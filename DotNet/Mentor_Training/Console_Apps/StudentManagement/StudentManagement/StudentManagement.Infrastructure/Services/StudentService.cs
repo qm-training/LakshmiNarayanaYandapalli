@@ -1,22 +1,19 @@
-﻿using StudentManagement.Core.Contracts.Services;
-using StudentManagement.Core.Models;
-using StudentManagement.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StudentManagement.Infrastructure.Services
+﻿namespace StudentManagement.Infrastructure.Services
 {
     public class StudentService: IStudentService
     {
-        public string AddCoursesToStudent(int studentId, List<int> courseIds)
+        public void AddCoursesToStudent()
         {
-            var resultStudent = GetStudent(studentId);
+            Console.WriteLine("Enter Student Id to add courses:");
+            int studentId = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Course Ids to add (comma separated):");
+            string[] courseIdsStr = Console.ReadLine().Split(',');
+            var courseIds = courseIdsStr.Select(c => Convert.ToInt32(c)).ToList();
+
+            var resultStudent = StudentData.Students.FirstOrDefault(st => st.Id == studentId);
             if (resultStudent == null)
             {
-                return "Student does not exist with given Id";
+                Console.WriteLine("Student does not exist with given Id");
             }
             else
             {
@@ -24,126 +21,187 @@ namespace StudentManagement.Infrastructure.Services
                 {
                     resultStudent.Courses = new List<Course>();
                 }
-                foreach (int courseId in courseIds)
+
+                var matchedCourses = CourseData.Courses.Where(c => courseIds.Contains(c.Id)).ToList();
+                if (matchedCourses.Count != courseIds.Count)
                 {
-                    foreach (Course c in CourseData.Courses)
-                    {
-                        if (c.Id == courseId)
-                        {
-
-                            resultStudent.Courses.Add(c);
-
-                        }
-                    }
+                    Console.WriteLine("One or more Course Ids are invalid");
                 }
-                return "Courses added to student successfully";
+                StudentData.Students.FirstOrDefault(st => st.Id == studentId).Courses.AddRange(matchedCourses);
+
+                Console.WriteLine("Courses added to student successfully");
             }
         }
 
-        public string AddStudent(Student s)
+        public void AddStudent()
         {
-            if (GetStudent(s.Id) == null)
+            Console.WriteLine("Enter Student Id:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Student Name:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter Student Age:");
+            int age = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Student M1 Marks:");
+            double m1Marks = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter Student M2 Marks:");
+            double m2Marks = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter Student M3 Marks:");
+            double m3Marks = Convert.ToDouble(Console.ReadLine());
+
+            var newStudent = new Student()
             {
-                StudentData.Students.Add(s);
-                return "Student Added Successfully";
+                Id = id,
+                Name = name,
+                Age = age,
+                M1Marks = m1Marks,
+                M2Marks = m2Marks,
+                M3Marks = m3Marks
+            };
+
+            var studentExists = StudentData.Students.Any(st => st.Id == id);
+
+            if (studentExists == null)
+            {
+                StudentData.Students.Add(newStudent);
+                Console.WriteLine("Student Added Successfully");
             }
             else
             {
-                return "Student already exist with given student Id";
+                Console.WriteLine("Student already exist with given student Id");
             }
         }
 
-        public string DeleteStudent(int id)
+        public void DeleteStudent()
         {
-            var resultStudent = GetStudent(id);
+            Console.WriteLine("Enter Student Id to delete:");
+            int deleteId = Convert.ToInt32(Console.ReadLine());
+            var resultStudent = StudentData.Students.FirstOrDefault(st => st.Id == deleteId);
             if (resultStudent == null)
             {
-                return "Student does not exist with given Id";
+                Console.WriteLine("Student does not exist with given Id");
             }
             else
             {
                 StudentData.Students.Remove(resultStudent);
-                return "Student Deleted Successfully";
+                Console.WriteLine("Student Deleted Successfully");
             }
         }
 
-        public List<Student> GetAllStudents()
+        public void GetAllStudents()
         {
-            return StudentData.Students;
+
+            var students = StudentData.Students;
+            if (students.Count == 0)
+            {
+                Console.WriteLine("No students available");
+                return;
+            }
+            foreach (Student student in students)
+            {
+                Console.WriteLine($"Id: {student.Id}, Name: {student.Name}, Age: {student.Age}, M1 Marks: {student.M1Marks}, M2 Marks: {student.M2Marks}, M3 Marks: {student.M3Marks}");
+            }
         }
 
-        public List<Course> GetCoursesbyStudentId(int id)
+        public void GetCoursesbyStudentId()
         {
-            var resultStudent = GetStudent(id);
-            if (resultStudent == null)
+            Console.WriteLine("Enter Student Id to view courses:");
+            var studentId = Convert.ToInt32(Console.ReadLine());
+            var courses = StudentData.Students.FirstOrDefault(s => s.Id == studentId).Courses;
+
+            if (courses != null && courses.Count > 0)
             {
-                return null;
+                foreach (Course course in courses)
+                {
+                    Console.WriteLine($"Id: {course.Id}, Name: {course.Name}, Description: {course.Description}");
+                }
             }
             else
             {
-                return resultStudent.Courses;
+                Console.WriteLine("No courses found for given student Id");
             }
         }
 
-        public Student GetStudent(int id)
+        public void GetStudentById()
         {
-            foreach (Student s in StudentData.Students)
+            Console.WriteLine("Enter Student Id to view:");
+            var studentId = Convert.ToInt32(Console.ReadLine());
+            var student = StudentData.Students.FirstOrDefault(s => s.Id == studentId);
+            if (student != null)
             {
-                if (s.Id == id)
+                Console.WriteLine($"Id: {student.Id}, Name: {student.Name}, Age: {student.Age}, M1 Marks: {student.M1Marks}, M2 Marks: {student.M2Marks}, M3 Marks: {student.M3Marks}");
+            }
+            else
+            {
+                Console.WriteLine("Student not found with given Id");
+            }
+        }
+
+        public void GetStudentsByAge()
+        {
+            Console.WriteLine("Enter Age to view students:");
+            var studentAge = Convert.ToInt32(Console.ReadLine());
+            var students = StudentData.Students.Where(s => s.Age == studentAge).ToList();
+            if (students.Count > 0)
+            {
+                foreach (Student student in students)
                 {
-                    return s;
+                    Console.WriteLine($"Id: {student.Id}, Name: {student.Name}, Age: {student.Age}, M1 Marks: {student.M1Marks}, M2 Marks: {student.M2Marks}, M3 Marks: {student.M3Marks}");
                 }
             }
-            return null;
+            else
+            {
+                Console.WriteLine("No students found with given age");
+            }
+            
         }
 
-        public List<Student> GetStudentsByAge(int age)
+        public void GetStudentsByCourseName()
         {
-            var resultStudents = new List<Student>();
-            foreach (Student s in StudentData.Students)
+            Console.WriteLine("Enter Course Name to view students:");
+            var courseName = Console.ReadLine();
+            var students = StudentData.Students.Where(s => s.Courses != null && s.Courses.Any(c => c.Name.Equals(courseName))).ToList();
+            if (students.Count > 0)
             {
-                if (s.Age == age)
+                foreach (Student student in students)
                 {
-                    resultStudents.Add(s);
+                    Console.WriteLine($"Id: {student.Id}, Name: {student.Name}, Age: {student.Age}, M1 Marks: {student.M1Marks}, M2 Marks: {student.M2Marks}, M3 Marks: {student.M3Marks}");
                 }
             }
-            return resultStudents;
-        }
-
-        public List<Student> GetStudnetsByCourseName(string courseName)
-        {
-            var resultStudents = new List<Student>();
-            foreach (Student s in StudentData.Students)
+            else
             {
-                foreach (Course c in s.Courses)
-                {
-                    if (c.Name.Equals(courseName))
-                    {
-                        resultStudents.Add(s);
-                        break;
-                    }
-                }
+                Console.WriteLine("No students found enrolled in given course");
             }
-            return resultStudents;
         }
 
-        public string UpdateStudent(Student s)
+        public void UpdateStudent()
         {
-            var resultStudent = GetStudent(s.Id);
+            Console.WriteLine("Enter Student Id to update:");
+            int id = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Student Name:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter Student Age:");
+            int age = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter Student M1 Marks:");
+            double m1Marks = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter Student M2 Marks:");
+            double m2Marks = Convert.ToDouble(Console.ReadLine());
+            Console.WriteLine("Enter Student M3 Marks:");
+            double m3Marks = Convert.ToDouble(Console.ReadLine());
+
+            var resultStudent = StudentData.Students.FirstOrDefault(st => st.Id == id);
 
             if (resultStudent != null)
             {
-                resultStudent.Name = s.Name;
-                resultStudent.Age = s.Age;
-                resultStudent.M1Marks = s.M1Marks;
-                resultStudent.M2Marks = s.M2Marks;
-                resultStudent.M3Marks = s.M3Marks;
-                resultStudent.Courses = s.Courses;
-                return "Student Updated Successfully";
+                resultStudent.Name = name;
+                resultStudent.Age = age;
+                resultStudent.M1Marks = m1Marks;
+                resultStudent.M2Marks = m2Marks;
+                resultStudent.M3Marks = m3Marks;
+                Console.WriteLine("Student Updated Successfully");
             }
             else
             {
-                return "Student does not exist with given Id";
+                Console.WriteLine("Student does not exist with given Id");
             }
         }
     }

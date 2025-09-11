@@ -1,15 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using StudentManagement.Core.Contracts.Services;
-using StudentManagement.Core.Vms;
-using System;
-
-namespace StudentManagement
+﻿namespace StudentManagement
 {
     public class Program
     {
-        private static readonly StudentVm studentVm = new StudentVm();
-        private static readonly CourseVm courseVm = new CourseVm();
+        private readonly static IServiceMapper serviceMapper = new ServiceMapper();
 
         public static void Main(string[] args)
         {
@@ -29,11 +22,11 @@ namespace StudentManagement
                 switch (choice)
                 {
                     case 1:
-                        studentVm.StudentOptions();
+                        serviceMapper.StudentServiceMapper();
                         break;
 
                     case 2:
-                        courseVm.CourseOptions();
+                        serviceMapper.CourseServiceMapper();
                         break;
 
                     case 3:
