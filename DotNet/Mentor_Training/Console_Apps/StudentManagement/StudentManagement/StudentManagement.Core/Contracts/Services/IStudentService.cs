@@ -2,14 +2,14 @@
 {
     public interface IStudentService
     {
-        public void AddStudent();
-        public void DeleteStudent();
-        public void UpdateStudent();
-        public void GetStudentById();
-        public void GetAllStudents();
-        public void GetStudentsByAge();
-        public void GetStudentsByCourseName();
-        public void GetCoursesbyStudentId();
-        public void AddCoursesToStudent();
+        void AddStudent();
+        void DeleteStudent();
+        void UpdateStudent();
+        void GetStudentById();
+        void GetAllStudents();
+        void GetStudentsByAge();
+        void GetStudentsByCourseName();
+        void GetCoursesbyStudentId();
+        void AddCoursesToStudent();
     }
 }

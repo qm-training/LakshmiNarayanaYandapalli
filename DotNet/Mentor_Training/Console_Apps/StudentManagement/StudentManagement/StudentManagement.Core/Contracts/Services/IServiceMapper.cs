@@ -2,7 +2,7 @@
 {
     public interface IServiceMapper
     {
-        public void StudentServiceMapper();
-        public void CourseServiceMapper();
+        void StudentServiceMapper();
+        void CourseServiceMapper();
     }
 }
