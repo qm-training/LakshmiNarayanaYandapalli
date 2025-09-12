@@ -8,8 +8,7 @@
             Console.WriteLine("Enter Student Id to add courses:");
             int studentId = Convert.ToInt32(Console.ReadLine());
             Console.WriteLine("Enter Course Ids to add (comma separated):");
-            string[] courseIdsStr = Console.ReadLine().Split(',');
-            var courseIds = courseIdsStr.Select(c => Convert.ToInt32(c)).ToList();
+            var courseIds = Console.ReadLine().Split(',').Select(id => int.Parse(id)).ToList();
 
             var resultStudent = studentData.FirstOrDefault(st => st.Id == studentId);
             if (resultStudent == null)
