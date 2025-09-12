@@ -2,6 +2,7 @@
 {
     public class CourseService: ICourseService
     {
+        public static List<Course> courseData = new List<Course>();
         public void AddCourse()
         {
             Console.WriteLine("Enter Course Id:");
@@ -16,10 +17,10 @@
                 Name = courseName,
                 Description = courseDescription
             };
-            var resultCourse = CourseData.Courses.FirstOrDefault(course => course.Id == newCourse.Id);
+            var resultCourse = courseData.FirstOrDefault(course => course.Id == newCourse.Id);
             if (resultCourse == null)
             {
-                CourseData.Courses.Add(newCourse);
+                courseData.Add(newCourse);
                 Console.WriteLine("Course Added Successfully");
             }
             else
@@ -33,27 +34,27 @@
             Console.WriteLine("Enter Course Id to delete:");
             int deleteCourseId = Convert.ToInt32(Console.ReadLine());
 
-            var courseToDelete = CourseData.Courses.FirstOrDefault(c => c.Id == deleteCourseId);
+            var courseToDelete = courseData.FirstOrDefault(c => c.Id == deleteCourseId);
             if (courseToDelete == null)
             {
                 Console.WriteLine("Course with given Id does not exist");
             }
 
-            var isStudentEnrolled = StudentData.Students.Any(s => s.Courses != null && s.Courses.Any(c => c.Id == deleteCourseId));
+            var isStudentEnrolled = StudentService.studentData.Any(s => s.Courses != null && s.Courses.Any(c => c.Id == deleteCourseId));
             if (isStudentEnrolled)
             {
                 Console.WriteLine("Cannot delete course. One or more students are registered with the course.");
             }
             else
             {
-                CourseData.Courses.Remove(courseToDelete);
+                courseData.Remove(courseToDelete);
                 Console.WriteLine("Course Deleted Successfully");
             }
         }
 
         public void GetAllCourses()
         {
-            var courses = CourseData.Courses;
+            var courses = courseData;
             foreach (Course course in courses)
             {
                 Console.WriteLine($"Id: {course.Id}, Name: {course.Name}, Description: {course.Description}");
@@ -64,7 +65,7 @@
         {
             Console.WriteLine("Enter Course Id to view:");
             var courseId = Convert.ToInt32(Console.ReadLine());
-            var course = CourseData.Courses.FirstOrDefault(course => course.Id == courseId);
+            var course = courseData.FirstOrDefault(course => course.Id == courseId);
             if (course != null)
             {
                 Console.WriteLine($"Id: {course.Id}, Name: {course.Name}, Description: {course.Description}");
@@ -83,7 +84,7 @@
             string courseName = Console.ReadLine();
             Console.WriteLine("Enter Course Description:");
             string courseDescription = Console.ReadLine();
-            var courseToUpdate = CourseData.Courses.FirstOrDefault(course => course.Id == courseId);
+            var courseToUpdate = courseData.FirstOrDefault(course => course.Id == courseId);
             if (courseToUpdate == null)
             {
                 Console.WriteLine("Course with given Id does not exist");

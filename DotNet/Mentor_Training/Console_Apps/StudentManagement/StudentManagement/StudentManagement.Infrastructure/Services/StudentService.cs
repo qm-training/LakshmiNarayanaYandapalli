@@ -2,6 +2,7 @@
 {
     public class StudentService: IStudentService
     {
+        public static List<Student> studentData = new List<Student>();
         public void AddCoursesToStudent()
         {
             Console.WriteLine("Enter Student Id to add courses:");
@@ -10,7 +11,7 @@
             string[] courseIdsStr = Console.ReadLine().Split(',');
             var courseIds = courseIdsStr.Select(c => Convert.ToInt32(c)).ToList();
 
-            var resultStudent = StudentData.Students.FirstOrDefault(st => st.Id == studentId);
+            var resultStudent = studentData.FirstOrDefault(st => st.Id == studentId);
             if (resultStudent == null)
             {
                 Console.WriteLine("Student does not exist with given Id");
@@ -22,12 +23,12 @@
                     resultStudent.Courses = new List<Course>();
                 }
 
-                var matchedCourses = CourseData.Courses.Where(c => courseIds.Contains(c.Id)).ToList();
+                var matchedCourses = CourseService.courseData.Where(c => courseIds.Contains(c.Id)).ToList();
                 if (matchedCourses.Count != courseIds.Count)
                 {
                     Console.WriteLine("One or more Course Ids are invalid");
                 }
-                StudentData.Students.FirstOrDefault(st => st.Id == studentId).Courses.AddRange(matchedCourses);
+                studentData.FirstOrDefault(st => st.Id == studentId).Courses.AddRange(matchedCourses);
 
                 Console.WriteLine("Courses added to student successfully");
             }
@@ -58,11 +59,11 @@
                 M3Marks = m3Marks
             };
 
-            var studentExists = StudentData.Students.Any(st => st.Id == id);
+            var studentExists = studentData.Any(st => st.Id == id);
 
             if (studentExists == null)
             {
-                StudentData.Students.Add(newStudent);
+                studentData.Add(newStudent);
                 Console.WriteLine("Student Added Successfully");
             }
             else
@@ -75,14 +76,14 @@
         {
             Console.WriteLine("Enter Student Id to delete:");
             int deleteId = Convert.ToInt32(Console.ReadLine());
-            var resultStudent = StudentData.Students.FirstOrDefault(st => st.Id == deleteId);
+            var resultStudent = studentData.FirstOrDefault(st => st.Id == deleteId);
             if (resultStudent == null)
             {
                 Console.WriteLine("Student does not exist with given Id");
             }
             else
             {
-                StudentData.Students.Remove(resultStudent);
+                studentData.Remove(resultStudent);
                 Console.WriteLine("Student Deleted Successfully");
             }
         }
@@ -90,11 +91,10 @@
         public void GetAllStudents()
         {
 
-            var students = StudentData.Students;
+            var students = studentData;
             if (students.Count == 0)
             {
                 Console.WriteLine("No students available");
-                return;
             }
             foreach (Student student in students)
             {
@@ -106,7 +106,7 @@
         {
             Console.WriteLine("Enter Student Id to view courses:");
             var studentId = Convert.ToInt32(Console.ReadLine());
-            var courses = StudentData.Students.FirstOrDefault(s => s.Id == studentId).Courses;
+            var courses = studentData.FirstOrDefault(s => s.Id == studentId).Courses;
 
             if (courses != null && courses.Count > 0)
             {
@@ -125,7 +125,7 @@
         {
             Console.WriteLine("Enter Student Id to view:");
             var studentId = Convert.ToInt32(Console.ReadLine());
-            var student = StudentData.Students.FirstOrDefault(s => s.Id == studentId);
+            var student = studentData.FirstOrDefault(s => s.Id == studentId);
             if (student != null)
             {
                 Console.WriteLine($"Id: {student.Id}, Name: {student.Name}, Age: {student.Age}, M1 Marks: {student.M1Marks}, M2 Marks: {student.M2Marks}, M3 Marks: {student.M3Marks}");
@@ -140,7 +140,7 @@
         {
             Console.WriteLine("Enter Age to view students:");
             var studentAge = Convert.ToInt32(Console.ReadLine());
-            var students = StudentData.Students.Where(s => s.Age == studentAge).ToList();
+            var students = studentData.Where(s => s.Age == studentAge).ToList();
             if (students.Count > 0)
             {
                 foreach (Student student in students)
@@ -159,7 +159,7 @@
         {
             Console.WriteLine("Enter Course Name to view students:");
             var courseName = Console.ReadLine();
-            var students = StudentData.Students.Where(s => s.Courses != null && s.Courses.Any(c => c.Name.Equals(courseName))).ToList();
+            var students = studentData.Where(s => s.Courses != null && s.Courses.Any(c => c.Name.Equals(courseName))).ToList();
             if (students.Count > 0)
             {
                 foreach (Student student in students)
@@ -188,7 +188,7 @@
             Console.WriteLine("Enter Student M3 Marks:");
             double m3Marks = Convert.ToDouble(Console.ReadLine());
 
-            var resultStudent = StudentData.Students.FirstOrDefault(st => st.Id == id);
+            var resultStudent = studentData.FirstOrDefault(st => st.Id == id);
 
             if (resultStudent != null)
             {
