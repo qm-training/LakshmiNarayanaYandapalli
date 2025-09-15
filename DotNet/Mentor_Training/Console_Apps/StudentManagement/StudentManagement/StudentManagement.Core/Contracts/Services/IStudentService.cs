@@ -1,15 +1,14 @@
-﻿namespace StudentManagement.Core.Contracts.Services
+﻿namespace StudentManagement.Core.Contracts.Services;
+
+public interface IStudentService
 {
-    public interface IStudentService
-    {
-        void AddStudent();
-        void DeleteStudent();
-        void UpdateStudent();
-        void GetStudentById();
-        void GetAllStudents();
-        void GetStudentsByAge();
-        void GetStudentsByCourseName();
-        void GetCoursesbyStudentId();
-        void AddCoursesToStudent();
-    }
+    void AddStudent();
+    void DeleteStudent();
+    void UpdateStudent();
+    void GetStudentById();
+    void GetAllStudents();
+    void GetStudentsByAge();
+    void GetStudentsByCourseName();
+    void GetCoursesbyStudentId();
+    void AddCoursesToStudent();
 }

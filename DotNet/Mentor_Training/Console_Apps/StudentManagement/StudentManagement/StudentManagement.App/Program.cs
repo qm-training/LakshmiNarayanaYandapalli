@@ -1,52 +1,49 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿namespace StudentManagement;
 
-namespace StudentManagement
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        IServiceCollection services = new ServiceCollection();
+        services.AddTransient<IStudentService, StudentService>();
+        services.AddTransient<ICourseService, CourseService>();
+        services.AddSingleton<IServiceMapper, ServiceMapper>();
+
+        IServiceProvider provider = services.BuildServiceProvider();
+
+        var serviceMapper = provider.GetRequiredService<IServiceMapper>();
+
+        Console.WriteLine("Welcome to Student Management System");
+        int choice = 0;
+
+
+        do
         {
-            IServiceCollection services = new ServiceCollection();
-            services.AddTransient<IStudentService, StudentService>();
-            services.AddTransient<ICourseService, CourseService>();
-            services.AddSingleton<IServiceMapper, ServiceMapper>();
+            Console.WriteLine("Select the following services:");
+            Console.WriteLine("1. Student Services");
+            Console.WriteLine("2. Course Services");
+            Console.WriteLine("3. Exit");
 
-            IServiceProvider provider = services.BuildServiceProvider();
+            choice = Convert.ToInt32(Console.ReadLine());
 
-            var serviceMapper = provider.GetRequiredService<IServiceMapper>();
-
-            Console.WriteLine("Welcome to Student Management System");
-            int choice = 0;
-
-
-            do
+            switch (choice)
             {
-                Console.WriteLine("Select the following services:");
-                Console.WriteLine("1. Student Services");
-                Console.WriteLine("2. Course Services");
-                Console.WriteLine("3. Exit");
+                case 1:
+                    serviceMapper.StudentServiceMapper();
+                    break;
 
-                choice = Convert.ToInt32(Console.ReadLine());
+                case 2:
+                    serviceMapper.CourseServiceMapper();
+                    break;
 
-                switch (choice)
-                {
-                    case 1:
-                        serviceMapper.StudentServiceMapper();
-                        break;
+                case 3:
+                    Console.WriteLine("Thank you for using Student Management System");
+                    break;
 
-                    case 2:
-                        serviceMapper.CourseServiceMapper();
-                        break;
-
-                    case 3:
-                        Console.WriteLine("Thank you for using Student Management System");
-                        break;
-
-                    default:
-                        Console.WriteLine("Invalid Choice");
-                        break;
-                }
-            } while (choice != 3);
-        }
+                default:
+                    Console.WriteLine("Invalid Choice");
+                    break;
+            }
+        } while (choice != 3);
     }
 }

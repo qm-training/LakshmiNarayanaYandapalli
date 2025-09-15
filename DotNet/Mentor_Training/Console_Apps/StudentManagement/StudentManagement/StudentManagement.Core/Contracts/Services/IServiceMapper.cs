@@ -1,8 +1,7 @@
-﻿namespace StudentManagement.Core.Contracts.Services
+﻿namespace StudentManagement.Core.Contracts.Services;
+
+public interface IServiceMapper
 {
-    public interface IServiceMapper
-    {
-        void StudentServiceMapper();
-        void CourseServiceMapper();
-    }
+    void StudentServiceMapper();
+    void CourseServiceMapper();
 }
