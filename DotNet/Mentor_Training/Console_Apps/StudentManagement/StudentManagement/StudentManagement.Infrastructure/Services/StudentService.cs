@@ -60,7 +60,7 @@ public class StudentService: IStudentService
 
         var studentExists = studentData.Any(st => st.Id == id);
 
-        if (studentExists == null)
+        if (!studentExists)
         {
             studentData.Add(newStudent);
             Console.WriteLine("Student Added Successfully");
