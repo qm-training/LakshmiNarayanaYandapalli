@@ -1,11 +1,9 @@
 ﻿namespace StudentManagement.Infrastructure.Services;
 
-public class ServiceMapper: IServiceMapper
+public class ServiceMapper(IStudentService studentService, ICourseService courseService) : IServiceMapper
 {
     public void StudentServiceMapper()
     {
-        IStudentService studentService = new StudentService();
-
         int subChoice = 0;
         Console.WriteLine("Student Services Options");
         Console.WriteLine("1. Add Student");
@@ -65,7 +63,6 @@ public class ServiceMapper: IServiceMapper
 
     public void CourseServiceMapper()
     {
-        ICourseService courseService = new CourseService();
 
         int courseChoice = 0;
         Console.WriteLine("Course Services Options");
