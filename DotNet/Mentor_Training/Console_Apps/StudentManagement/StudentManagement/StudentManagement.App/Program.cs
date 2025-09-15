@@ -1,43 +1,42 @@
-﻿namespace StudentManagement
+﻿namespace StudentManagement;
+
+public class Program
 {
-    public class Program
+    private readonly static IServiceMapper serviceMapper = new ServiceMapper();
+
+    public static void Main(string[] args)
     {
-        private readonly static IServiceMapper serviceMapper = new ServiceMapper();
+        Console.WriteLine("Welcome to Student Management System");
+        int choice = 0;
 
-        public static void Main(string[] args)
+
+        do
         {
-            Console.WriteLine("Welcome to Student Management System");
-            int choice = 0;
+            Console.WriteLine("Select the following services:");
+            Console.WriteLine("1. Student Services");
+            Console.WriteLine("2. Course Services");
+            Console.WriteLine("3. Exit");
 
+            choice = Convert.ToInt32(Console.ReadLine());
 
-            do
+            switch (choice)
             {
-                Console.WriteLine("Select the following services:");
-                Console.WriteLine("1. Student Services");
-                Console.WriteLine("2. Course Services");
-                Console.WriteLine("3. Exit");
+                case 1:
+                    serviceMapper.StudentServiceMapper();
+                    break;
 
-                choice = Convert.ToInt32(Console.ReadLine());
+                case 2:
+                    serviceMapper.CourseServiceMapper();
+                    break;
 
-                switch (choice)
-                {
-                    case 1:
-                        serviceMapper.StudentServiceMapper();
-                        break;
+                case 3:
+                    Console.WriteLine("Thank you for using Student Management System");
+                    break;
 
-                    case 2:
-                        serviceMapper.CourseServiceMapper();
-                        break;
-
-                    case 3:
-                        Console.WriteLine("Thank you for using Student Management System");
-                        break;
-
-                    default:
-                        Console.WriteLine("Invalid Choice");
-                        break;
-                }
-            } while (choice != 3);
-        }
+                default:
+                    Console.WriteLine("Invalid Choice");
+                    break;
+            }
+        } while (choice != 3);
     }
 }
