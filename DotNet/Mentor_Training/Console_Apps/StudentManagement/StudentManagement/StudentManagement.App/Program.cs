@@ -2,10 +2,17 @@
 
 public class Program
 {
-    private readonly static IServiceMapper serviceMapper = new ServiceMapper();
-
     public static void Main(string[] args)
     {
+        IServiceCollection services = new ServiceCollection();
+        services.AddTransient<IStudentService, StudentService>();
+        services.AddTransient<ICourseService, CourseService>();
+        services.AddSingleton<IServiceMapper, ServiceMapper>();
+
+        IServiceProvider provider = services.BuildServiceProvider();
+
+        var serviceMapper = provider.GetRequiredService<IServiceMapper>();
+
         Console.WriteLine("Welcome to Student Management System");
         int choice = 0;
 
