@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-
-namespace StudentManagement;
+﻿namespace StudentManagement;
 
 public class Program
 {
