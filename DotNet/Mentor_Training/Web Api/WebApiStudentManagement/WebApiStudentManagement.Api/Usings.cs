@@ -1,0 +1,10 @@
+﻿global using Microsoft.AspNetCore.Mvc;
+global using WebApiStudentManagement.Core.Contracts.Services;
+global using WebApiStudentManagement.Core.Dtos;
+global using Microsoft.EntityFrameworkCore;
+global using WebApiStudentManagement.Core.Contracts.Repositories;
+global using WebApiStudentManagement.Infrastructure.Data;
+global using WebApiStudentManagement.Infrastructure.Repositories;
+global using WebApiStudentManagement.Infrastructure.Services;
+global using Serilog;
+global using WebApiStudentManagement.Api.Infrastructure.Extensions;

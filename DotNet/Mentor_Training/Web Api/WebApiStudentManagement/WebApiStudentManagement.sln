@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApiStudentManagement", "WebApiStudentManagement", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{E90CC2E1-2701-4AD6-93D1-33E0E0C3936C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{EC9E9BDB-4407-41E3-8C30-14AD67CABACD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{DD675866-A0DB-4057-9A51-5BBB8DA15AC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiStudentManagement.Api", "WebApiStudentManagement.Api\WebApiStudentManagement.Api.csproj", "{240F7DD8-95CA-46A4-9463-02B97EEF35B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiStudentManagement.Core", "WebApiStudentManagement.Core\WebApiStudentManagement.Core.csproj", "{9A52D5E8-B675-4EE5-93DE-EC025AEAD7F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiStudentManagement.Infrastructure", "WebApiStudentManagement.Infrastructure\WebApiStudentManagement.Infrastructure.csproj", "{120C256A-3027-407B-9E38-D6A171D5F053}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{240F7DD8-95CA-46A4-9463-02B97EEF35B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{240F7DD8-95CA-46A4-9463-02B97EEF35B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{240F7DD8-95CA-46A4-9463-02B97EEF35B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{240F7DD8-95CA-46A4-9463-02B97EEF35B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A52D5E8-B675-4EE5-93DE-EC025AEAD7F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A52D5E8-B675-4EE5-93DE-EC025AEAD7F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A52D5E8-B675-4EE5-93DE-EC025AEAD7F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A52D5E8-B675-4EE5-93DE-EC025AEAD7F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{120C256A-3027-407B-9E38-D6A171D5F053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{120C256A-3027-407B-9E38-D6A171D5F053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{120C256A-3027-407B-9E38-D6A171D5F053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{120C256A-3027-407B-9E38-D6A171D5F053}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E90CC2E1-2701-4AD6-93D1-33E0E0C3936C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{EC9E9BDB-4407-41E3-8C30-14AD67CABACD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{DD675866-A0DB-4057-9A51-5BBB8DA15AC5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{240F7DD8-95CA-46A4-9463-02B97EEF35B6} = {E90CC2E1-2701-4AD6-93D1-33E0E0C3936C}
+		{9A52D5E8-B675-4EE5-93DE-EC025AEAD7F3} = {DD675866-A0DB-4057-9A51-5BBB8DA15AC5}
+		{120C256A-3027-407B-9E38-D6A171D5F053} = {EC9E9BDB-4407-41E3-8C30-14AD67CABACD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F871424C-A637-4D3C-BE7A-2285C41F9A10}
+	EndGlobalSection
+EndGlobal
