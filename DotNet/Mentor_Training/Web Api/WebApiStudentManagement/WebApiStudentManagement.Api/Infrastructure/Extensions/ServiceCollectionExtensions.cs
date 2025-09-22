@@ -1,6 +1,4 @@
-﻿using WebApiStudentManagement.Api.Infrastructure.Handler;
-
-namespace WebApiStudentManagement.Api.Infrastructure.Extensions;
+﻿namespace WebApiStudentManagement.Api.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -32,6 +30,9 @@ public static class ServiceCollectionExtensions
 
     public static void RegisterConfigurationServices(this IServiceCollection services, IConfiguration configuration)
     {
+        var mapper = AutoMapperConfiguration.InitializeMapper();
+        services.AddSingleton(mapper);
+
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
 

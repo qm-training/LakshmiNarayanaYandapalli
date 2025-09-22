@@ -8,3 +8,7 @@ global using WebApiStudentManagement.Infrastructure.Repositories;
 global using WebApiStudentManagement.Infrastructure.Services;
 global using Serilog;
 global using WebApiStudentManagement.Api.Infrastructure.Extensions;
+global using WebApiStudentManagement.Api.Configuration;
+global using WebApiStudentManagement.Api.Infrastructure.Handler;
+global using AutoMapper;
+global using WebApiStudentManagement.Core.Models;

@@ -1,13 +1,11 @@
 ﻿namespace WebApiStudentManagement.Infrastructure.Services;
 
-public class CourseService(ICourseRepository courseRepository) : ICourseService
+public class CourseService(ICourseRepository courseRepository, IMapper mapper) : ICourseService
 {
+    private readonly IMapper _mapper = mapper;
     public string AddCourse(AddCourse course)
     {
-        var newCourse = new Course()
-        {
-            Title = course.Title
-        };
+        var newCourse = _mapper.Map<Course>(course);
         return courseRepository.AddCourse(newCourse);
     }
 
@@ -19,58 +17,31 @@ public class CourseService(ICourseRepository courseRepository) : ICourseService
     public List<CourseResponseDto> GetAllCourses()
     {
         var courses = courseRepository.GetAllCourses();
-        var courseDtos = courses.Select(course => new CourseResponseDto
-        {
-            Title = course.Title,
-        }).ToList();
-        return courseDtos;
+        return _mapper.Map<List<CourseResponseDto>>(courses);
     }
 
     public CourseResponseDto GetCourseByTitle(string title)
     {
         var course = courseRepository.GetCourseByTitle(title);
-        var courseDto = new CourseResponseDto()
-        {
-            Title = course.Title,
-        };
-        return courseDto;
+        return _mapper.Map<CourseResponseDto>(course);
     }
 
     public List<StudentResponseDto> GetStudentsInCourse(string title)
     {
         var students = courseRepository.GetStudentsInCourse(title);
-        var studentDtos = students.Select(student => new StudentResponseDto
-        {
-            FirstName = student.FirstName,
-            LastName = student.LastName,
-            Email = student.Email
-        }).ToList();
-        return studentDtos;
+        return _mapper.Map<List<StudentResponseDto>>(students);
     }
 
     public TeacherResponseDto GetTeacherOfCourse(string title)
     {
         var teacher = courseRepository.GetTeacherOfCourse(title);
-        var teacherDto = new TeacherResponseDto()
-        {
-            FirstName = teacher.FirstName,
-            LastName = teacher.LastName,
-            Email = teacher.Email
-        };
-        return teacherDto;
+        return _mapper.Map<TeacherResponseDto>(teacher);
     }
 
     public CourseResponseDto UpdateCourse(AddCourse course, string title)
     {
-        var updatedCourse = new Course()
-        {
-            Title = course.Title
-        };
+        var updatedCourse = _mapper.Map<Course>(course);
         var result = courseRepository.UpdateCourse(updatedCourse, title);
-        var courseDto = new CourseResponseDto()
-        {
-            Title = result.Title,
-        };
-        return courseDto;
+        return _mapper.Map<CourseResponseDto>(result);
     }
 }
