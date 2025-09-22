@@ -2,46 +2,48 @@
 
 public class CourseService(ICourseRepository courseRepository, IMapper mapper) : ICourseService
 {
+    private readonly ICourseRepository _courseRepository = courseRepository;
     private readonly IMapper _mapper = mapper;
-    public string AddCourse(AddCourse course)
+
+    public async Task<string> AddCourse(AddCourse course)
     {
         var newCourse = _mapper.Map<Course>(course);
-        return courseRepository.AddCourse(newCourse);
+        return await _courseRepository.AddCourse(newCourse);
     }
 
-    public string DeleteCourse(string email)
+    public async Task<string> DeleteCourse(string title)
     {
-        return courseRepository.DeleteCourse(email);
+        return await _courseRepository.DeleteCourse(title);
     }
 
-    public List<CourseResponseDto> GetAllCourses()
+    public async Task<List<CourseResponseDto>> GetAllCourses()
     {
-        var courses = courseRepository.GetAllCourses();
+        var courses = await _courseRepository.GetAllCourses();
         return _mapper.Map<List<CourseResponseDto>>(courses);
     }
 
-    public CourseResponseDto GetCourseByTitle(string title)
+    public async Task<CourseResponseDto> GetCourseByTitle(string title)
     {
-        var course = courseRepository.GetCourseByTitle(title);
+        var course = await _courseRepository.GetCourseByTitle(title);
         return _mapper.Map<CourseResponseDto>(course);
     }
 
-    public List<StudentResponseDto> GetStudentsInCourse(string title)
+    public async Task<List<StudentResponseDto>> GetStudentsInCourse(string title)
     {
-        var students = courseRepository.GetStudentsInCourse(title);
+        var students = await _courseRepository.GetStudentsInCourse(title);
         return _mapper.Map<List<StudentResponseDto>>(students);
     }
 
-    public TeacherResponseDto GetTeacherOfCourse(string title)
+    public async Task<TeacherResponseDto> GetTeacherOfCourse(string title)
     {
-        var teacher = courseRepository.GetTeacherOfCourse(title);
+        var teacher = await _courseRepository.GetTeacherOfCourse(title);
         return _mapper.Map<TeacherResponseDto>(teacher);
     }
 
-    public CourseResponseDto UpdateCourse(AddCourse course, string title)
+    public async Task<CourseResponseDto> UpdateCourse(AddCourse course, string title)
     {
         var updatedCourse = _mapper.Map<Course>(course);
-        var result = courseRepository.UpdateCourse(updatedCourse, title);
+        var result = await _courseRepository.UpdateCourse(updatedCourse, title);
         return _mapper.Map<CourseResponseDto>(result);
     }
 }

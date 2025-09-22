@@ -2,11 +2,11 @@
 
 public interface ICourseService
 {
-    List<CourseResponseDto> GetAllCourses();
-    CourseResponseDto GetCourseByTitle(string title);
-    string AddCourse(AddCourse course);
-    CourseResponseDto UpdateCourse(AddCourse course, string title);
-    string DeleteCourse(string email);
-    List<StudentResponseDto> GetStudentsInCourse(string title);
-    TeacherResponseDto GetTeacherOfCourse(string title);
+    Task<List<CourseResponseDto>> GetAllCourses();
+    Task<CourseResponseDto> GetCourseByTitle(string title);
+    Task<string> AddCourse(AddCourse course);
+    Task<CourseResponseDto> UpdateCourse(AddCourse course, string title);
+    Task<string> DeleteCourse(string email);
+    Task<List<StudentResponseDto>> GetStudentsInCourse(string title);
+    Task<TeacherResponseDto> GetTeacherOfCourse(string title);
 }

@@ -2,10 +2,10 @@
 
 public interface ITeacherRepository
 {
-    List<Teacher> GetAllTeachers();
-    Teacher GetTeacherByEmail(string email);
-    string AddTeacher(Teacher teacher);
-    Teacher UpdateTeacher(Teacher teacher, string email);
-    string DeleteTeacher(string email);
-    List<Course> GetCoursesOfTeacher(string email);
+    Task<List<Teacher>> GetAllTeachers();
+    Task<Teacher> GetTeacherByEmail(string email);
+    Task<string> AddTeacher(Teacher teacher);
+    Task<Teacher> UpdateTeacher(Teacher teacher, string email);
+    Task<string> DeleteTeacher(string email);
+    Task<List<Course>> GetCoursesOfTeacher(string email);
 }

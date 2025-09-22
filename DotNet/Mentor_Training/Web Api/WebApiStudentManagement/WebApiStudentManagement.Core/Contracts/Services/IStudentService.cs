@@ -2,11 +2,11 @@
 
 public interface IStudentService
 {
-    List<StudentResponseDto> GetAllStudents();
-    StudentResponseDto GetStudentByEmail(string email);
-    string AddStudent(AddStudent student);
-    StudentResponseDto UpdateStudent(AddStudent student, string email);
-    string DeleteStudent(string email);
-    string EnrollStudentInCourse(string studentEmail, string courseTitle);
-    List<CourseResponseDto> GetCoursesOfStudent(string email);
+    Task<List<StudentResponseDto>> GetAllStudents();
+    Task<StudentResponseDto> GetStudentByEmail(string email);
+    Task<string> AddStudent(AddStudent student);
+    Task<StudentResponseDto> UpdateStudent(AddStudent student, string email);
+    Task<string> DeleteStudent(string email);
+    Task<string> EnrollStudentInCourse(string studentEmail, string courseTitle);
+    Task<List<CourseResponseDto>> GetCoursesOfStudent(string email);
 }

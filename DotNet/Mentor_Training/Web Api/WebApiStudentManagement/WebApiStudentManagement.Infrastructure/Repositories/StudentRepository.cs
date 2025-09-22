@@ -2,65 +2,68 @@
 
 public class StudentRepository(WebApiStudentManagementDbContext context) : IStudentRepository
 {
-    public string AddStudent(Student student)
+    public async Task<string> AddStudent(Student student)
     {
-        context.Students.Add(student);
-        context.SaveChanges();
+        await context.Students.AddAsync(student);
+        await context.SaveChangesAsync();
         return "Student added successfully";
     }
 
-    public string DeleteStudent(string email)
+    public async Task<string> DeleteStudent(string email)
     {
-        var student = context.Students.FirstOrDefault(s => s.Email == email);
+        var student = await context.Students.FirstOrDefaultAsync(s => s.Email == email);
         if (student == null)
         {
             return "Student not found";
         }
         context.Students.Remove(student);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return "Student deleted successfully";
     }
 
-    public List<Student> GetAllStudents()
+    public async Task<List<Student>> GetAllStudents()
     {
-        return context.Students.ToList();
+        return await context.Students.ToListAsync();
     }
 
-    public Student GetStudentByEmail(string email)
+    public async Task<Student?> GetStudentByEmail(string email)
     {
-        return context.Students.FirstOrDefault(s => s.Email == email);
+        return await context.Students.FirstOrDefaultAsync(s => s.Email == email);
     }
 
-    public Student UpdateStudent(Student student, string email)
+    public async Task<Student?> UpdateStudent(Student student, string email)
     {
-        var existingStudent = GetStudentByEmail(email);
+        var existingStudent = await GetStudentByEmail(email);
         if (existingStudent == null)
         {
             return null;
         }
+
         existingStudent.FirstName = student.FirstName;
         existingStudent.LastName = student.LastName;
         existingStudent.Email = student.Email;
-        context.SaveChanges();
+
+        await context.SaveChangesAsync();
         return existingStudent;
     }
 
-    public string EnrollStudentInCourse(string studentEmail, string courseTitle)
+    public async Task<string> EnrollStudentInCourse(string studentEmail, string courseTitle)
     {
-        var student = GetStudentByEmail(studentEmail);
+        var student = await GetStudentByEmail(studentEmail);
         if (student == null)
         {
             return "Student not found";
         }
 
-        var course = context.Courses.FirstOrDefault(c => c.Title == courseTitle);
+        var course = await context.Courses.FirstOrDefaultAsync(c => c.Title == courseTitle);
         if (course == null)
         {
             return "Course not found";
         }
 
-        bool alreadyEnrolled = context.Enrollments
-                    .Any(e => e.StudentId == student.Id && e.CourseId == course.Id);
+        bool alreadyEnrolled = await context.Enrollments
+            .AnyAsync(e => e.StudentId == student.Id && e.CourseId == course.Id);
+
         if (alreadyEnrolled)
         {
             return "Student is already enrolled in this course";
@@ -73,22 +76,22 @@ public class StudentRepository(WebApiStudentManagementDbContext context) : IStud
             EnrollmentDate = DateTime.UtcNow
         };
 
-        context.Enrollments.Add(enrollment);
-        context.SaveChanges();
+        await context.Enrollments.AddAsync(enrollment);
+        await context.SaveChangesAsync();
         return "Student enrolled in course successfully";
     }
 
-    public List<Course> GetCoursesOfStudent(string email)
+    public async Task<List<Course>> GetCoursesOfStudent(string email)
     {
-        var student = GetStudentByEmail(email);
+        var student = await GetStudentByEmail(email);
         if (student == null)
         {
-            return null;
+            return new List<Course>();
         }
-        var courses = context.Enrollments
+
+        return await context.Enrollments
             .Where(e => e.StudentId == student.Id)
             .Select(e => e.Course)
-            .ToList();
-        return courses;
+            .ToListAsync();
     }
 }

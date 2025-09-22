@@ -4,21 +4,23 @@
 [ApiController]
 public class StudentController(IStudentService studentService, ILogger<StudentController> logger) : ControllerBase
 {
+    private readonly IStudentService _studentService = studentService;
     private readonly ILogger<StudentController> _logger = logger;
+
     [HttpGet]
-    public IActionResult GetAllStudents()
+    public async Task<IActionResult> GetAllStudents()
     {
         _logger.LogInformation("Fetching all students");
-        var students = studentService.GetAllStudents();
+        var students = await _studentService.GetAllStudents();
         _logger.LogInformation("Retrieved {Count} students", students.Count());
         return Ok(students);
     }
 
     [HttpGet("{email}")]
-    public IActionResult GetStudentByEmail(string email)
+    public async Task<IActionResult> GetStudentByEmail(string email)
     {
         _logger.LogInformation("Fetching student with email {Email}", email);
-        var student = studentService.GetStudentByEmail(email);
+        var student = await _studentService.GetStudentByEmail(email);
         if (student == null)
         {
             _logger.LogWarning("Student with email {Email} not found", email);
@@ -29,20 +31,19 @@ public class StudentController(IStudentService studentService, ILogger<StudentCo
     }
 
     [HttpPost]
-    public IActionResult AddStudent(AddStudent student)
+    public async Task<IActionResult> AddStudent(AddStudent student)
     {
         _logger.LogInformation("Adding new student with email {Email}", student.Email);
-        var result = studentService.AddStudent(student);
-
+        var result = await _studentService.AddStudent(student);
         _logger.LogInformation("Student {Email} added successfully", student.Email);
         return Ok(result);
     }
 
     [HttpPut("{email}")]
-    public IActionResult UpdateStudent(AddStudent student, string email)
+    public async Task<IActionResult> UpdateStudent(AddStudent student, string email)
     {
         _logger.LogInformation("Updating student with email {Email}", email);
-        var updatedStudent = studentService.UpdateStudent(student, email);
+        var updatedStudent = await _studentService.UpdateStudent(student, email);
         if (updatedStudent == null)
         {
             _logger.LogWarning("Student with email {Email} not found for update", email);
@@ -53,10 +54,10 @@ public class StudentController(IStudentService studentService, ILogger<StudentCo
     }
 
     [HttpDelete("{email}")]
-    public IActionResult DeleteStudent(string email)
+    public async Task<IActionResult> DeleteStudent(string email)
     {
         _logger.LogInformation("Deleting student with email {Email}", email);
-        var result = studentService.DeleteStudent(email);
+        var result = await _studentService.DeleteStudent(email);
         if (result == "Student not found")
         {
             _logger.LogWarning("Student with email {Email} not found for deletion", email);
@@ -67,10 +68,10 @@ public class StudentController(IStudentService studentService, ILogger<StudentCo
     }
 
     [HttpPost("{studentEmail}/enroll/{courseTitle}")]
-    public IActionResult EnrollStudentInCourse(string studentEmail, string courseTitle)
+    public async Task<IActionResult> EnrollStudentInCourse(string studentEmail, string courseTitle)
     {
         _logger.LogInformation("Enrolling student {Email} in course {CourseTitle}", studentEmail, courseTitle);
-        var result = studentService.EnrollStudentInCourse(studentEmail, courseTitle);
+        var result = await _studentService.EnrollStudentInCourse(studentEmail, courseTitle);
 
         if (result == "Student or Course not found")
         {
@@ -82,14 +83,14 @@ public class StudentController(IStudentService studentService, ILogger<StudentCo
     }
 
     [HttpGet("{email}/courses")]
-    public IActionResult GetCoursesOfStudent(string email)
+    public async Task<IActionResult> GetCoursesOfStudent(string email)
     {
         _logger.LogInformation("Fetching courses for student {Email}", email);
-        var courses = studentService.GetCoursesOfStudent(email);
-        if (courses == null)
+        var courses = await _studentService.GetCoursesOfStudent(email);
+        if (courses == null || courses.Count == 0)
         {
             _logger.LogWarning("No courses found for student {Email}", email);
-            return NotFound("Student not found");
+            return NotFound("Student not found or no courses enrolled");
         }
         _logger.LogInformation("Retrieved {Count} courses for student {Email}", courses.Count(), email);
         return Ok(courses);

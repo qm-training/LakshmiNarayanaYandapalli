@@ -2,40 +2,42 @@
 
 public class TeacherService(ITeacherRepository teacherRepository, IMapper mapper) : ITeacherService
 {
+    private readonly ITeacherRepository _teacherRepository = teacherRepository;
     private readonly IMapper _mapper = mapper;
-    public string AddTeacher(AddTeacher teacher)
+
+    public async Task<string> AddTeacher(AddTeacher teacher)
     {
         var newTeacher = _mapper.Map<Teacher>(teacher);
-        return teacherRepository.AddTeacher(newTeacher);
+        return await _teacherRepository.AddTeacher(newTeacher);
     }
 
-    public string DeleteTeacher(string email)
+    public async Task<string> DeleteTeacher(string email)
     {
-        return teacherRepository.DeleteTeacher(email);
+        return await _teacherRepository.DeleteTeacher(email);
     }
 
-    public List<TeacherResponseDto> GetAllTeachers()
+    public async Task<List<TeacherResponseDto>> GetAllTeachers()
     {
-        var teachers = teacherRepository.GetAllTeachers();
+        var teachers = await _teacherRepository.GetAllTeachers();
         return _mapper.Map<List<TeacherResponseDto>>(teachers);
     }
 
-    public List<CourseResponseDto> GetCoursesOfTeacher(string email)
+    public async Task<List<CourseResponseDto>> GetCoursesOfTeacher(string email)
     {
-        var courses = teacherRepository.GetCoursesOfTeacher(email);
+        var courses = await _teacherRepository.GetCoursesOfTeacher(email);
         return _mapper.Map<List<CourseResponseDto>>(courses);
     }
 
-    public TeacherResponseDto GetTeacherByEmail(string email)
+    public async Task<TeacherResponseDto> GetTeacherByEmail(string email)
     {
-        var teacher = teacherRepository.GetTeacherByEmail(email);
-        return _mapper.Map<TeacherResponseDto>(teacher);
+        var teacher = await _teacherRepository.GetTeacherByEmail(email);
+        return teacher == null ? null : _mapper.Map<TeacherResponseDto>(teacher);
     }
 
-    public TeacherResponseDto UpdateTeacher(AddTeacher teacher, string email)
+    public async Task<TeacherResponseDto> UpdateTeacher(AddTeacher teacher, string email)
     {
         var updatedTeacher = _mapper.Map<Teacher>(teacher);
-        var result = teacherRepository.UpdateTeacher(updatedTeacher, email);
+        var result = await _teacherRepository.UpdateTeacher(updatedTeacher, email);
         return _mapper.Map<TeacherResponseDto>(result);
     }
 }

@@ -2,66 +2,66 @@
 
 public class CourseRepository(WebApiStudentManagementDbContext context) : ICourseRepository
 {
-    public string AddCourse(Course course)
+    public async Task<string> AddCourse(Course course)
     {
-        context.Courses.Add(course);
-        context.SaveChanges();
+        await context.Courses.AddAsync(course);
+        await context.SaveChangesAsync();
         return "Course added successfully";
     }
 
-    public string DeleteCourse(string email)
+    public async Task<string> DeleteCourse(string email)
     {
-        var course = context.Courses.FirstOrDefault(c => c.Title == email);
+        var course = await context.Courses.FirstOrDefaultAsync(c => c.Title == email);
         if (course == null)
         {
             return "Course not found";
         }
         context.Courses.Remove(course);
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return "Course deleted successfully";
     }
 
-    public List<Course> GetAllCourses()
+    public async Task<List<Course>> GetAllCourses()
     {
-        return context.Courses.ToList();
+        return await context.Courses.ToListAsync();
     }
 
-    public Course GetCourseByTitle(string title)
+    public async Task<Course> GetCourseByTitle(string title)
     {
-        return context.Courses.FirstOrDefault(c => c.Title == title);
+        return await context.Courses.FirstOrDefaultAsync(c => c.Title == title);
     }
 
-    public Course UpdateCourse(Course course, string title)
+    public async Task<Course> UpdateCourse(Course course, string title)
     {
-        var existingCourse = GetCourseByTitle(title);
+        var existingCourse = await GetCourseByTitle(title);
         if (existingCourse == null)
         {
             return null;
         }
         existingCourse.Title = course.Title;
-        context.SaveChanges();
+        await context.SaveChangesAsync();
         return existingCourse;
     }
 
-    public List<Student> GetStudentsInCourse(string title)
+    public async Task<List<Student>> GetStudentsInCourse(string title)
     {
-        var course = context.Courses.FirstOrDefault(c => c.Title == title);
+        var course = await context.Courses.FirstOrDefaultAsync(c => c.Title == title);
         if (course == null)
         {
             return new List<Student>();
         }
-        return context.Enrollments
+        return await context.Enrollments
             .Where(e => e.CourseId == course.Id)
             .Select(e => e.Student)
-            .ToList();
+            .ToListAsync();
     }
 
-    public Teacher GetTeacherOfCourse(string title)
+    public async Task<Teacher> GetTeacherOfCourse(string title)
     {
-        return context.Courses
-     .Include(c => c.Teacher)
-     .Where(c => c.Title == title)
-     .Select(c => c.Teacher)
-     .FirstOrDefault();
+        return await context.Courses
+                        .Include(c => c.Teacher)
+                        .Where(c => c.Title == title)
+                        .Select(c => c.Teacher)
+                        .FirstOrDefaultAsync();
     }
 }
