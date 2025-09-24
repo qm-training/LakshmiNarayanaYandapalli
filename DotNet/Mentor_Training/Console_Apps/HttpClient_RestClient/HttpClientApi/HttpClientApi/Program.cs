@@ -5,10 +5,20 @@ public class Program
     {
         var services = new ServiceCollection();
 
+        var retryPolicy = Policy<HttpResponseMessage>
+            .Handle<HttpRequestException>()
+            .WaitAndRetryAsync(3, attempt => TimeSpan.FromSeconds(attempt));
+
+        var circuitBreakerPolicy = Policy<HttpResponseMessage>
+            .Handle<HttpRequestException>()
+            .CircuitBreakerAsync(3, TimeSpan.FromSeconds(10));
+
         services.AddHttpClient<IProductRepository, ProductRepository>(client =>
         {
             client.BaseAddress = new Uri("https://fakestoreapi.com/");
-        });
+        })
+        .AddPolicyHandler(retryPolicy)
+        .AddPolicyHandler(circuitBreakerPolicy);
 
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ProductMenu>();
