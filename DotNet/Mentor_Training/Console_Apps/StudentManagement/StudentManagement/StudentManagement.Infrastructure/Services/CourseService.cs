@@ -30,7 +30,7 @@ public class CourseService(ILogger<CourseService> logger): ICourseService
             }
             else
             {
-                throw new CourseAlreadyExistsException();
+                throw new StudentManagementException("Course Already Exists");
             }
         }
         catch (FormatException fe)
@@ -55,7 +55,7 @@ public class CourseService(ILogger<CourseService> logger): ICourseService
             var courseToDelete = courseData.FirstOrDefault(c => c.Id == deleteCourseId);
             if (courseToDelete == null)
             {
-                throw new CourseNotFoundException();
+                throw new StudentManagementException("Course Not Found");
             }
 
             var isStudentEnrolled = StudentService.studentData.Any(s => s.Courses != null && s.Courses.Any(c => c.Id == deleteCourseId));
@@ -115,7 +115,7 @@ public class CourseService(ILogger<CourseService> logger): ICourseService
             }
             else
             {
-                throw new CourseNotFoundException();
+                throw new StudentManagementException("Course Not Found");
             }
         }
         catch (FormatException fe)
@@ -143,7 +143,7 @@ public class CourseService(ILogger<CourseService> logger): ICourseService
             var courseToUpdate = courseData.FirstOrDefault(course => course.Id == courseId);
             if (courseToUpdate == null)
             {
-                throw new CourseNotFoundException();
+                throw new StudentManagementException("Course Not Found");
             }
             else
             {

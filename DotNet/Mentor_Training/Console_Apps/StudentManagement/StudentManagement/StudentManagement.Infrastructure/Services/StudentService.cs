@@ -17,7 +17,7 @@ public class StudentService(ILogger<StudentService> logger): IStudentService
             var resultStudent = studentData.FirstOrDefault(st => st.Id == studentId);
             if (resultStudent == null)
             {
-                throw new StudentNotFoundException();
+                throw new StudentManagementException("Course Already Exists");
             }
             else
             {
@@ -29,7 +29,7 @@ public class StudentService(ILogger<StudentService> logger): IStudentService
                 var matchedCourses = CourseService.courseData.Where(c => courseIds.Contains(c.Id)).ToList();
                 if (matchedCourses.Count != courseIds.Count)
                 {
-                    throw new CourseNotFoundException();
+                    throw new StudentManagementException("One or more Courses Not Found Exists");
                 }
                 studentData.FirstOrDefault(st => st.Id == studentId).Courses.AddRange(matchedCourses);
                 _logger.LogInformation("Courses {CourseIds} added to StudentId {StudentId}", courseIds, studentId);
@@ -85,7 +85,7 @@ public class StudentService(ILogger<StudentService> logger): IStudentService
             }
             else
             {
-                throw new StudentAlreadyExistsException();
+                throw new StudentManagementException("Student Already Exists");
             }
         }
         catch(FormatException fe)
@@ -109,7 +109,7 @@ public class StudentService(ILogger<StudentService> logger): IStudentService
             var resultStudent = studentData.FirstOrDefault(st => st.Id == deleteId);
             if (resultStudent == null)
             {
-                throw new StudentNotFoundException();
+                throw new StudentManagementException("Student Not Found");
             }
             else
             {
@@ -197,7 +197,7 @@ public class StudentService(ILogger<StudentService> logger): IStudentService
             }
             else
             {
-                throw new StudentNotFoundException();
+                throw new StudentManagementException("Student Not Found");
             }
         }
         catch (FormatException fe)
@@ -307,7 +307,7 @@ public class StudentService(ILogger<StudentService> logger): IStudentService
             }
             else
             {
-                throw new StudentNotFoundException();
+                throw new StudentManagementException("Student Not Found");
             }
         }
         catch (FormatException fe)
