@@ -2,11 +2,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuraion = builder.Configuration;
 
-//builder.Logging.ClearProviders();
-//builder.Logging.AddConsole();
-//builder.Logging.AddDebug();
-//builder.Logging.SetMinimumLevel(LogLevel.Information);
-
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuraion)
     .CreateLogger();

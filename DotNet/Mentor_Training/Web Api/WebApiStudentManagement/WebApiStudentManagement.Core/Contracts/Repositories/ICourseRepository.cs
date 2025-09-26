@@ -2,12 +2,12 @@
 
 public interface ICourseRepository
 {
-    Task<List<Course>> GetAllCourses();
-    Task<Course> GetCourseByTitle(string title);
-    Task<string> AddCourse(Course course);
-    Task<Course> UpdateCourse(Course course, string title);
-    Task<string> DeleteCourse(string email);
-    Task<List<Student>> GetStudentsInCourse(string title);
-    Task<Teacher> GetTeacherOfCourse(string title);
+    Task<List<Course>> GetAllCoursesAsync();
+    Task<Course> GetCourseByTitleAsync(string title);
+    Task<string> AddCourseAsync(Course course);
+    Task<Course> UpdateCourseAsync(Course course, string title);
+    Task<string> DeleteCourseAsync(string email);
+    Task<List<Student>> GetStudentsInCourseAsync(string title);
+    Task<Teacher> GetTeacherOfCourseAsync(string title);
 
 }

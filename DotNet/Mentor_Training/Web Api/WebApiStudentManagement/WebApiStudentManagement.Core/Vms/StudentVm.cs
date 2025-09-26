@@ -1,6 +1,6 @@
-﻿namespace WebApiStudentManagement.Core.Dtos;
+﻿namespace WebApiStudentManagement.Core.Vms;
 
-public class AddStudent
+public class StudentVm
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

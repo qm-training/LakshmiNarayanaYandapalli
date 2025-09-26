@@ -1,5 +1,9 @@
 ﻿namespace WebApiStudentManagement.Api.Controllers;
 
+/// <summary>
+/// Handles teacher-related operations such as retrieving,
+/// creating, updating, deleting, and fetching courses taught by teachers.
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class TeacherController(ITeacherService teacherService, ILogger<TeacherController> logger) : ControllerBase
@@ -7,77 +11,95 @@ public class TeacherController(ITeacherService teacherService, ILogger<TeacherCo
     private readonly ITeacherService _teacherService = teacherService;
     private readonly ILogger<TeacherController> _logger = logger;
 
+    /// <summary>
+    /// Retrieves all teachers in the system.
+    /// </summary>
+    /// <returns>A list of all teachers.</returns>
     [HttpGet]
     public async Task<IActionResult> GetAllTeachers()
     {
-        _logger.LogInformation("Fetching all teachers");
-        var teachers = await _teacherService.GetAllTeachers();
-        _logger.LogInformation("Retrieved {Count} teachers", teachers.Count);
+        var teachers = await _teacherService.GetAllTeachersAsync();
         return Ok(teachers);
     }
 
+    /// <summary>
+    /// Retrieves a teacher by their email address.
+    /// </summary>
+    /// <param name="email">The email of the teacher.</param>
+    /// <returns>The teacher if found; otherwise, 404 Not Found.</returns>
     [HttpGet("{email}")]
     public async Task<IActionResult> GetTeacherByEmail(string email)
     {
-        _logger.LogInformation("Fetching teacher with email {Email}", email);
-        var teacher = await _teacherService.GetTeacherByEmail(email);
+        var teacher = await _teacherService.GetTeacherByEmailAsync(email);
         if (teacher == null)
         {
             _logger.LogWarning("Teacher with email {Email} not found", email);
             return NotFound($"Teacher with email {email} not found.");
         }
-        _logger.LogInformation("Successfully retrieved teacher {Email}", email);
         return Ok(teacher);
     }
 
+    /// <summary>
+    /// Adds a new teacher to the system.
+    /// </summary>
+    /// <param name="teacher">The teacher details.</param>
+    /// <returns>A 201 Created response with the created teacher.</returns>
     [HttpPost]
-    public async Task<IActionResult> AddTeacher(AddTeacher teacher)
+    public async Task<IActionResult> AddTeacher(TeacherVm teacher)
     {
-        _logger.LogInformation("Adding new teacher with email {Email}", teacher.Email);
-        var result = await _teacherService.AddTeacher(teacher);
-        _logger.LogInformation("Teacher {Email} added successfully", teacher.Email);
+        var result = await _teacherService.AddTeacherAsync(teacher);
         return CreatedAtAction(nameof(GetTeacherByEmail), new { email = teacher.Email }, result);
     }
 
+    /// <summary>
+    /// Updates an existing teacher's details by email.
+    /// </summary>
+    /// <param name="teacher">The updated teacher details.</param>
+    /// <param name="email">The email of the teacher to update.</param>
+    /// <returns>The updated teacher; otherwise, 404 Not Found.</returns>
     [HttpPut("{email}")]
-    public async Task<IActionResult> UpdateTeacher(AddTeacher teacher, string email)
+    public async Task<IActionResult> UpdateTeacher(TeacherVm teacher, string email)
     {
-        _logger.LogInformation("Updating teacher with email {Email}", email);
-        var updatedTeacher = await _teacherService.UpdateTeacher(teacher, email);
+        var updatedTeacher = await _teacherService.UpdateTeacherAsync(teacher, email);
         if (updatedTeacher == null)
         {
             _logger.LogWarning("Teacher with email {Email} not found for update", email);
             return NotFound($"Teacher with email {email} not found.");
         }
-        _logger.LogInformation("Teacher {Email} updated successfully", email);
         return Ok(updatedTeacher);
     }
 
+    /// <summary>
+    /// Deletes a teacher by their email address.
+    /// </summary>
+    /// <param name="email">The email of the teacher to delete.</param>
+    /// <returns>A success message if deleted; otherwise, 404 Not Found.</returns>
     [HttpDelete("{email}")]
     public async Task<IActionResult> DeleteTeacher(string email)
     {
-        _logger.LogInformation("Deleting teacher with email {Email}", email);
-        var result = await _teacherService.DeleteTeacher(email);
+        var result = await _teacherService.DeleteTeacherAsync(email);
         if (result.Contains("not found"))
         {
             _logger.LogWarning("Teacher with email {Email} not found for deletion", email);
             return NotFound(result);
         }
-        _logger.LogInformation("Teacher {Email} deleted successfully", email);
         return Ok(result);
     }
 
+    /// <summary>
+    /// Retrieves all courses assigned to a specific teacher.
+    /// </summary>
+    /// <param name="email">The email of the teacher.</param>
+    /// <returns>A list of courses if found; otherwise, 404 Not Found.</returns>
     [HttpGet("{email}/courses")]
     public async Task<IActionResult> GetCoursesOfTeacher(string email)
     {
-        _logger.LogInformation("Fetching courses for teacher {Email}", email);
-        var courses = await _teacherService.GetCoursesOfTeacher(email);
+        var courses = await _teacherService.GetCoursesOfTeacherAsync(email);
         if (courses == null || !courses.Any())
         {
             _logger.LogWarning("No courses found for teacher {Email}", email);
             return NotFound($"No courses found for teacher with email {email}.");
         }
-        _logger.LogInformation("Retrieved {Count} courses for teacher {Email}", courses.Count, email);
         return Ok(courses);
     }
 }

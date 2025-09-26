@@ -12,3 +12,4 @@ global using WebApiStudentManagement.Api.Configuration;
 global using WebApiStudentManagement.Api.Infrastructure.Handler;
 global using AutoMapper;
 global using WebApiStudentManagement.Core.Models;
+global using WebApiStudentManagement.Core.Vms;

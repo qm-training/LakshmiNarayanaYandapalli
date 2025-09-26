@@ -10,32 +10,11 @@ namespace WebApiStudentManagement.Api.Infrastructure.Handler
         {
             var problem = new ProblemDetails
             {
+                Title = "An unexpected error occurred",
                 Detail = exception.Message,
-                Instance = httpContext.Request.Path
+                Instance = httpContext.Request.Path,
+                Status = StatusCodes.Status500InternalServerError
             };
-
-            switch (exception)
-            {
-                case StudentNotFoundException:
-                    problem.Status = StatusCodes.Status404NotFound;
-                    problem.Title = "Student not found";
-                    break;
-
-                case CourseNotFoundException:
-                    problem.Status = StatusCodes.Status404NotFound;
-                    problem.Title = "Course not found";
-                    break;
-
-                case TeacherNotFoundException:
-                    problem.Status = StatusCodes.Status404NotFound;
-                    problem.Title = "Teacher not found";
-                    break;
-
-                default:
-                    problem.Status = StatusCodes.Status500InternalServerError;
-                    problem.Title = "An unexpected error occurred";
-                    break;
-            }
 
             httpContext.Response.StatusCode = problem.Status.Value;
             httpContext.Response.ContentType = "application/json";

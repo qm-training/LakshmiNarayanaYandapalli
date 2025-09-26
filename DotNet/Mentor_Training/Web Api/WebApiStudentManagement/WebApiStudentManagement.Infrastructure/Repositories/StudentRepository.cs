@@ -2,14 +2,14 @@
 
 public class StudentRepository(WebApiStudentManagementDbContext context) : IStudentRepository
 {
-    public async Task<string> AddStudent(Student student)
+    public async Task<string> AddStudentAsync(Student student)
     {
         await context.Students.AddAsync(student);
         await context.SaveChangesAsync();
         return "Student added successfully";
     }
 
-    public async Task<string> DeleteStudent(string email)
+    public async Task<string> DeleteStudentAsync(string email)
     {
         var student = await context.Students.FirstOrDefaultAsync(s => s.Email == email);
         if (student == null)
@@ -21,19 +21,19 @@ public class StudentRepository(WebApiStudentManagementDbContext context) : IStud
         return "Student deleted successfully";
     }
 
-    public async Task<List<Student>> GetAllStudents()
+    public async Task<List<Student>> GetAllStudentsAsync()
     {
         return await context.Students.ToListAsync();
     }
 
-    public async Task<Student?> GetStudentByEmail(string email)
+    public async Task<Student?> GetStudentByEmailAsync(string email)
     {
         return await context.Students.FirstOrDefaultAsync(s => s.Email == email);
     }
 
-    public async Task<Student?> UpdateStudent(Student student, string email)
+    public async Task<Student?> UpdateStudentAsync(Student student, string email)
     {
-        var existingStudent = await GetStudentByEmail(email);
+        var existingStudent = await GetStudentByEmailAsync(email);
         if (existingStudent == null)
         {
             return null;
@@ -47,9 +47,9 @@ public class StudentRepository(WebApiStudentManagementDbContext context) : IStud
         return existingStudent;
     }
 
-    public async Task<string> EnrollStudentInCourse(string studentEmail, string courseTitle)
+    public async Task<string> EnrollStudentInCourseAsync(string studentEmail, string courseTitle)
     {
-        var student = await GetStudentByEmail(studentEmail);
+        var student = await GetStudentByEmailAsync(studentEmail);
         if (student == null)
         {
             return "Student not found";
@@ -81,9 +81,9 @@ public class StudentRepository(WebApiStudentManagementDbContext context) : IStud
         return "Student enrolled in course successfully";
     }
 
-    public async Task<List<Course>> GetCoursesOfStudent(string email)
+    public async Task<List<Course>> GetCoursesOfStudentAsync(string email)
     {
-        var student = await GetStudentByEmail(email);
+        var student = await GetStudentByEmailAsync(email);
         if (student == null)
         {
             return new List<Course>();

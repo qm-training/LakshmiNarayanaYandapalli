@@ -2,11 +2,11 @@
 
 public interface IStudentRepository
 {
-    Task<List<Student>> GetAllStudents();
-    Task<Student> GetStudentByEmail(string email);
-    Task<string> AddStudent(Student student);
-    Task<Student> UpdateStudent(Student student, string email);
-    Task<string> EnrollStudentInCourse(string studentEmail, string courseTitle);
-    Task<string> DeleteStudent(string email);
-    Task<List<Course>> GetCoursesOfStudent(string email);
+    Task<List<Student>> GetAllStudentsAsync();
+    Task<Student> GetStudentByEmailAsync(string email);
+    Task<string> AddStudentAsync(Student student);
+    Task<Student> UpdateStudentAsync(Student student, string email);
+    Task<string> EnrollStudentInCourseAsync(string studentEmail, string courseTitle);
+    Task<string> DeleteStudentAsync(string email);
+    Task<List<Course>> GetCoursesOfStudentAsync(string email);
 }

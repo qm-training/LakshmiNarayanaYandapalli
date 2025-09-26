@@ -1,4 +1,6 @@
-﻿namespace WebApiStudentManagement.Api.Configuration
+﻿using WebApiStudentManagement.Core.Vms;
+
+namespace WebApiStudentManagement.Api.Configuration
 {
     public static class AutoMapperConfiguration
     {
@@ -6,9 +8,9 @@
         {
             var mapper = new MapperConfiguration(config =>
             {
-                config.CreateMap<AddCourse, Course>();
-                config.CreateMap<AddStudent, Student>();
-                config.CreateMap<AddTeacher, Teacher>();
+                config.CreateMap<CourseVm, Course>();
+                config.CreateMap<StudentVm, Student>();
+                config.CreateMap<TeacherVm, Teacher>();
                 config.CreateMap<CourseResponseDto, Course>();
                 config.CreateMap<StudentResponseDto, Student>();
                 config.CreateMap<TeacherResponseDto, Teacher>();

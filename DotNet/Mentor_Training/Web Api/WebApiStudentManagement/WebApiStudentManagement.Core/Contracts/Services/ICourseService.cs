@@ -1,12 +1,14 @@
-﻿namespace WebApiStudentManagement.Core.Contracts.Services;
+﻿using WebApiStudentManagement.Core.Vms;
+
+namespace WebApiStudentManagement.Core.Contracts.Services;
 
 public interface ICourseService
 {
-    Task<List<CourseResponseDto>> GetAllCourses();
-    Task<CourseResponseDto> GetCourseByTitle(string title);
-    Task<string> AddCourse(AddCourse course);
-    Task<CourseResponseDto> UpdateCourse(AddCourse course, string title);
-    Task<string> DeleteCourse(string email);
-    Task<List<StudentResponseDto>> GetStudentsInCourse(string title);
-    Task<TeacherResponseDto> GetTeacherOfCourse(string title);
+    Task<List<CourseResponseDto>> GetAllCoursesAsync();
+    Task<CourseResponseDto> GetCourseByTitleAsync(string title);
+    Task<string> AddCourseAsync(CourseVm course);
+    Task<CourseResponseDto> UpdateCourseAsync(CourseVm course, string title);
+    Task<string> DeleteCourseAsync(string email);
+    Task<List<StudentResponseDto>> GetStudentsInCourseAsync(string title);
+    Task<TeacherResponseDto> GetTeacherOfCourseAsync(string title);
 }

@@ -24,8 +24,7 @@ public static class ServiceCollectionExtensions
     public static void RegisterDatabases(this IServiceCollection services, IConfiguration configuration)
     {
         var ConnectionString = configuration.GetConnectionString("DefaultConnection");
-        services.AddDbContext<WebApiStudentManagementDbContext>(options => options.UseSqlServer(ConnectionString,
-            b => b.MigrationsAssembly("WebApiStudentManagement.Infrastructure")));
+        services.AddDbContext<WebApiStudentManagementDbContext>(options => options.UseSqlServer(ConnectionString));
     }
 
     public static void RegisterConfigurationServices(this IServiceCollection services, IConfiguration configuration)

@@ -2,14 +2,14 @@
 
 public class TeacherRepository(WebApiStudentManagementDbContext context) : ITeacherRepository
 {
-    public async Task<string> AddTeacher(Teacher teacher)
+    public async Task<string> AddTeacherAsync(Teacher teacher)
     {
         await context.Teachers.AddAsync(teacher);
         await context.SaveChangesAsync();
         return "Teacher added successfully";
     }
 
-    public async Task<string> DeleteTeacher(string email)
+    public async Task<string> DeleteTeacherAsync(string email)
     {
         var teacher = await context.Teachers.FirstOrDefaultAsync(t => t.Email == email);
         if (teacher == null)
@@ -17,24 +17,24 @@ public class TeacherRepository(WebApiStudentManagementDbContext context) : ITeac
             return "Teacher not found";
         }
 
-        context.Teachers.Remove(teacher); // in-memory
-        await context.SaveChangesAsync(); // async DB call
+        context.Teachers.Remove(teacher);
+        await context.SaveChangesAsync();
         return "Teacher deleted successfully";
     }
 
-    public async Task<List<Teacher>> GetAllTeachers()
+    public async Task<List<Teacher>> GetAllTeachersAsync()
     {
         return await context.Teachers.ToListAsync();
     }
 
-    public async Task<Teacher?> GetTeacherByEmail(string email)
+    public async Task<Teacher?> GetTeacherByEmailAsync(string email)
     {
         return await context.Teachers.FirstOrDefaultAsync(t => t.Email == email);
     }
 
-    public async Task<Teacher?> UpdateTeacher(Teacher teacher, string email)
+    public async Task<Teacher?> UpdateTeacherAsync(Teacher teacher, string email)
     {
-        var existingTeacher = await GetTeacherByEmail(email);
+        var existingTeacher = await GetTeacherByEmailAsync(email);
         if (existingTeacher == null)
         {
             return null;
@@ -48,7 +48,7 @@ public class TeacherRepository(WebApiStudentManagementDbContext context) : ITeac
         return existingTeacher;
     }
 
-    public async Task<List<Course>> GetCoursesOfTeacher(string email)
+    public async Task<List<Course>> GetCoursesOfTeacherAsync(string email)
     {
         var teacher = await context.Teachers.FirstOrDefaultAsync(t => t.Email == email);
         if (teacher == null)
