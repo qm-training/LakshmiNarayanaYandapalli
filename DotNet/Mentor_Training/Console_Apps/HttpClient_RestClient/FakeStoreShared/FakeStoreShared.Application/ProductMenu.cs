@@ -1,6 +1,4 @@
-﻿using HttpClientCore.Models;
-
-namespace HttpClientApi;
+﻿namespace FakeStoreShared.Application;
 public class ProductMenu(IProductService productService)
 {
     private readonly IProductService _productService = productService;

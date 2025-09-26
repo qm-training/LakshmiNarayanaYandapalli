@@ -13,8 +13,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RestClientCore\RestClientCore.csproj" />
-    <ProjectReference Include="..\RestClientInfrastructure\RestClientInfrastructure.csproj" />
+    <Reference Include="FakeStoreShared.Application">
+      <HintPath>..\..\FakeStoreShared\FakeStoreShared.Application\bin\Debug\net9.0\FakeStoreShared.Application.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeStoreShared.Core">
+      <HintPath>..\..\FakeStoreShared\FakeStoreShared\bin\Debug\net9.0\FakeStoreShared.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeStoreShared.Infrastructure">
+      <HintPath>..\..\FakeStoreShared\FakeStoreShared.Infrastructure\bin\Debug\net9.0\FakeStoreShared.Infrastructure.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
