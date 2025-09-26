@@ -1,0 +1,8 @@
+﻿namespace WebApiStudentManagement.Core.Vms;
+
+public class StudentVm
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+    public string Email { get; set; }
+}

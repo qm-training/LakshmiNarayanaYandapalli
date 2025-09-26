@@ -50,6 +50,12 @@ Generated\ Files/
 TestResult.xml
 nunit-*.xml
 
+# Ignore all EF Core migrations
+**/Migrations/
+
+
+
+
 # Build Results of an ATL Project
 [Dd]ebugPS/
 [Rr]eleasePS/
