@@ -47,8 +47,8 @@ public static class ServiceCollectionsExtension
 
     public static void RegisterConfigurationServices(this IServiceCollection services, IConfiguration configuration)
     {
-        //var mapper = AutoMapperConfiguration.InitializeMapper();
-        //services.AddSingleton(mapper);
+        var mapper = AutoMapperConfiguration.InitializeMapper();
+        services.AddSingleton(mapper);
 
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
