@@ -6,7 +6,7 @@ public class CacheService(IConnectionMultiplexer redis) : ICacheService
     {
         var value = await _cache.StringGetAsync(key);
         if (value.IsNullOrEmpty) return default;
-        return JsonSerializer.Deserialize<T>(value);
+        return JsonSerializer.Deserialize<T>(value!);
     }
 
     public async Task RemoveAsync(string key)

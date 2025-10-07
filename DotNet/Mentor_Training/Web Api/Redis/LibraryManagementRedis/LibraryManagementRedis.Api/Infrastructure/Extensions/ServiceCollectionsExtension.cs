@@ -13,9 +13,11 @@ public static class ServiceCollectionsExtension
 
     public static void RegisterApplicationServices(this IServiceCollection services)
     {
+        services.AddTransient<IAuthorRepository, AuthorRepository>();
         services.AddTransient<IBookService, BookService>();
         services.AddTransient<IBorrowerService, BorrowerService>();
 
+        services.AddScoped<IAuthorService, AuthorService>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IBorrowerRepository, BorrowerRepository>();
 
@@ -26,8 +28,8 @@ public static class ServiceCollectionsExtension
     {
         services.AddSingleton<IConnectionMultiplexer>(sp =>
         {
-            var config = configuration.GetConnectionString("Redis");
-            return ConnectionMultiplexer.Connect(config);
+            var config = configuration.GetConnectionString("Redis" ?? "localhost:6379");
+            return ConnectionMultiplexer.Connect(config!);
         });
 
         var ConnectionString = configuration.GetConnectionString("DefaultConnection");
