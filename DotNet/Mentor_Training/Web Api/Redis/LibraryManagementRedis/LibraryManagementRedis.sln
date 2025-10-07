@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{EF4E2529-8A88-4C19-823D-7DCB41BD7BA7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{B65A9890-7CB0-4B3F-B7C9-9D8EED5799F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementRedis.Api", "LibraryManagementRedis.Api\LibraryManagementRedis.Api.csproj", "{93EB7D22-A2BB-4438-B0D9-542438CFA651}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementRedis.Core", "LibraryManagementRedis.Core\LibraryManagementRedis.Core.csproj", "{1DA8A7F8-61C2-4920-8841-DCE72262595E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementRedis.Infrastructure", "LibraryManagementRedis.Infrastructure\LibraryManagementRedis.Infrastructure.csproj", "{B9FBB84E-229F-4B93-8098-DCD9BC8E4271}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93EB7D22-A2BB-4438-B0D9-542438CFA651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93EB7D22-A2BB-4438-B0D9-542438CFA651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93EB7D22-A2BB-4438-B0D9-542438CFA651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93EB7D22-A2BB-4438-B0D9-542438CFA651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DA8A7F8-61C2-4920-8841-DCE72262595E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DA8A7F8-61C2-4920-8841-DCE72262595E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DA8A7F8-61C2-4920-8841-DCE72262595E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DA8A7F8-61C2-4920-8841-DCE72262595E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9FBB84E-229F-4B93-8098-DCD9BC8E4271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9FBB84E-229F-4B93-8098-DCD9BC8E4271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9FBB84E-229F-4B93-8098-DCD9BC8E4271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9FBB84E-229F-4B93-8098-DCD9BC8E4271}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{93EB7D22-A2BB-4438-B0D9-542438CFA651} = {B65A9890-7CB0-4B3F-B7C9-9D8EED5799F4}
+		{1DA8A7F8-61C2-4920-8841-DCE72262595E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B9FBB84E-229F-4B93-8098-DCD9BC8E4271} = {EF4E2529-8A88-4C19-823D-7DCB41BD7BA7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F273152B-7486-4FC1-9B5D-2B862CEC3410}
+	EndGlobalSection
+EndGlobal
