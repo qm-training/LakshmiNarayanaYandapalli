@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibraryManagementRedis.Core.Models;
+﻿namespace LibraryManagementRedis.Core.Models;
 public class Author
 {
     public int AuthorId { get; set; }

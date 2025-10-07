@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibraryManagementRedis.Core.Contracts.Caching;
+﻿namespace LibraryManagementRedis.Core.Contracts.Caching;
 public interface ICacheService
 {
     Task<T> GetAsync<T>(string key);

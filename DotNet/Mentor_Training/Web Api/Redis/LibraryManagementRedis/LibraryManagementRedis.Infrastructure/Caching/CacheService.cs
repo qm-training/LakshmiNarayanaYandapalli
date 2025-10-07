@@ -1,8 +1,4 @@
-﻿using LibraryManagementRedis.Core.Contracts.Caching;
-using StackExchange.Redis;
-using System.Text.Json;
-
-namespace LibraryManagementRedis.Infrastructure.Caching;
+﻿namespace LibraryManagementRedis.Infrastructure.Caching;
 public class CacheService(IConnectionMultiplexer redis) : ICacheService
 {
     private readonly IDatabase _cache = redis.GetDatabase();

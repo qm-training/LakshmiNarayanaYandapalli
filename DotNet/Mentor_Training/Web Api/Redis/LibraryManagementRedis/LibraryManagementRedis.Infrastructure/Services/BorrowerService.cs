@@ -1,15 +1,38 @@
-﻿using LibraryManagementRedis.Core.Contracts.Repository;
+﻿using AutoMapper;
+using LibraryManagementRedis.Core.Contracts.Repository;
 using LibraryManagementRedis.Core.Contracts.Services;
+using LibraryManagementRedis.Core.Dtos;
 using LibraryManagementRedis.Core.Models;
+using LibraryManagementRedis.Core.ViewModels;
 
 namespace LibraryManagementRedis.Infrastructure.Services;
-public class BorrowerService(IBorrowerRepository repo) : IBorrowerService
+public class BorrowerService(IBorrowerRepository repo, IMapper mapper) : IBorrowerService
 {
     private readonly IBorrowerRepository _repo = repo;
+    private readonly IMapper _mapper = mapper;
 
-    public Task<IEnumerable<Borrower>> GetAllBorrowersAsync() => _repo.GetAllAsync();
-    public Task<Borrower?> GetBorrowerByIdAsync(int id) => _repo.GetByIdAsync(id);
-    public Task<Borrower> CreateBorrowerAsync(Borrower borrower) => _repo.AddAsync(borrower);
-    public Task<bool> BorrowBookAsync(int borrowerId, int bookId) => _repo.BorrowBookAsync(borrowerId, bookId);
-    public Task<bool> ReturnBookAsync(int borrowerId, int bookId) => _repo.ReturnBookAsync(borrowerId, bookId);
+    public async Task<IEnumerable<BorrowerVm>> GetAllBorrowersAsync()
+    {
+        var borrowers = await _repo.GetAllAsync();
+        return _mapper.Map<IEnumerable<BorrowerVm>>(borrowers);
+    }
+    public async Task<BorrowerVm?> GetBorrowerByIdAsync(int id)
+    {
+        var borrower = await _repo.GetByIdAsync(id);
+        return _mapper.Map<BorrowerVm?>(borrower);
+    }
+    public async Task<BorrowerVm> CreateBorrowerAsync(BorrowerDto borrowerDto)
+    {
+        var entity = _mapper.Map<Borrower>(borrowerDto);
+        var created = await _repo.AddAsync(entity);
+        return _mapper.Map<BorrowerVm>(created);
+    }
+    public async Task<bool> BorrowBookAsync(int borrowerId, int bookId)
+    {
+        return await _repo.BorrowBookAsync(borrowerId, bookId);
+    }
+    public async Task<bool> ReturnBookAsync(int borrowerId, int bookId)
+    {
+        return await _repo.ReturnBookAsync(borrowerId, bookId);
+    }
 }

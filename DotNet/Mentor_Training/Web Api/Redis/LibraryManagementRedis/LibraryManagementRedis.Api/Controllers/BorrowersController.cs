@@ -1,9 +1,4 @@
-﻿using LibraryManagementRedis.Core.Contracts.Caching;
-using LibraryManagementRedis.Core.Contracts.Services;
-using LibraryManagementRedis.Core.Models;
-using Microsoft.AspNetCore.Mvc;
-
-namespace LibraryManagementRedis.Api.Controllers;
+﻿namespace LibraryManagementRedis.Api.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class BorrowersController(IBorrowerService service, ICacheService cache) : ControllerBase
@@ -17,7 +12,7 @@ public class BorrowersController(IBorrowerService service, ICacheService cache) 
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-        var cached = await _cache.GetAsync<IEnumerable<Borrower>>(AllBorrowersCacheKey);
+        var cached = await _cache.GetAsync<IEnumerable<BorrowerVm>>(AllBorrowersCacheKey);
         if (cached != null)
             return Ok(cached);
 
@@ -25,11 +20,12 @@ public class BorrowersController(IBorrowerService service, ICacheService cache) 
         await _cache.SetAsync(AllBorrowersCacheKey, borrowers);
         return Ok(borrowers);
     }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
         var cacheKey = BorrowerCacheKey(id);
-        var cached = await _cache.GetAsync<Borrower>(cacheKey);
+        var cached = await _cache.GetAsync<BorrowerVm>(cacheKey);
         if (cached != null)
             return Ok(cached);
 
@@ -41,10 +37,14 @@ public class BorrowersController(IBorrowerService service, ICacheService cache) 
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Borrower borrower)
+    public async Task<IActionResult> Create([FromBody] BorrowerDto borrowerDto)
     {
-        var created = await _service.CreateBorrowerAsync(borrower);
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var created = await _service.CreateBorrowerAsync(borrowerDto);
         await _cache.RemoveAsync(AllBorrowersCacheKey);
+
         return CreatedAtAction(nameof(GetById), new { id = created.BorrowerId }, created);
     }
 
@@ -52,23 +52,29 @@ public class BorrowersController(IBorrowerService service, ICacheService cache) 
     public async Task<IActionResult> BorrowBook(int borrowerId, int bookId)
     {
         var result = await _service.BorrowBookAsync(borrowerId, bookId);
+
         if (result)
         {
             await _cache.RemoveAsync(AllBorrowersCacheKey);
             await _cache.RemoveAsync(BorrowerCacheKey(borrowerId));
+            return Ok("Book borrowed successfully");
         }
-        return result ? Ok("Book borrowed successfully") : BadRequest("Book unavailable or borrower not found");
+
+        return BadRequest("Book unavailable or borrower not found");
     }
 
     [HttpPost("{borrowerId}/return/{bookId}")]
     public async Task<IActionResult> ReturnBook(int borrowerId, int bookId)
     {
         var result = await _service.ReturnBookAsync(borrowerId, bookId);
+
         if (result)
         {
             await _cache.RemoveAsync(AllBorrowersCacheKey);
             await _cache.RemoveAsync(BorrowerCacheKey(borrowerId));
+            return Ok("Book returned successfully");
         }
-        return result ? Ok("Book returned successfully") : BadRequest("Invalid borrower or book");
+
+        return BadRequest("Invalid borrower or book");
     }
 }

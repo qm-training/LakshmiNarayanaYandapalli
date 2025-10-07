@@ -1,14 +1,4 @@
-﻿using LibraryManagementRedis.Core.Contracts.Repository;
-using LibraryManagementRedis.Core.Models;
-using LibraryManagementRedis.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibraryManagementRedis.Infrastructure.Repository;
+﻿namespace LibraryManagementRedis.Infrastructure.Repository;
 public class BookRepository(LibraryDbContext context) : IBookRepository
 {
     private readonly LibraryDbContext _context = context;

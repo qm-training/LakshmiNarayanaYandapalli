@@ -1,11 +1,4 @@
-﻿using LibraryManagementRedis.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibraryManagementRedis.Core.Contracts.Repository;
+﻿namespace LibraryManagementRedis.Core.Contracts.Repository;
 public interface IBookRepository
 {
     Task<IEnumerable<Book>> GetAllAsync();

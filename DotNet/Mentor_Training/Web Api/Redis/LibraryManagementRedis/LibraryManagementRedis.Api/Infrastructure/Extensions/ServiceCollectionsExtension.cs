@@ -1,15 +1,4 @@
-﻿using LibraryManagementRedis.Api.Infrastructure.Handlers;
-using LibraryManagementRedis.Core.Contracts.Caching;
-using LibraryManagementRedis.Core.Contracts.Repository;
-using LibraryManagementRedis.Core.Contracts.Services;
-using LibraryManagementRedis.Infrastructure.Caching;
-using LibraryManagementRedis.Infrastructure.Data;
-using LibraryManagementRedis.Infrastructure.Repository;
-using LibraryManagementRedis.Infrastructure.Services;
-using Microsoft.EntityFrameworkCore;
-using StackExchange.Redis;
-
-namespace LibraryManagementRedis.Api.Infrastructure.Extensions;
+﻿namespace LibraryManagementRedis.Api.Infrastructure.Extensions;
 public static class ServiceCollectionsExtension
 {
     public static void RegisterSystemService(this IServiceCollection services, IConfiguration configuration)

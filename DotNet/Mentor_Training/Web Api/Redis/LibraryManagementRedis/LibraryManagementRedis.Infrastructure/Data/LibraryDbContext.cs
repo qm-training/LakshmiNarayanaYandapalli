@@ -1,7 +1,4 @@
-﻿using LibraryManagementRedis.Core.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace LibraryManagementRedis.Infrastructure.Data;
+﻿namespace LibraryManagementRedis.Infrastructure.Data;
 public class LibraryDbContext: DbContext
 {
     public LibraryDbContext(DbContextOptions<LibraryDbContext> options)

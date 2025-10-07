@@ -1,9 +1,4 @@
-﻿using LibraryManagementRedis.Core.Contracts.Caching;
-using LibraryManagementRedis.Core.Contracts.Services;
-using LibraryManagementRedis.Core.Models;
-using Microsoft.AspNetCore.Mvc;
-
-namespace LibraryManagementRedis.Api.Controllers;
+﻿namespace LibraryManagementRedis.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -18,8 +13,7 @@ public class BooksController(IBookService service, ICacheService cache) : Contro
     [HttpGet]
     public async Task<IActionResult> GetAll()
     {
-
-        var cached = await _cache.GetAsync<IEnumerable<Book>>(AllBooksCacheKey);
+        var cached = await _cache.GetAsync<IEnumerable<BookVm>>(AllBooksCacheKey);
         if (cached != null)
             return Ok(cached);
 
@@ -32,12 +26,11 @@ public class BooksController(IBookService service, ICacheService cache) : Contro
     public async Task<IActionResult> GetById(int id)
     {
         var cacheKey = BookCacheKey(id);
-        var cached = await _cache.GetAsync<Book>(cacheKey);
+        var cached = await _cache.GetAsync<BookVm>(cacheKey);
         if (cached != null)
             return Ok(cached);
 
         var book = await _service.GetBookByIdAsync(id);
-
         if (book != null)
             await _cache.SetAsync(cacheKey, book);
 
@@ -45,23 +38,24 @@ public class BooksController(IBookService service, ICacheService cache) : Contro
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(Book book)
+    public async Task<IActionResult> Create([FromBody] BookDto bookDto)
     {
-        var created = await _service.CreateBookAsync(book);
+
+        var created = await _service.CreateBookAsync(bookDto);
         await _cache.RemoveAsync(AllBooksCacheKey);
         return CreatedAtAction(nameof(GetById), new { id = created.BookId }, created);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, Book book)
+    public async Task<IActionResult> Update(int id, [FromBody] BookDto bookDto)
     {
-        if (id != book.BookId) return BadRequest();
-        var updated = await _service.UpdateBookAsync(book);
+
+        var updated = await _service.UpdateBookAsync(id, bookDto);
 
         if (updated != null)
         {
             await _cache.RemoveAsync(AllBooksCacheKey);
-            await _cache.RemoveAsync(BookCacheKey(book.BookId));
+            await _cache.RemoveAsync(BookCacheKey(id));
         }
 
         return updated == null ? NotFound() : Ok(updated);

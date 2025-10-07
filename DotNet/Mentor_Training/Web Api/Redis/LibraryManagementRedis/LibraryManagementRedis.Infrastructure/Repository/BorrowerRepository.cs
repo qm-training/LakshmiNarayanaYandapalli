@@ -1,9 +1,4 @@
-﻿using LibraryManagementRedis.Core.Contracts.Repository;
-using LibraryManagementRedis.Core.Models;
-using LibraryManagementRedis.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-
-namespace LibraryManagementRedis.Infrastructure.Repository;
+﻿namespace LibraryManagementRedis.Infrastructure.Repository;
 public class BorrowerRepository(LibraryDbContext context) : IBorrowerRepository
 {
     private readonly LibraryDbContext _context = context;

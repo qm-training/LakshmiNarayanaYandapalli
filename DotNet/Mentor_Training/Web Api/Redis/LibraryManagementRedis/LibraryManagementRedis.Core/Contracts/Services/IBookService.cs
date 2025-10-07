@@ -1,16 +1,9 @@
-﻿using LibraryManagementRedis.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibraryManagementRedis.Core.Contracts.Services;
+﻿namespace LibraryManagementRedis.Core.Contracts.Services;
 public interface IBookService
 {
-    Task<IEnumerable<Book>> GetAllBooksAsync();
-    Task<Book?> GetBookByIdAsync(int id);
-    Task<Book> CreateBookAsync(Book book);
-    Task<Book?> UpdateBookAsync(Book book);
+    Task<IEnumerable<BookVm>> GetAllBooksAsync();
+    Task<BookVm?> GetBookByIdAsync(int id);
+    Task<BookVm> CreateBookAsync(BookDto bookDto);
+    Task<BookVm?> UpdateBookAsync(int id, BookDto bookDto);
     Task<bool> DeleteBookAsync(int id);
 }

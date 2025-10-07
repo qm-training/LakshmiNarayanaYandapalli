@@ -1,5 +1,3 @@
-using LibraryManagementRedis.Api.Infrastructure.Extensions;
-
 var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuraion = builder.Configuration;
