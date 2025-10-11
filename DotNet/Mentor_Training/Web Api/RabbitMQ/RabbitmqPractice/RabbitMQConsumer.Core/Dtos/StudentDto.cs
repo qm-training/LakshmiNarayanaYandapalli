@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RabbitMQSender.Core.Vms
+namespace RabbitMQSender.Core.Dtos
 {
-    public class StudentVm
+    public class StudentDto
     {
         public string Name { get; set; } = string.Empty;
         public int Age { get; set; }

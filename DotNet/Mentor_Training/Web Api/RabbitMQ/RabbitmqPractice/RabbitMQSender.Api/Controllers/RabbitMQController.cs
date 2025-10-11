@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RabbitMQSender.Core.Vms;
+using RabbitMQSender.Core.Dtos;
 using RabbitMQSender.Infrastructure.Services;
 
 namespace RabbitMQSender.Api.Controllers
@@ -12,7 +12,7 @@ namespace RabbitMQSender.Api.Controllers
         private readonly RabbitMQServices _rabbitMQServices = rabbitMQServices;
 
         [HttpPost("publish")]
-        public async Task<IActionResult> PublishMessage([FromBody] StudentVm message)
+        public async Task<IActionResult> PublishMessage([FromBody] StudentDto message)
         {
             if (message == null)
             {
