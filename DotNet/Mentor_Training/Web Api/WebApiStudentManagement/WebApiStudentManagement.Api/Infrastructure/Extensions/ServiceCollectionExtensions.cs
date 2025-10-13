@@ -29,6 +29,9 @@ public static class ServiceCollectionExtensions
 
     public static void RegisterConfigurationServices(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+
         var mapper = AutoMapperConfiguration.InitializeMapper();
         services.AddSingleton(mapper);
 
