@@ -1,9 +1,3 @@
-using Hangfire;
-using HangfirePractice.Core.Contracts.Services;
-using HangfirePractice.Infrastructure.Services;
-using Microsoft.Extensions.Configuration;
-using Serilog;
-
 var builder = WebApplication.CreateBuilder(args);
 
 IConfiguration configuration = builder.Configuration;

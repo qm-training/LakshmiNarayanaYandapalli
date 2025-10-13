@@ -1,7 +1,4 @@
-﻿using HangfirePractice.Core.Contracts.Services;
-using Microsoft.Extensions.Logging;
-
-namespace HangfirePractice.Infrastructure.Services;
+﻿namespace HangfirePractice.Infrastructure.Services;
 public class HangfireService(ILogger<HangfireService> logger) : IHangfireService
 {
     private readonly ILogger<HangfireService> _logger = logger;
