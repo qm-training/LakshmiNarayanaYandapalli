@@ -5,12 +5,13 @@ public static class AutoMapperConfiguration
     {
         var mapper = new MapperConfiguration(config =>
         {
-            config.CreateMap<CourseVm, Course>();
+            config.CreateMap<CourseVm, Course>()
+      .ForMember(dest => dest.Teacher, opt => opt.Ignore());
             config.CreateMap<StudentVm, Student>();
             config.CreateMap<TeacherVm, Teacher>();
-            config.CreateMap<CourseResponseDto, Course>();
-            config.CreateMap<StudentResponseDto, Student>();
-            config.CreateMap<TeacherResponseDto, Teacher>();
+            config.CreateMap<Course, CourseResponseDto>();
+            config.CreateMap<Student, StudentResponseDto>();
+            config.CreateMap<Teacher, TeacherResponseDto>();
         });
 
         return mapper.CreateMapper();
