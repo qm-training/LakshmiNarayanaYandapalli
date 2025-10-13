@@ -1,71 +1,59 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using RabbitMQConsumer.Core.Contracts.Services;
-using RabbitMQConsumer.Core.Options;
-using RabbitMQSender.Core.Dtos;
-using System.Text;
-using System.Text.Json;
+﻿namespace RabbitMQConsumer.Infrastructure.Services;
 
-namespace RabbitMQConsumer.Infrastructure.Services
+public class RabbitMQConsumerService(RabbitMQServices service
+    , IOptions<RabbitMQOptions> options, IServiceScopeFactory serviceScopeFactory) : BackgroundService
 {
-    public class RabbitMQConsumerService(RabbitMQServices service
-        , IOptions<RabbitMQOptions> options, IServiceScopeFactory serviceScopeFactory) : BackgroundService
+    private readonly RabbitMQServices _services = service;
+    private readonly RabbitMQOptions _options = options.Value;
+    private readonly IServiceScopeFactory _scopeFactory = serviceScopeFactory;
+
+    protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        private readonly RabbitMQServices _services = service;
-        private readonly RabbitMQOptions _options = options.Value;
-        private readonly IServiceScopeFactory _scopeFactory = serviceScopeFactory;
+        Console.WriteLine("[Consumer] Background worker started...");
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        var channel = _services.GetChannel();
+
+        channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
+
+        var consumer = new AsyncEventingBasicConsumer(channel);
+
+        consumer.Received += async (_, ea) =>
         {
-            Console.WriteLine("[Consumer] Background worker started...");
+            var body = ea.Body.ToArray();
+            var json = Encoding.UTF8.GetString(body);
 
-            var channel = _services.GetChannel();
-
-            channel.BasicQos(prefetchSize: 0, prefetchCount: 1, global: false);
-
-            var consumer = new AsyncEventingBasicConsumer(channel);
-
-            consumer.Received += async (_, ea) =>
+            try
             {
-                var body = ea.Body.ToArray();
-                var json = Encoding.UTF8.GetString(body);
-
-                try
+                var student = JsonSerializer.Deserialize<StudentDto>(json, new JsonSerializerOptions
                 {
-                    var student = JsonSerializer.Deserialize<StudentDto>(json, new JsonSerializerOptions
-                    {
-                        PropertyNameCaseInsensitive = true
-                    });
+                    PropertyNameCaseInsensitive = true
+                });
 
-                    if (student is null)
-                    {
-                        Console.WriteLine("[Consumer] Invalid student data received.");
-                        channel.BasicNack(ea.DeliveryTag, false, false);
-                        return;
-                    }
-
-                    using var scope = _scopeFactory.CreateScope();
-                    var studentService = scope.ServiceProvider.GetRequiredService<IStudentService>();
-
-                    var result = await studentService.AddStudentAsync(student);
-
-                    Console.WriteLine($"[Consumer] {result}");
-
-                    channel.BasicAck(ea.DeliveryTag, false);
+                if (student is null)
+                {
+                    Console.WriteLine("[Consumer] Invalid student data received.");
+                    channel.BasicNack(ea.DeliveryTag, false, false);
+                    return;
                 }
 
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Consumer Processing Error: {ex.Message}");
-                    channel.BasicNack(ea.DeliveryTag, false, true);
-                }
-            };
+                using var scope = _scopeFactory.CreateScope();
+                var studentService = scope.ServiceProvider.GetRequiredService<IStudentService>();
 
-            channel.BasicConsume(queue: _options.QueueName, autoAck: false, consumer: consumer);
-            return Task.CompletedTask;
-        }
+                var result = await studentService.AddStudentAsync(student);
+
+                Console.WriteLine($"[Consumer] {result}");
+
+                channel.BasicAck(ea.DeliveryTag, false);
+            }
+
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Consumer Processing Error: {ex.Message}");
+                channel.BasicNack(ea.DeliveryTag, false, true);
+            }
+        };
+
+        channel.BasicConsume(queue: _options.QueueName, autoAck: false, consumer: consumer);
+        return Task.CompletedTask;
     }
 }

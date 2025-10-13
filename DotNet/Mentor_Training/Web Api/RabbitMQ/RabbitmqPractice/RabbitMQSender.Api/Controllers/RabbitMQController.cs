@@ -1,25 +1,19 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using RabbitMQSender.Core.Dtos;
-using RabbitMQSender.Infrastructure.Services;
+﻿namespace RabbitMQSender.Api.Controllers;
 
-namespace RabbitMQSender.Api.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class RabbitMQController(RabbitMQServices rabbitMQServices) : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RabbitMQController(RabbitMQServices rabbitMQServices) : ControllerBase
-    {
-        private readonly RabbitMQServices _rabbitMQServices = rabbitMQServices;
+    private readonly RabbitMQServices _rabbitMQServices = rabbitMQServices;
 
-        [HttpPost("publish")]
-        public async Task<IActionResult> PublishMessage([FromBody] StudentDto message)
+    [HttpPost("publish")]
+    public async Task<IActionResult> PublishMessage([FromBody] StudentDto message)
+    {
+        if (message == null)
         {
-            if (message == null)
-            {
-                return BadRequest("Message cannot be null.");
-            }
-            await _rabbitMQServices.PublishAsync(message);
-            return Ok("Message published successfully.");
+            return BadRequest("Message cannot be null.");
         }
+        await _rabbitMQServices.PublishAsync(message);
+        return Ok("Message published successfully.");
     }
 }

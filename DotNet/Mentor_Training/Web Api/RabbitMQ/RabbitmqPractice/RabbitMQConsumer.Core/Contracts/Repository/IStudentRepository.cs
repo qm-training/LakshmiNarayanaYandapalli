@@ -1,9 +1,6 @@
-﻿using RabbitMQConsumer.Core.Models;
+﻿namespace RabbitMQConsumer.Core.Contracts.Repository;
 
-namespace RabbitMQConsumer.Core.Contracts.Repository
+public interface IStudentRepository
 {
-    public interface IStudentRepository
-    {
-        Task AddStudentAsync(Student student);
-    }
+    Task AddStudentAsync(Student student);
 }

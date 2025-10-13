@@ -1,11 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using RabbitMQConsumer.Core.Contracts.Repository;
-using RabbitMQConsumer.Core.Contracts.Services;
-using RabbitMQConsumer.Core.Options;
-using RabbitMQConsumer.Infrastructure.Data;
-using RabbitMQConsumer.Infrastructure.Repository;
-using RabbitMQConsumer.Infrastructure.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<RabbitMQContext>(options =>

@@ -1,6 +1,3 @@
-using RabbitMQSender.Core.Options;
-using RabbitMQSender.Infrastructure.Services;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<RabbitMQOptions>(

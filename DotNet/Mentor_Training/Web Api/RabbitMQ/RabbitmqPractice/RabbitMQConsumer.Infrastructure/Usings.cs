@@ -1,0 +1,14 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using RabbitMQConsumer.Core.Models;
+global using RabbitMQConsumer.Core.Contracts.Repository;
+global using RabbitMQConsumer.Infrastructure.Data;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Options;
+global using RabbitMQ.Client;
+global using RabbitMQ.Client.Events;
+global using RabbitMQConsumer.Core.Contracts.Services;
+global using RabbitMQConsumer.Core.Options;
+global using RabbitMQSender.Core.Dtos;
+global using System.Text;
+global using System.Text.Json;
