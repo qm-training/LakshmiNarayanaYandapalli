@@ -1,27 +1,21 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using WebApiStudentManagement.Core.Exceptions;
-
-namespace WebApiStudentManagement.Api.Infrastructure.Handler
+﻿namespace WebApiStudentManagement.Api.Infrastructure.Handler;
+public class GlobalExceptionHandler : IExceptionHandler
 {
-    public class GlobalExceptionHandler : IExceptionHandler
+    public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
+        var problem = new ProblemDetails
         {
-            var problem = new ProblemDetails
-            {
-                Title = "An unexpected error occurred",
-                Detail = exception.Message,
-                Instance = httpContext.Request.Path,
-                Status = StatusCodes.Status500InternalServerError
-            };
+            Title = "An unexpected error occurred",
+            Detail = exception.Message,
+            Instance = httpContext.Request.Path,
+            Status = StatusCodes.Status500InternalServerError
+        };
 
-            httpContext.Response.StatusCode = problem.Status.Value;
-            httpContext.Response.ContentType = "application/json";
+        httpContext.Response.StatusCode = problem.Status.Value;
+        httpContext.Response.ContentType = "application/json";
 
-            await httpContext.Response.WriteAsJsonAsync(problem, cancellationToken);
+        await httpContext.Response.WriteAsJsonAsync(problem, cancellationToken);
 
-            return true;
-        }
+        return true;
     }
 }

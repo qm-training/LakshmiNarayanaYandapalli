@@ -13,3 +13,4 @@ global using WebApiStudentManagement.Api.Infrastructure.Handler;
 global using AutoMapper;
 global using WebApiStudentManagement.Core.Models;
 global using WebApiStudentManagement.Core.Vms;
+global using Microsoft.AspNetCore.Diagnostics;

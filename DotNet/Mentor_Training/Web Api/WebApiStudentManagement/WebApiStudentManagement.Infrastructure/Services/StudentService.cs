@@ -1,6 +1,4 @@
-﻿using WebApiStudentManagement.Core.Vms;
-
-namespace WebApiStudentManagement.Infrastructure.Services;
+﻿namespace WebApiStudentManagement.Infrastructure.Services;
 
 public class StudentService(IStudentRepository studentRepository, IMapper mapper) : IStudentService
 {

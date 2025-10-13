@@ -1,6 +1,4 @@
-﻿using WebApiStudentManagement.Core.Vms;
-
-namespace WebApiStudentManagement.Core.Contracts.Services;
+﻿namespace WebApiStudentManagement.Core.Contracts.Services;
 
 public interface ICourseService
 {
