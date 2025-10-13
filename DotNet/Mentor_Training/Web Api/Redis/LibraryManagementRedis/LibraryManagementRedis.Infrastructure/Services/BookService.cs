@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using LibraryManagementRedis.Core.Contracts.Repository;
-using LibraryManagementRedis.Core.Contracts.Services;
-using LibraryManagementRedis.Core.Dtos;
-using LibraryManagementRedis.Core.Models;
-using LibraryManagementRedis.Core.ViewModels;
-
-namespace LibraryManagementRedis.Infrastructure.Services;
+﻿namespace LibraryManagementRedis.Infrastructure.Services;
 public class BookService(IBookRepository _repo, IAuthorRepository _authorRepo, IMapper _mapper) : IBookService
 {
     public async Task<IEnumerable<BookVm>> GetAllBooksAsync()

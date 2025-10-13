@@ -1,11 +1,4 @@
-﻿using AutoMapper;
-using LibraryManagementRedis.Core.Contracts.Repository;
-using LibraryManagementRedis.Core.Contracts.Services;
-using LibraryManagementRedis.Core.Dtos;
-using LibraryManagementRedis.Core.Models;
-using LibraryManagementRedis.Core.ViewModels;
-
-namespace LibraryManagementRedis.Infrastructure.Services;
+﻿namespace LibraryManagementRedis.Infrastructure.Services;
 public class BorrowerService(IBorrowerRepository repo, IMapper mapper) : IBorrowerService
 {
     private readonly IBorrowerRepository _repo = repo;
