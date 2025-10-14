@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
 
         services.AddTransient<IUserService, UserService>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
     }
 
     public static void RegisterDatabases(this IServiceCollection services, IConfiguration configuration)

@@ -7,19 +7,21 @@ public class UserController(IUserService service, JwtService jwtService) : Contr
     private readonly IUserService _service = service;
     private readonly JwtService _jwtService = jwtService;
 
-    [HttpPost("/login")]
-    public async Task<IActionResult> Login([FromBody] UserDto userDto)
+    [HttpGet("/login")]
+    public async Task<IActionResult> Login([FromQuery] string username, [FromQuery] string password)
     {
-        var userPassword = await _service.GetPassword(userDto.Username);
-
-        if (userPassword == null || userPassword != userDto.Password)
+        if(!await _service.PasswordCheckAsync(username, password))
         {
             return Unauthorized("Invalid username or password");
         }
 
-        var user = await _service.GetUserByName(userDto.Username);
+        var user = await _service.GetUserByNameAsync(username);
 
-        var token = _jwtService.GenerateToken(user);
+        if (user == null) {
+            return NotFound("User not found");
+        }
+
+        var token = _jwtService.GenerateToken(user!);
 
         return Ok(new { Token = token });
     }
@@ -34,12 +36,19 @@ public class UserController(IUserService service, JwtService jwtService) : Contr
             return Unauthorized("User is not authenticated");
         }
 
-        var user = await _service.GetUserByName(username);
+        var user = await _service.GetUserByNameAsync(username);
         if (user == null)
         {
             return NotFound("User not found");
         }
         return Ok(user);
 
+    }
+
+    [HttpPost("/register")]
+    public async Task<IActionResult> Register([FromBody] UserDto userDto)
+    {
+        var result = await _service.AddUserAsync(userDto);
+        return Ok(result);
     }
 }

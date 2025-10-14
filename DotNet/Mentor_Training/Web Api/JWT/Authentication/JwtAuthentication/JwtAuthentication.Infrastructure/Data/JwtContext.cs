@@ -1,5 +1,4 @@
 ﻿namespace JwtAuthentication.Infrastructure.Data;
-
 public partial class JwtContext : DbContext
 {
     public JwtContext()
@@ -31,7 +30,8 @@ public partial class JwtContext : DbContext
             entity.HasKey(e => e.UserId);
 
             entity.Property(e => e.Email).HasMaxLength(150);
-            entity.Property(e => e.Password).HasMaxLength(256);
+            entity.Property(e => e.PasswordHash).HasMaxLength(255);
+            entity.Property(e => e.Salt).HasMaxLength(255);
             entity.Property(e => e.Username).HasMaxLength(100);
 
             entity.HasOne(d => d.Role).WithMany(p => p.Users)

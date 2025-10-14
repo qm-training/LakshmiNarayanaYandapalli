@@ -8,4 +8,12 @@ public class UserRepository(JwtContext context) : IUserRepository
         .Include(u => u.Role)
         .FirstOrDefaultAsync(u => u.Username == username);
     }
+
+    public async Task<string> AddUser(User user)
+    {
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
+        return "user added successfully";
+
+    }
 }
