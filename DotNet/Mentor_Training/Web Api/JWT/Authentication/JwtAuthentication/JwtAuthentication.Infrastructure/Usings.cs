@@ -1,0 +1,11 @@
+﻿global using JwtAuthentication.Core.Models;
+global using Microsoft.EntityFrameworkCore;
+global using JwtAuthentication.Core.Contracts.Repository;
+global using JwtAuthentication.Infrastructure.Data;
+global using JwtAuthentication.Core.Vms;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.IdentityModel.Tokens;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Text;
+global using JwtAuthentication.Core.Contracts.Services;
