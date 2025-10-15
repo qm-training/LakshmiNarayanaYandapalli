@@ -17,7 +17,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<JwtService>();
 
         services.AddTransient<IUserService, UserService>();
+        services.AddTransient<IRefreshTokenService, RefreshTokenService>();
+
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
     }
 

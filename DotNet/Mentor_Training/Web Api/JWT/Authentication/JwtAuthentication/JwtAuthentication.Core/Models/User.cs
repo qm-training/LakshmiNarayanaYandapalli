@@ -13,5 +13,7 @@ public partial class User
 
     public string? PasswordHash { get; set; }
 
+    public virtual RefreshToken? RefreshToken { get; set; }
+
     public virtual Role? Role { get; set; }
 }
