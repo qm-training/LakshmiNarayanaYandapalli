@@ -17,5 +17,16 @@ namespace WelfareTracker.Api.Controllers
             var result = await _userService.AddUserAsync(registerUserVm);
             return Ok(result);
         }
+
+        [HttpPost("user-login")]
+        public async Task<IActionResult> LoginUser([FromBody] LoginUserVm loginUserVm)
+        {
+            var result = await _userService.LoginUser(loginUserVm);
+            if (result == null)
+            {
+                return Unauthorized("Invalid email or password.");
+            }
+            return Ok(result);
+        }
     }
 }

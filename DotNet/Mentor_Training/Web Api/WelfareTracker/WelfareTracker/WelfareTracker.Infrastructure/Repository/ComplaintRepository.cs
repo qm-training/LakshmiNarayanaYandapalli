@@ -1,4 +1,5 @@
-﻿using WelfareTracker.Core.Contracts.Repository;
+﻿using Microsoft.EntityFrameworkCore;
+using WelfareTracker.Core.Contracts.Repository;
 using WelfareTracker.Core.Models;
 using WelfareTracker.Infrastructure.Data;
 
@@ -18,6 +19,12 @@ namespace WelfareTracker.Infrastructure.Repository
         {
             var complaint = await _context.Complaints.FindAsync(complaintId);
             return complaint;
+        }
+
+        public async Task<List<Complaint>> GetComplaintsByCitizenIdAsync(int citizenId)
+        {
+            var complaints = await _context.Complaints.Where(c => c.CitizenId == citizenId).ToListAsync();
+            return complaints;
         }
 
         public async Task<Complaint> UpdateComplaintAsync(Complaint complaint)

@@ -7,5 +7,6 @@ namespace WelfareTracker.Core.Contracts.Repository
         Task<Complaint> AddComplaintAsync(Complaint complaint);
         Task<Complaint> UpdateComplaintAsync(Complaint complaint);
         Task<Complaint?> GetComplaintByIdAsync(int complaintId);
+        Task<List<Complaint>> GetComplaintsByCitizenIdAsync(int citizenId);
     }
 }

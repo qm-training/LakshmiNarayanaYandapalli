@@ -77,6 +77,39 @@ namespace WelfareTracker.Infrastructure.Service
             return complaintDto;
         }
 
+        public async Task<ComplaintDto> GetComplaintByComplaintIdAsync(int complaintId)
+        {
+            var complaint = await _complaintRepository.GetComplaintByIdAsync(complaintId);
+            if (complaint == null)
+            {
+                throw new WelfareTrackerException("Complaint not found", (int)HttpStatusCode.NotFound);
+            }
+            var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByIdAsync(complaintId);
+
+            var complaintDto = _mapper.Map<ComplaintDto>(complaint);
+            complaintDto.Status = ((Status)complaintStatus!.Status).ToString();
+
+            return complaintDto;
+        }
+
+        public async Task<List<ComplaintDto>?> GetComplaintsByCitizenIdAsync(int citizenId)
+        {
+            var complaints = await _complaintRepository.GetComplaintsByCitizenIdAsync(citizenId);
+            if (complaints == null || complaints.Count == 0)
+            {
+                return null;
+            }
+            var complaintDtos = new List<ComplaintDto>();
+            foreach (var complaint in complaints)
+            {
+                var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByIdAsync(complaint.ComplaintId);
+                var complaintDto = _mapper.Map<ComplaintDto>(complaint);
+                complaintDto.Status = ((Status)complaintStatus!.Status).ToString();
+                complaintDtos.Add(complaintDto);
+            }
+            return complaintDtos;
+        }
+
         public async Task<ComplaintDto?> UpdateComplaintAsync(int complaintId, ComplaintVm complaintVm)
         {
             var userId = await _claimsService.GetUserIdFromClaimsAsync();
