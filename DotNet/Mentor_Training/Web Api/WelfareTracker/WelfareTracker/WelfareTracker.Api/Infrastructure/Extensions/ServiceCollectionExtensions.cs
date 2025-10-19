@@ -25,6 +25,7 @@ namespace WelfareTracker.Api.Infrastructure.Extensions
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IComplaintService, ComplaintService>();
+            services.AddTransient<IComplaintStatusService, ComplaintStatusService>();
             services.AddTransient<IClaimsService, ClaimsService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -69,7 +70,7 @@ namespace WelfareTracker.Api.Infrastructure.Extensions
                     IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtKey)),
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateLifetime = false,
+                    ValidateLifetime = true,
                     ValidateIssuerSigningKey = true
                 };
             });

@@ -7,19 +7,19 @@ namespace WelfareTracker.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ComplaintController (IComplaintService complaintService) : ControllerBase
+    public class ComplaintController(IComplaintService complaintService) : ControllerBase
     {
         private readonly IComplaintService _complaintService = complaintService;
 
         [HttpPost("register-complaint")]
-        public async Task<IActionResult> RegisterComplaint([FromBody] ComplaintVm complaintVm)
+        public async Task<IActionResult> RegisterComplaint(ComplaintVm complaintVm)
         {
             var result = await _complaintService.AddComplaintAsync(complaintVm);
-            return Ok(new { message = "Complaint added successfully", result});
+            return Ok(new { message = "Complaint added successfully", result });
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetComplaintByComplaintId([FromQuery] int complaintId)
+        [HttpGet("{complaintId}")]
+        public async Task<IActionResult> GetComplaintByComplaintId(int complaintId)
         {
             var result = await _complaintService.GetComplaintByComplaintIdAsync(complaintId);
             if (result == null)
@@ -29,13 +29,47 @@ namespace WelfareTracker.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("by-citizen")]
-        public async Task<IActionResult> GetComplaintsByUserId([FromQuery] int userId)
+        [HttpGet("by-citizen/{citizenId}")]
+        public async Task<IActionResult> GetComplaintsByUserId(int citizenId)
         {
-            var result = await _complaintService.GetComplaintsByCitizenIdAsync(userId);
+            var result = await _complaintService.GetComplaintsByCitizenIdAsync(citizenId);
             if (result == null)
             {
                 return NotFound(new { message = "No complaints found for this user" });
+            }
+            return Ok(result);
+        }
+
+        [HttpPut("update/{complaintId}")]
+        public async Task<ActionResult> UpdateComplaint(int complaintId, ComplaintVm complaintVm)
+        {
+            var result = await _complaintService.UpdateComplaintAsync(complaintId, complaintVm);
+            if (result == null)
+            {
+                return NotFound(new { message = "Complaint not found" });
+            }
+
+            return Ok(new { message = "Complaint updated successfully", result });
+        }
+
+        [HttpDelete("delete/{complaintId}")]
+        public async Task<IActionResult> DeleteComplaint(int complaintId)
+        {
+            var result = await _complaintService.DeleteComplaintAsync(complaintId);
+            if (!result)
+            {
+                return NotFound(new { message = "Complaint not found" });
+            }
+            return Ok(new { message = "Complaint deleted successfully", result });
+        }
+
+        [HttpGet("complaints-for-leader /{leasderId}")]
+        public async Task<IActionResult> GetComplaintsForLeader(int leasderId)
+        {
+            var result = await _complaintService.GetLeaderComplaintsByLeaderId(leasderId);
+            if (result == null)
+            {
+                return NotFound(new { message = "No complaints found for this leader" });
             }
             return Ok(result);
         }

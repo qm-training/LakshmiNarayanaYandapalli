@@ -15,6 +15,20 @@ namespace WelfareTracker.Infrastructure.Repository
             return complaint;
         }
 
+        public async Task<Complaint> DeleteComplaintAsync(Complaint complaint)
+        {
+            _context.Complaints.Remove(complaint);
+            await _context.SaveChangesAsync();
+            return complaint;
+
+        }
+
+        public async Task<List<Complaint>> GetAllReferredComplaintsAsync(int complaintId)
+        {
+            var complaints = await _context.Complaints.Where(c => c.ReferenceNumber == complaintId).ToListAsync();
+            return complaints;
+        }
+
         public async Task<Complaint?> GetComplaintByIdAsync(int complaintId)
         {
             var complaint = await _context.Complaints.FindAsync(complaintId);
@@ -24,6 +38,12 @@ namespace WelfareTracker.Infrastructure.Repository
         public async Task<List<Complaint>> GetComplaintsByCitizenIdAsync(int citizenId)
         {
             var complaints = await _context.Complaints.Where(c => c.CitizenId == citizenId).ToListAsync();
+            return complaints;
+        }
+
+        public async Task<List<Complaint>> GetLeaderComplaintsByLeaderIdAsync(int leaderId)
+        {
+             var complaints = await _context.Complaints.Where(c => c.LeaderId ==  leaderId).ToListAsync();
             return complaints;
         }
 

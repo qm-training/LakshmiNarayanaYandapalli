@@ -23,13 +23,19 @@ public partial class Complaint
 
     public DateTime DateUpdated { get; set; }
 
+    public int ReferenceNumber { get; set; }
+
+    public DateTime? OpenedDate { get; set; }
+
+    public int Status { get; set; }
+
     public virtual User Citizen { get; set; } = null!;
 
-    public virtual ICollection<Comment> Comments { get; set; } = [];
+    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-    public virtual ICollection<ComplaintImage> ComplaintImages { get; set; } = [];
+    public virtual ICollection<ComplaintImage> ComplaintImages { get; set; } = new List<ComplaintImage>();
 
-    public virtual ICollection<ComplaintStatus> ComplaintStatuses { get; set; } = [];
+    public virtual ICollection<ComplaintStatus> ComplaintStatuses { get; set; } = new List<ComplaintStatus>();
 
     public virtual Constituency Constituency { get; set; } = null!;
 

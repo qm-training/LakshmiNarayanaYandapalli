@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using WelfareTracker.Core.Models;
 
 namespace WelfareTracker.Infrastructure.Data;
@@ -71,6 +73,8 @@ public partial class WelfareTrackerContext : DbContext
             entity.Property(e => e.DateUpdated)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.OpenedDate).HasColumnType("datetime");
+            entity.Property(e => e.Status).HasDefaultValue(1);
 
             entity.HasOne(d => d.Citizen).WithMany(p => p.ComplaintCitizens)
                 .HasForeignKey(d => d.CitizenId)
@@ -122,11 +126,7 @@ public partial class WelfareTrackerContext : DbContext
             entity.Property(e => e.DateCreated)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasColumnType("datetime");
-            entity.Property(e => e.DateUpdated)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasColumnType("datetime");
             entity.Property(e => e.DeadlineDate).HasColumnType("datetime");
-            entity.Property(e => e.EscalatedDate).HasColumnType("datetime");
             entity.Property(e => e.RejectReason).HasMaxLength(255);
 
             entity.HasOne(d => d.Complaint).WithMany(p => p.ComplaintStatuses)

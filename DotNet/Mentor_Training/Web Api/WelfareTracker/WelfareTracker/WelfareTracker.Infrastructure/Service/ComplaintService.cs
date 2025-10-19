@@ -66,7 +66,6 @@ namespace WelfareTracker.Infrastructure.Service
                 Status = (int) Status.UnderValidation,
                 AttemptNumber = createdComplaint.Attempts,
                 DateCreated = DateTime.UtcNow,
-                DateUpdated = DateTime.UtcNow
             };
 
             await _complaintStatusRepository.AddComplaintStatusAsync(complaintStatus);
@@ -77,14 +76,47 @@ namespace WelfareTracker.Infrastructure.Service
             return complaintDto;
         }
 
-        public async Task<ComplaintDto> GetComplaintByComplaintIdAsync(int complaintId)
+        public async Task<bool> DeleteComplaintAsync(int complaintId)
+        {
+            var userId = await _claimsService.GetUserIdFromClaimsAsync();
+            var complaint = await _complaintRepository.GetComplaintByIdAsync(complaintId);
+            if (complaint == null)
+            {
+                return false;
+            }
+            if (complaint.CitizenId != userId)
+            {
+                throw new WelfareTrackerException("You are not authorized to delete this complaint.");
+            }
+            var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByComplaintIdAsync(complaintId);
+            if(complaintStatus!.Status != (int)Status.UnderValidation)
+            {
+                throw new WelfareTrackerException("Complaint cannot be deleted", (int)HttpStatusCode.Unauthorized);
+            }
+
+            var complaintStatusDelete = await _complaintStatusRepository.DeleteComplaintStatusByComplaintIdAsync(complaintId);
+            if (!complaintStatusDelete)
+            {
+                throw new WelfareTrackerException("Error deleting complaint status");
+            }
+
+            var complaintImages = await _complaintImageRepository.GetComplaintImagesByComplaintIdAsync(complaintId);
+            foreach (var image in complaintImages)
+            {
+                await _complaintImageRepository.DeleteComplaintImageAsync(image);
+            }
+            await _complaintRepository.DeleteComplaintAsync(complaint);
+            return true;
+        }
+
+        public async Task<ComplaintDto?> GetComplaintByComplaintIdAsync(int complaintId)
         {
             var complaint = await _complaintRepository.GetComplaintByIdAsync(complaintId);
             if (complaint == null)
             {
-                throw new WelfareTrackerException("Complaint not found", (int)HttpStatusCode.NotFound);
+                return null;
             }
-            var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByIdAsync(complaintId);
+            var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByComplaintIdAsync(complaintId);
 
             var complaintDto = _mapper.Map<ComplaintDto>(complaint);
             complaintDto.Status = ((Status)complaintStatus!.Status).ToString();
@@ -102,12 +134,36 @@ namespace WelfareTracker.Infrastructure.Service
             var complaintDtos = new List<ComplaintDto>();
             foreach (var complaint in complaints)
             {
+                var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByComplaintIdAsync(complaint.ComplaintId) ?? throw new WelfareTrackerException("Complaint status not found");
+                var complaintDto = _mapper.Map<ComplaintDto>(complaint);
+                complaintDto.Status = ((Status)complaintStatus!.Status).ToString();
+                complaintDtos.Add(complaintDto);
+            }
+            return complaintDtos;
+        }
+
+        public async Task<List<ComplaintDto>?> GetLeaderComplaintsByLeaderId(int leaderId)
+        {
+            //var userId = await _claimsService.GetUserIdFromClaimsAsync();
+            //if (leaderId != userId)
+            //{
+            //    throw new WelfareTrackerException("You are not authorized to view these complaints.");
+            //}
+            var complaints = await _complaintRepository.GetLeaderComplaintsByLeaderIdAsync(leaderId);
+            if (complaints == null || complaints.Count == 0)
+            {
+                return null;
+            }
+            var complaintDtos = new List<ComplaintDto>();
+            foreach (var complaint in complaints)
+            {
                 var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByIdAsync(complaint.ComplaintId);
                 var complaintDto = _mapper.Map<ComplaintDto>(complaint);
                 complaintDto.Status = ((Status)complaintStatus!.Status).ToString();
                 complaintDtos.Add(complaintDto);
             }
             return complaintDtos;
+
         }
 
         public async Task<ComplaintDto?> UpdateComplaintAsync(int complaintId, ComplaintVm complaintVm)
@@ -125,7 +181,7 @@ namespace WelfareTracker.Infrastructure.Service
                 throw new WelfareTrackerException("You are not authorized to update this complaint.");
             }
 
-            var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByIdAsync(complaintId);
+            var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByComplaintIdAsync(complaintId);
 
             if(complaintStatus!.Status != (int)Status.UnderValidation)
             {
@@ -158,6 +214,23 @@ namespace WelfareTracker.Infrastructure.Service
             var complaintDto = _mapper.Map<ComplaintDto>(updatedComplaint);
             complaintDto.Status = ((Status)complaintStatus.Status).ToString();
             return complaintDto;
+        }
+
+        public async Task<bool> UpdateStatusOfReferredComplaintsAsync(int complaintId)
+        {
+            var complaints = await _complaintRepository.GetAllReferredComplaintsAsync(complaintId);
+            var originalComplaint = await _complaintRepository.GetComplaintByIdAsync(complaintId);
+            if(complaints == null || complaints.Count == 0 || originalComplaint == null)
+            {
+                return false;
+            }
+            foreach (var complaint in complaints)
+            {
+                complaint.Status = originalComplaint!.Status;
+                complaint.DateUpdated = DateTime.UtcNow;
+                await _complaintRepository.UpdateComplaintAsync(complaint);
+            }
+            return true;
         }
     }
 }
