@@ -63,6 +63,10 @@ namespace WelfareTracker.Infrastructure.Service
 
         public async Task<List<CommentDto>> GetCommentsByCitizenId(int citizenId)
         {
+            var userId = await _claimsService.GetUserIdFromClaimsAsync();
+            if (userId != citizenId)
+                throw new WelfareTrackerException("Cannot access other user comments", (int)HttpStatusCode.Unauthorized);
+
             var comments = await _commentRepository.GetCommentsByUserIdAsync(citizenId);
             if(comments == null || comments.Count == 0)
             {
@@ -91,8 +95,17 @@ namespace WelfareTracker.Infrastructure.Service
             var commentDtos = new List<CommentDto>();
 
             foreach (var comment in comments)
-            { 
-                var commentDto = _mapper.Map<CommentDto>(comment);
+            {
+                var commentDto = new CommentDto
+                {
+                    CommentId = comment.CommentId,
+                    Description = comment.Description,
+                    UserId = comment.IsAnonymous ? comment.UserId : 0,
+                    ComplaintId = comment.ComplaintId,
+                    DailyComplaintId = comment.DailyComplaintId,
+                    DateCreated = comment.DateCreated,
+                    DateUpdated = comment.DateUpdated
+                };
                 commentDtos.Add(commentDto);
             }
             return commentDtos;

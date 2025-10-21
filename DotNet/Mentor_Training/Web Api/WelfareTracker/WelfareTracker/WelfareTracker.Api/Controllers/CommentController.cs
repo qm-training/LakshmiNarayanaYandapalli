@@ -11,7 +11,7 @@ namespace WelfareTracker.Api.Controllers
     {
         private readonly ICommentService _commentService = commentService;
 
-        [HttpPost("add-Comment")]
+        [HttpPost("add-comment")]
         public async Task<IActionResult> AddCommentAsync(CommentVm commentVm)
         {
             var result = await _commentService.AddComment(commentVm);
