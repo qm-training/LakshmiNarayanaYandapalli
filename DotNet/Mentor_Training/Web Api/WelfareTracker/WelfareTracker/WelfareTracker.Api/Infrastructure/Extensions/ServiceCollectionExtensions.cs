@@ -27,6 +27,7 @@ namespace WelfareTracker.Api.Infrastructure.Extensions
             services.AddTransient<IComplaintService, ComplaintService>();
             services.AddTransient<IComplaintStatusService, ComplaintStatusService>();
             services.AddTransient<IClaimsService, ClaimsService>();
+            services.AddTransient<ICommentService, CommentService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IConstituencyRepository, ConstituencyRepository>();
@@ -34,6 +35,7 @@ namespace WelfareTracker.Api.Infrastructure.Extensions
             services.AddScoped<IComplaintRepository, ComplaintRepository>();
             services.AddScoped<IComplaintStatusRepository, ComplaintStatusRepository>();
             services.AddScoped<IComplaintImageRepository, ComplaintImageRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
         }
 
         public static void RegisterDatabases(this IServiceCollection services, IConfiguration configuration)
@@ -70,7 +72,7 @@ namespace WelfareTracker.Api.Infrastructure.Extensions
                     IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(jwtKey)),
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidateLifetime = true,
+                    ValidateLifetime = false,
                     ValidateIssuerSigningKey = true
                 };
             });

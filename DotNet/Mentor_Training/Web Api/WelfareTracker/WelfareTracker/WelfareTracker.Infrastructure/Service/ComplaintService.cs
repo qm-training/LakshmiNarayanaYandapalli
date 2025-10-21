@@ -116,10 +116,9 @@ namespace WelfareTracker.Infrastructure.Service
             {
                 return null;
             }
-            var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByComplaintIdAsync(complaintId);
 
             var complaintDto = _mapper.Map<ComplaintDto>(complaint);
-            complaintDto.Status = ((Status)complaintStatus!.Status).ToString();
+            complaintDto.Status = ((Status)complaint.Status).ToString();
 
             return complaintDto;
         }
@@ -157,9 +156,8 @@ namespace WelfareTracker.Infrastructure.Service
             var complaintDtos = new List<ComplaintDto>();
             foreach (var complaint in complaints)
             {
-                var complaintStatus = await _complaintStatusRepository.GetComplaintStatusByIdAsync(complaint.ComplaintId);
                 var complaintDto = _mapper.Map<ComplaintDto>(complaint);
-                complaintDto.Status = ((Status)complaintStatus!.Status).ToString();
+                complaintDto.Status = ((Status)complaint.Status).ToString();
                 complaintDtos.Add(complaintDto);
             }
             return complaintDtos;

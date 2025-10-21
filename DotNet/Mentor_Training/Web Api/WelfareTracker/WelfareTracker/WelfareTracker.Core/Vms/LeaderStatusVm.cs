@@ -1,10 +1,8 @@
 ﻿namespace WelfareTracker.Core.Vms
 {
-    public class AdminRepStatusVm
+    public class LeaderStatusVm
     {
         public int ComplaintId { get; set; }
         public int Status { get; set; }
-        public int ReferenceNumber { get; set; } = 0;
-        public int ExpectedDeadline { get; set; }
     }
 }

@@ -21,5 +21,27 @@ namespace WelfareTracker.Api.Controllers
             }
             return Ok(result);
         }
+
+        [HttpPost("ValidateByAdmin")]
+        public async Task<IActionResult> ValidateComplaintStatusByAdmin(AdminStatusVm adminStatusVm)
+        {
+            var result = await _complaintStatusService.AddComplaintStatusByAdmin(adminStatusVm);
+            if(result == null)
+            {
+                return BadRequest("Unable to add complaint status.");
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("ValidateByLeader")]
+        public async Task<IActionResult> ValidateComplaintStatusByLeader(LeaderStatusVm leaderStatusVm)
+        {
+            var result = await _complaintStatusService.AddComplaintStatusByLeader(leaderStatusVm);
+            if( result == null)
+            {
+                return BadRequest("Unable to add complaint status.");
+            }
+            return Ok(result);
+        }
     }
 }

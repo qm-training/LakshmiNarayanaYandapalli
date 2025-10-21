@@ -63,10 +63,10 @@ namespace WelfareTracker.Api.Controllers
             return Ok(new { message = "Complaint deleted successfully", result });
         }
 
-        [HttpGet("complaints-for-leader /{leasderId}")]
-        public async Task<IActionResult> GetComplaintsForLeader(int leasderId)
+        [HttpGet("complaints-for-leader/{leaderId}")]
+        public async Task<IActionResult> GetComplaintsForLeader(int leaderId)
         {
-            var result = await _complaintService.GetLeaderComplaintsByLeaderId(leasderId);
+            var result = await _complaintService.GetLeaderComplaintsByLeaderId(leaderId);
             if (result == null)
             {
                 return NotFound(new { message = "No complaints found for this leader" });
