@@ -36,6 +36,8 @@ namespace WelfareTracker.Api.Infrastructure.Extensions
             services.AddScoped<IComplaintStatusRepository, ComplaintStatusRepository>();
             services.AddScoped<IComplaintImageRepository, ComplaintImageRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IDailyComplaintRepository, DailyComplaintRepository>();
+            services.AddScoped<IDailyComplaintStatusRepository, DailyComplaintStatusRepository>();
         }
 
         public static void RegisterDatabases(this IServiceCollection services, IConfiguration configuration)

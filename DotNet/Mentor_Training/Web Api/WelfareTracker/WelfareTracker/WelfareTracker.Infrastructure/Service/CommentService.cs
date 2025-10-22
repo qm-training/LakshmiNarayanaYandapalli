@@ -11,11 +11,13 @@ namespace WelfareTracker.Infrastructure.Service
 {
     public class CommentService(ICommentRepository commentRepository,
                                     IComplaintRepository complaintRepository,
+                                    IDailyComplaintRepository dailyComplaintRepository,
                                     IClaimsService claimsService,
                                     IMapper mapper) : ICommentService
     {
         private readonly ICommentRepository _commentRepository = commentRepository;
         private readonly IComplaintRepository _complaintRepository = complaintRepository;
+        private readonly IDailyComplaintRepository _dailyComplaintRepository = dailyComplaintRepository;
         private readonly IClaimsService _claimsService = claimsService;
         private readonly IMapper _mapper = mapper;
         public async Task<CommentDto> AddComment(CommentVm commentVm)
@@ -28,10 +30,11 @@ namespace WelfareTracker.Infrastructure.Service
             else if (commentVm.ComplaintId.HasValue && commentVm.DailyComplaintId.HasValue)
                 throw new WelfareTrackerException("only one of the ID's should be provided.", (int)HttpStatusCode.BadRequest);
 
-            var complaint = await _complaintRepository.GetComplaintByIdAsync(commentVm.ComplaintId!.Value) ?? throw new WelfareTrackerException("Complaint not found.");
-            var complaintId = complaint.ReferenceNumber != 0 ? complaint.ReferenceNumber : complaint.ComplaintId;
             if (commentVm.ComplaintId != 0)
             {
+                var complaint = await _complaintRepository.GetComplaintByIdAsync(commentVm.ComplaintId!.Value) ?? throw new WelfareTrackerException("Complaint not found.");
+                var complaintId = complaint.ReferenceNumber != 0 ? complaint.ReferenceNumber : complaint.ComplaintId;
+
                 var comment = new Comment
                 {
                     Description = commentVm.Description,
@@ -47,7 +50,24 @@ namespace WelfareTracker.Infrastructure.Service
                 var mapperDto = _mapper.Map<CommentDto>(addedcomment);
                 return mapperDto;
             }
-            return null;
+            else
+            {
+                var dailyComplaint = await _dailyComplaintRepository.GetDailyComplaintByIdAsync(commentVm.DailyComplaintId!.Value) ?? throw new WelfareTrackerException("Daily Complaint not found.");
+                var comment = new Comment
+                {
+                    Description = commentVm.Description,
+                    UserId = userId,
+                    DailyComplaintId = dailyComplaint.DailyComplaintId,
+                    DateCreated = DateTime.UtcNow,
+                    DateUpdated = DateTime.UtcNow,
+                    IsAnonymous = commentVm.IsAnonymous
+                };
+
+                var addedcomment = await _commentRepository.AddCommentAsync(comment);
+
+                var mapperDto = _mapper.Map<CommentDto>(addedcomment);
+                return mapperDto;
+            }
         }
 
         public async Task<bool> DeleteCommentByIdAsync(int commentId)

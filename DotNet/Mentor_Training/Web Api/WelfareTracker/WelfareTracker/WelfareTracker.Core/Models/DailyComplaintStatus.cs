@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WelfareTracker.Core.Models;
+﻿namespace WelfareTracker.Core.Models;
 
 public partial class DailyComplaintStatus
 {

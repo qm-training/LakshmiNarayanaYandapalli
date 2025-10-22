@@ -28,6 +28,9 @@ namespace WelfareTracker.Api.Configurations
                     .ForMember(dest => dest.Status, opt => opt.Ignore());
 
                 cnfg.CreateMap<Comment, CommentDto>();
+                cnfg.CreateMap<DailyComplaint, DailyComplaintDto>();
+                cnfg.CreateMap<DailyComplaintStatus, DailyComplaintStatusDto>();
+
             });
             return mapper.CreateMapper();
         }

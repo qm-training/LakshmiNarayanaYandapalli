@@ -8,5 +8,6 @@ public interface IUserRepository
     Task<User> DeleteUserAsync(User user);
     Task<User?> GetUserByIdAsync(int userId);
     Task<User?> GetUserByEmailAsync(string email);
-    Task<User?> GetLeaderByConstituencyName(string constituencyName);
+    Task<User?> GetLeaderByConstituencyNameAsync(string constituencyName);
+    Task<List<User>> GetAllLeadersAsync();
 }

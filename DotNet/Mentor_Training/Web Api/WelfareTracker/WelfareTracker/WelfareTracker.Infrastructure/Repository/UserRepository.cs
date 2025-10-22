@@ -42,10 +42,16 @@ public class UserRepository(WelfareTrackerContext context) : IUserRepository
         return user;
     }
 
-    public async Task<User?> GetLeaderByConstituencyName(string constituencyName)
+    public async Task<User?> GetLeaderByConstituencyNameAsync(string constituencyName)
     {
         var user = await _context.Users
             .FirstOrDefaultAsync(u => u.ConstituencyName == constituencyName && u.RoleName == "Leader");
         return user;
+    }
+
+    public async Task<List<User>> GetAllLeadersAsync()
+    {
+        var leaders = await _context.Users.Where(u => u.RoleName!.Equals("Leader")).ToListAsync();
+        return leaders;
     }
 }

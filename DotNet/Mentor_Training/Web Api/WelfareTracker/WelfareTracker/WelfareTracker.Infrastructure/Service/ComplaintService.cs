@@ -29,7 +29,7 @@ namespace WelfareTracker.Infrastructure.Service
             var consituencyName = await _claimsService.GetConstituencyNameFromClaimsAsync();
             var userId = await _claimsService.GetUserIdFromClaimsAsync();
 
-            var leader = await _userRepository.GetLeaderByConstituencyName(consituencyName);
+            var leader = await _userRepository.GetLeaderByConstituencyNameAsync(consituencyName);
 
             if(complaintVm.ComplaintImageUrls == null || complaintVm.ComplaintImageUrls.Count == 0)
             {
