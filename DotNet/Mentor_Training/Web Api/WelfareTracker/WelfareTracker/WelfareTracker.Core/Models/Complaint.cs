@@ -33,6 +33,8 @@ public partial class Complaint
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
+    public virtual ICollection<ComplaintFeedback> ComplaintFeedbacks { get; set; } = new List<ComplaintFeedback>();
+
     public virtual ICollection<ComplaintImage> ComplaintImages { get; set; } = new List<ComplaintImage>();
 
     public virtual ICollection<ComplaintStatus> ComplaintStatuses { get; set; } = new List<ComplaintStatus>();

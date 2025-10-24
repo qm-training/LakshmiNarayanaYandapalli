@@ -28,6 +28,7 @@ namespace WelfareTracker.Api.Infrastructure.Extensions
             services.AddTransient<IComplaintStatusService, ComplaintStatusService>();
             services.AddTransient<IClaimsService, ClaimsService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IFeedbackService, FeedbackService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IConstituencyRepository, ConstituencyRepository>();
@@ -38,6 +39,7 @@ namespace WelfareTracker.Api.Infrastructure.Extensions
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddScoped<IDailyComplaintRepository, DailyComplaintRepository>();
             services.AddScoped<IDailyComplaintStatusRepository, DailyComplaintStatusRepository>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
         }
 
         public static void RegisterDatabases(this IServiceCollection services, IConfiguration configuration)

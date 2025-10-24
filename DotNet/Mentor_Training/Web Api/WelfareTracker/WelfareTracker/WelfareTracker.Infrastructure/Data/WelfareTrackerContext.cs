@@ -20,6 +20,8 @@ public partial class WelfareTrackerContext : DbContext
 
     public virtual DbSet<Complaint> Complaints { get; set; }
 
+    public virtual DbSet<ComplaintFeedback> ComplaintFeedbacks { get; set; }
+
     public virtual DbSet<ComplaintImage> ComplaintImages { get; set; }
 
     public virtual DbSet<ComplaintStatus> ComplaintStatuses { get; set; }
@@ -90,6 +92,33 @@ public partial class WelfareTrackerContext : DbContext
                 .HasForeignKey(d => d.LeaderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Complaint_Leader");
+        });
+
+        modelBuilder.Entity<ComplaintFeedback>(entity =>
+        {
+            entity.HasKey(e => e.CitizenFeedbackId).HasName("PK__Complain__056FD829FBCC567B");
+
+            entity.ToTable("ComplaintFeedback");
+
+            entity.Property(e => e.DateCreated)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.DateUpdated)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasColumnType("datetime");
+
+            entity.HasOne(d => d.Citizen).WithMany(p => p.ComplaintFeedbacks)
+                .HasForeignKey(d => d.CitizenId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ComplaintFeedback_User");
+
+            entity.HasOne(d => d.Complaint).WithMany(p => p.ComplaintFeedbacks)
+                .HasForeignKey(d => d.ComplaintId)
+                .HasConstraintName("FK_ComplaintFeedback_Complaint");
+
+            entity.HasOne(d => d.DailyComplaint).WithMany(p => p.ComplaintFeedbacks)
+                .HasForeignKey(d => d.DailyComplaintId)
+                .HasConstraintName("FK_ComplaintFeedback_DailyComplaint");
         });
 
         modelBuilder.Entity<ComplaintImage>(entity =>

@@ -30,6 +30,7 @@ namespace WelfareTracker.Api.Configurations
                 cnfg.CreateMap<Comment, CommentDto>();
                 cnfg.CreateMap<DailyComplaint, DailyComplaintDto>();
                 cnfg.CreateMap<DailyComplaintStatus, DailyComplaintStatusDto>();
+                cnfg.CreateMap<ComplaintFeedback, FeedbackDto>();
 
             });
             return mapper.CreateMapper();

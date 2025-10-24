@@ -17,11 +17,13 @@ public partial class DailyComplaint
 
     public DateTime DateUpdated { get; set; }
 
-    public virtual ICollection<Comment> Comments { get; set; } = [];
+    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
+
+    public virtual ICollection<ComplaintFeedback> ComplaintFeedbacks { get; set; } = new List<ComplaintFeedback>();
 
     public virtual Constituency Constituency { get; set; } = null!;
 
-    public virtual ICollection<DailyComplaintStatus> DailyComplaintStatuses { get; set; } = [];
+    public virtual ICollection<DailyComplaintStatus> DailyComplaintStatuses { get; set; } = new List<DailyComplaintStatus>();
 
     public virtual User Leader { get; set; } = null!;
 }

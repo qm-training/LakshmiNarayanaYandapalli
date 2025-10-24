@@ -45,15 +45,17 @@ public partial class User
 
     public string? ConstituencyName { get; set; }
 
-    public virtual ICollection<Comment> Comments { get; set; } = [];
+    public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
-    public virtual ICollection<Complaint> ComplaintCitizens { get; set; } = [];
+    public virtual ICollection<Complaint> ComplaintCitizens { get; set; } = new List<Complaint>();
 
-    public virtual ICollection<Complaint> ComplaintLeaders { get; set; } = [];
+    public virtual ICollection<ComplaintFeedback> ComplaintFeedbacks { get; set; } = new List<ComplaintFeedback>();
+
+    public virtual ICollection<Complaint> ComplaintLeaders { get; set; } = new List<Complaint>();
 
     public virtual Constituency Constituency { get; set; } = null!;
 
-    public virtual ICollection<DailyComplaint> DailyComplaints { get; set; } = [];
+    public virtual ICollection<DailyComplaint> DailyComplaints { get; set; } = new List<DailyComplaint>();
 
     public virtual Role Role { get; set; } = null!;
 }
