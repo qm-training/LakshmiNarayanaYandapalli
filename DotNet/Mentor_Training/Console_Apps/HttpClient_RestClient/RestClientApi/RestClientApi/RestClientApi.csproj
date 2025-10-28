@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.9" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FakeStoreShared.Application">
+      <HintPath>..\..\FakeStoreShared\FakeStoreShared.Application\bin\Debug\net9.0\FakeStoreShared.Application.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeStoreShared.Core">
+      <HintPath>..\..\FakeStoreShared\FakeStoreShared\bin\Debug\net9.0\FakeStoreShared.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeStoreShared.Infrastructure">
+      <HintPath>..\..\FakeStoreShared\FakeStoreShared.Infrastructure\bin\Debug\net9.0\FakeStoreShared.Infrastructure.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
