@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{A9A9E455-BE20-44E1-AAD2-C2C21467EB66}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{5B6BC5BA-04F3-4CE8-99F0-3A832262D861}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTrackerAuth.Api", "WelfareWorkTrackerAuth.Api\WelfareWorkTrackerAuth.Api.csproj", "{ED7BB401-774E-46C7-B99E-291D749F16B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTrackerAuth.Infrastructure", "WelfareWorkTrackerAuth.Infrastructure\WelfareWorkTrackerAuth.Infrastructure.csproj", "{A45BFCB0-6A96-440A-B63B-657FAF257636}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTrackerAuth.Core", "WelfareWorkTrackerAuth.Core\WelfareWorkTrackerAuth.Core.csproj", "{286B431F-96E6-48B3-8EB3-553EC1435486}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED7BB401-774E-46C7-B99E-291D749F16B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED7BB401-774E-46C7-B99E-291D749F16B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED7BB401-774E-46C7-B99E-291D749F16B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED7BB401-774E-46C7-B99E-291D749F16B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A45BFCB0-6A96-440A-B63B-657FAF257636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A45BFCB0-6A96-440A-B63B-657FAF257636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A45BFCB0-6A96-440A-B63B-657FAF257636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A45BFCB0-6A96-440A-B63B-657FAF257636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{286B431F-96E6-48B3-8EB3-553EC1435486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{286B431F-96E6-48B3-8EB3-553EC1435486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{286B431F-96E6-48B3-8EB3-553EC1435486}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{286B431F-96E6-48B3-8EB3-553EC1435486}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ED7BB401-774E-46C7-B99E-291D749F16B8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A45BFCB0-6A96-440A-B63B-657FAF257636} = {5B6BC5BA-04F3-4CE8-99F0-3A832262D861}
+		{286B431F-96E6-48B3-8EB3-553EC1435486} = {A9A9E455-BE20-44E1-AAD2-C2C21467EB66}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5738DFE6-B740-4735-8B0A-07C8EFD0F33F}
+	EndGlobalSection
+EndGlobal
