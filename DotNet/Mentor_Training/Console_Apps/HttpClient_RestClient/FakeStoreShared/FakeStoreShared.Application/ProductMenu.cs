@@ -7,9 +7,9 @@ public class ProductMenu(IProductService productService)
     {
         var products = await _productService.GetAllProductsAsync();
         Console.WriteLine("--- Product List ---");
-        foreach (var p in products.Take(5))
+        foreach (var product in products.Take(5))
         {
-            Console.WriteLine($"{p.Id}: {p.Title} - ${p.Price}");
+            Console.WriteLine($"{product.Id}: {product.Title} - ${product.Price}");
         }
     }
 
