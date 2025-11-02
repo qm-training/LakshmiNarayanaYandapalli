@@ -1,22 +1,22 @@
-﻿namespace WelfareWorkTrackerAuth.Api.Infrastructure.Extensions
+﻿namespace WelfareWorkTrackerAuth.Api.Infrastructure.Extensions;
+public static class WebAppExtensions
 {
-    public static class WebAppExtensions
+    public static void CreateMiddlewarePipeline(this WebApplication app)
     {
-        public static void CreateMiddlewarePipeline(this WebApplication app)
+        app.UseExceptionHandler();
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthentication();
+
+        app.UseAuthorization();
+
+        if (app.Environment.IsDevelopment())
         {
-            app.UseHttpsRedirection();
-
-            app.UseAuthentication();
-
-            app.UseAuthorization();
-
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
-
-            app.MapControllers();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
+
+        app.MapControllers();
     }
 }

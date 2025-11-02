@@ -1,17 +1,13 @@
-﻿using AutoMapper;
-
-namespace WelfareTracker.Api.Configurations
+﻿namespace WelfareTracker.Api.Configurations;
+public static class AutoMapperConfiguration
 {
-    public static class AutoMapperConfiguration
+    public static IMapper InitializeMapper()
     {
-        public static IMapper InitializeMapper()
+        var mapper = new MapperConfiguration(cnfg =>
         {
-            var mapper = new MapperConfiguration(cnfg =>
-            {
-                //cnfg.CreateMap<User, UserDto>();
-            });
-            return mapper.CreateMapper();
-        }
-
+            cnfg.CreateMap<Role, RoleDto>();
+        });
+        return mapper.CreateMapper();
     }
+
 }
