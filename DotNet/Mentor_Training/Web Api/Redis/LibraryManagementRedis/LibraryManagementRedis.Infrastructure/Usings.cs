@@ -1,0 +1,11 @@
+﻿global using LibraryManagementRedis.Core.Contracts.Caching;
+global using StackExchange.Redis;
+global using System.Text.Json;
+global using LibraryManagementRedis.Core.Models;
+global using Microsoft.EntityFrameworkCore;
+global using LibraryManagementRedis.Core.Contracts.Repository;
+global using LibraryManagementRedis.Infrastructure.Data;
+global using AutoMapper;
+global using LibraryManagementRedis.Core.Contracts.Services;
+global using LibraryManagementRedis.Core.Dtos;
+global using LibraryManagementRedis.Core.ViewModels;
