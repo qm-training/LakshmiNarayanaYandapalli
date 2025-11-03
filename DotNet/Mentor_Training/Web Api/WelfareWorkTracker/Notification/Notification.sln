@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8F098143-030B-445D-A5BA-5026DA145356}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{FC0FCA4F-572F-4553-8726-74C08DE34F0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification.Core", "Notification.Core\Notification.Core.csproj", "{599E8479-0318-494D-8856-ADC22A2AF538}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notification.Infrastructure", "Notification.Infrastructure\Notification.Infrastructure.csproj", "{1A84A01E-B11F-4AC9-8D47-7A85214914AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{599E8479-0318-494D-8856-ADC22A2AF538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{599E8479-0318-494D-8856-ADC22A2AF538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{599E8479-0318-494D-8856-ADC22A2AF538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{599E8479-0318-494D-8856-ADC22A2AF538}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A84A01E-B11F-4AC9-8D47-7A85214914AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A84A01E-B11F-4AC9-8D47-7A85214914AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A84A01E-B11F-4AC9-8D47-7A85214914AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A84A01E-B11F-4AC9-8D47-7A85214914AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{599E8479-0318-494D-8856-ADC22A2AF538} = {8F098143-030B-445D-A5BA-5026DA145356}
+		{1A84A01E-B11F-4AC9-8D47-7A85214914AD} = {FC0FCA4F-572F-4553-8726-74C08DE34F0B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B9642C56-F972-4AA5-A4E2-5D6311E8247F}
+	EndGlobalSection
+EndGlobal
