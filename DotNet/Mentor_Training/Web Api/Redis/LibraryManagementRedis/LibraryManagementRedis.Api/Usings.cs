@@ -15,3 +15,4 @@ global using Microsoft.EntityFrameworkCore;
 global using StackExchange.Redis;
 global using LibraryManagementRedis.Api.Infrastructure.Extensions;
 global using LibraryManagementRedis.Api.Configuration;
+global using Microsoft.AspNetCore.Diagnostics;
