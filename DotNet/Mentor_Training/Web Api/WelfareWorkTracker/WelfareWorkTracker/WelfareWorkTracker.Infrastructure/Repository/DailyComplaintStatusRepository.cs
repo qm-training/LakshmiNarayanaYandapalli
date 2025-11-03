@@ -45,12 +45,12 @@ namespace WelfareWorkTracker.Infrastructure.Repository
             return pendingComplaints;
         }
 
-        public async Task<List<DailyComplaintStatus>> GetUnresolvedComplaintsOfLeader(int leaderId, int status)
+        public async Task<List<DailyComplaintStatus>> GetUnresolvedComplaintsOfLeader(int leaderId)
         {
             var complaints = await _dailyComplaintRepository.GetAllDailyComplaintsForLeaderAsync(leaderId);
             var unresolvedComplaints = await _context.DailyComplaintStatuses
                                                     .Where(cs => complaints.Select(c => c.DailyComplaintId)
-                                                    .Contains(cs.DailyComplaintId) && cs.Status == status)
+                                                    .Contains(cs.DailyComplaintId) && cs.Status == (int)Status.Unresolved)
                                                     .ToListAsync();
 
             return unresolvedComplaints;

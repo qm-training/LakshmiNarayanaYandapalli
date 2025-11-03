@@ -22,6 +22,12 @@ namespace WelfareWorkTracker.Infrastructure.Repository
             return leaders;
         }
 
+        public async Task<int> GetCitizenCountInConstituencyAsync(int constituencyId)
+        {
+            int constituencyCount = await _context.Users.Where(c => c.ConstituencyId == constituencyId && c.RoleId == 4).CountAsync();
+            return constituencyCount;
+        }
+
         public async Task<User?> GetLeaderByConstituencyNameAsync(string constituencyName)
         {
             var leader = await _context.Users.Where(c => c.ConstituencyName == constituencyName && c.RoleName == "Leader").FirstOrDefaultAsync();

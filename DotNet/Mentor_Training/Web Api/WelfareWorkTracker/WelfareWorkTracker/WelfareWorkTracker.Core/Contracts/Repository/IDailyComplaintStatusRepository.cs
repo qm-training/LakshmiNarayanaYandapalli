@@ -9,6 +9,6 @@ namespace WelfareWorkTracker.Core.Contracts.Repository
         Task<DailyComplaintStatus?> GetDailyComplaintStatusByDailyComplaintStatusIdAsync(int dailyComplaintStatusId);
         Task<DailyComplaintStatus?> GetDailyComplaintStatusByDailyComplaintIdAsync(int dailyComplaintId);
         Task<List<DailyComplaintStatus?>> GetPendingDailyComplaintsAsync();
-        Task<List<DailyComplaintStatus>> GetUnresolvedComplaintsOfLeader(int leaderId, int status);
+        Task<List<DailyComplaintStatus>> GetUnresolvedComplaintsOfLeader(int leaderId);
     }
 }

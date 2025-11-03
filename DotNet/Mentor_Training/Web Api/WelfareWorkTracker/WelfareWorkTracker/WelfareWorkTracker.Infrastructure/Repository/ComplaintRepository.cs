@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WelfareWorkTracker.Core.Contracts.Repository;
+using WelfareWorkTracker.Core.Enums;
 using WelfareWorkTracker.Core.Models;
 using WelfareWorkTracker.Infrastructure.Data;
 
@@ -78,6 +79,12 @@ namespace WelfareWorkTracker.Infrastructure.Repository
                             .ToListAsync();
 
             return complaints;
+        }
+
+        public async Task<List<Complaint>> GetUnresolvedComplaintsForLeaderAsync(int leaderId)
+        {
+            var unresolvedComplaints = await _context.Complaints.Where(c => c.Status == (int)Status.Unresolved).ToListAsync();
+            return unresolvedComplaints;
         }
 
         public async Task<Complaint> UpdateComplaintAsync(Complaint complaint)

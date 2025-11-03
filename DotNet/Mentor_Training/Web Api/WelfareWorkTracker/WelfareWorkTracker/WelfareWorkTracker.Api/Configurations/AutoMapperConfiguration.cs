@@ -18,6 +18,7 @@ namespace WelfareWorkTracker.Api.Configurations
                 cnfg.CreateMap<Complaint, ComplaintDto>();
                 cnfg.CreateMap<DailyComplaint, DailyComplaintDto>();
                 cnfg.CreateMap<DailyComplaintStatus, DailyComplaintStatusDto>();
+                cnfg.CreateMap<ComplaintFeedback, ComplaintFeedbackDto>();
             });
                 return mapper.CreateMapper();
         }

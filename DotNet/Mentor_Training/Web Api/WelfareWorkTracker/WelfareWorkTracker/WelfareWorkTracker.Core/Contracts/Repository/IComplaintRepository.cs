@@ -16,5 +16,6 @@ namespace WelfareWorkTracker.Core.Contracts.Repository
         Task<List<Complaint>> GetComplaintsForConstituencyAsync(int constituencyId);
         Task<List<Complaint>> GetComplaintsForConstituencyAndStatusAsync(int status, int constituencyId);
         Task<List<Complaint>> GetComplaintsInBackLogForMoreThanHoursAsync(int hours);
+        Task<List<Complaint>> GetUnresolvedComplaintsForLeaderAsync(int leaderId);
     }
 }

@@ -12,6 +12,7 @@ namespace WelfareWorkTracker.Core.Contracts.Repository
         Task<List<User>?> GetAllLeadersAsync();
         Task<User> UpdateUserAsync(User user);
         Task<User> UpdateLeaderReputationAsync(int leaderId, double reputation);
+        Task<int> GetCitizenCountInConstituencyAsync(int constituencyId);
 
     }
 }

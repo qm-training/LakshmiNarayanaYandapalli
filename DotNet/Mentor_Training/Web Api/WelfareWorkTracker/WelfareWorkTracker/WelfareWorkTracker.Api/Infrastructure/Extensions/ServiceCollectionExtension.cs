@@ -21,11 +21,25 @@ namespace WelfareWorkTracker.Api.Infrastructure.Extensions
         public static void RegisterApplicationServices(this IServiceCollection services)
         {
             services.AddTransient<IClaimsService, ClaimsService>();
+            services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IComplaintImageService, ComplaintImageService>();
+            services.AddTransient<IComplaintService, ComplaintService>();
+            services.AddTransient<IComplaintStatusService, ComplaintStatusService>();
             services.AddTransient<IConstituencyService, ConstituencyService>();
+            services.AddTransient<IDailyComplaintService, DailyComplaintService>();
+            services.AddTransient<IDailyComplaintStatusService, DailyComplaintStatusService>();
+            services.AddTransient<IFeedbackService, FeedbackService>();
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
 
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IComplaintImageRepository, ComplaintImageRepository>();
+            services.AddScoped<IComplaintRepository, ComplaintRepository>();
+            services.AddScoped<IComplaintStatusRepository, ComplaintStatusRepository>();
             services.AddScoped<IConstituencyRepository, ConstituencyRepository>();
+            services.AddScoped<IDailyComplaintRepository, DailyComplaintRepository>();
+            services.AddScoped<IDailyComplaintStatusRepository, DailyComplaintStatusRepository>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
 
