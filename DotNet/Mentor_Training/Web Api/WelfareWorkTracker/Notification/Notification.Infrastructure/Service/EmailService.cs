@@ -8,31 +8,28 @@ public class EmailService(IOptions<SmtpClientOptions> mailSettings, ISmtpClientW
     {
         try
         {
-            // Sender's email address and password (for authentication)
             string senderEmail = _mailSettings.Value.SenderEmail;
             string password = _mailSettings.Value.Password;
 
-            // Recipient's email address
             string recipientEmail = welfareEvent.UserEmail;
 
-            // Configure SMTP client wrapper
             _smtpClientWrapper.SetCredentials(new NetworkCredential(senderEmail, password));
             _smtpClientWrapper.SetEnableSsl(true);
 
-            // Create and send an email
-            var mail = new System.Net.Mail.MailMessage(senderEmail, recipientEmail)
+            var mail = new MailMessage(senderEmail, recipientEmail)
             {
                 Subject = welfareEvent.Subject,
                 Body = welfareEvent.Body,
-                IsBodyHtml = true,  // Set to true if using HTML in the body
+                IsBodyHtml = true
             };
 
             await _smtpClientWrapper.SendMailAsync(mail);
-            Console.WriteLine("Email sent successfully!");
+            Log.Information("Email sent successfully!");
             return true;
         }
         catch (Exception ex)
         {
+            Log.Error(ex, "Failed to send email to: {EmailToId}", welfareEvent.UserEmail);
             return false;
         }
     }

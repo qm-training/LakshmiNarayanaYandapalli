@@ -5,7 +5,6 @@ public class SmtpClientWrapperService : ISmtpClientWrapper
 
     public SmtpClientWrapperService(IOptions<SmtpClientOptions> options)
     {
-        // Declare options as a local variable
         var smtpOptions = options.Value;
 
         _smtpClient = new SmtpClient(smtpOptions.SmtpServer, smtpOptions.Port)
@@ -22,13 +21,11 @@ public class SmtpClientWrapperService : ISmtpClientWrapper
 
     public void SetCredentials(NetworkCredential credentials)
     {
-        // Update the credentials of the SmtpClient
         _smtpClient.Credentials = credentials;
     }
 
     public void SetEnableSsl(bool enableSsl)
     {
-        // Update the SSL setting of the SmtpClient
         _smtpClient.EnableSsl = enableSsl;
     }
 }
