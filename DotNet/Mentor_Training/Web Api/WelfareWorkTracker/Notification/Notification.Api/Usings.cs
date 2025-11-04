@@ -1,0 +1,11 @@
+﻿global using MassTransit;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Notification.Core.Constants;
+global using Notification.Core.Contracts.Service;
+global using Notification.Core.Options;
+global using Notification.Infrastructure.Service;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.Extensions.Hosting;
+global using Notifications.Infrastructure.Extensions;
+global using Serilog;
