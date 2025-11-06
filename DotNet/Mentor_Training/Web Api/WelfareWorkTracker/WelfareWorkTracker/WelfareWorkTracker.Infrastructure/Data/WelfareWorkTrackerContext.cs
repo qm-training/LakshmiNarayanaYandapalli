@@ -12,15 +12,33 @@ namespace WelfareWorkTracker.Infrastructure.Data
             : base(options) { }
 
         public virtual DbSet<Comment> Comments { get; set; }
+
         public virtual DbSet<Complaint> Complaints { get; set; }
+
         public virtual DbSet<ComplaintFeedback> ComplaintFeedbacks { get; set; }
+
         public virtual DbSet<ComplaintImage> ComplaintImages { get; set; }
+
         public virtual DbSet<ComplaintStatus> ComplaintStatuses { get; set; }
+
         public virtual DbSet<Constituency> Constituencies { get; set; }
+
         public virtual DbSet<DailyComplaint> DailyComplaints { get; set; }
+
         public virtual DbSet<DailyComplaintStatus> DailyComplaintStatuses { get; set; }
+
+        public virtual DbSet<EmailOutbox> EmailOutboxes { get; set; }
+
+        public virtual DbSet<EmailPlaceholder> EmailPlaceholders { get; set; }
+
+        public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
+
         public virtual DbSet<Leader> Leaders { get; set; }
+
+        public virtual DbSet<Notification> Notifications { get; set; }
+
         public virtual DbSet<Role> Roles { get; set; }
+
         public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -250,6 +268,75 @@ namespace WelfareWorkTracker.Infrastructure.Data
             });
 
             // -------------------------
+            // EmailOutbox
+            // -------------------------
+            modelBuilder.Entity<EmailOutbox>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PK__EmailOut__3214EC07B8169185");
+                entity.ToTable("EmailOutbox");
+
+                entity.Property(e => e.FromEmail)
+                      .HasMaxLength(255)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.ToEmail)
+                      .HasMaxLength(255)
+                      .IsUnicode(false);
+
+                entity.HasOne<EmailTemplate>()
+                      .WithMany()
+                      .HasForeignKey(e => e.EmailTemplateId)
+                      .OnDelete(DeleteBehavior.ClientSetNull)
+                      .HasConstraintName("FK_EmailOutbox_EmailTemplate");
+            });
+
+            // -------------------------
+            // EmailPlaceholder
+            // -------------------------
+            modelBuilder.Entity<EmailPlaceholder>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PK__EmailPla__3214EC0777036A1A");
+                entity.ToTable("EmailPlaceholder");
+
+                entity.Property(e => e.DateCreated)
+                      .HasDefaultValueSql("(sysutcdatetime())");
+
+                entity.Property(e => e.PlaceHolderKey)
+                      .HasMaxLength(100)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.PlaceHolderValue)
+                      .HasMaxLength(4000)
+                      .IsUnicode(false);
+
+                entity.HasOne<EmailOutbox>()
+                      .WithMany()
+                      .HasForeignKey(e => e.EmailHistoryId)
+                      .HasConstraintName("FK_EmailPlaceholder_EmailOutbox");
+            });
+
+            // -------------------------
+            // EmailTemplate
+            // -------------------------
+            modelBuilder.Entity<EmailTemplate>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PK__EmailTem__3214EC071E31FC9E");
+                entity.ToTable("EmailTemplate");
+
+                entity.Property(e => e.Body).IsUnicode(false);
+                entity.Property(e => e.DateCreated).HasDefaultValueSql("(sysutcdatetime())");
+                entity.Property(e => e.IsActive).HasDefaultValue(true);
+
+                entity.Property(e => e.Name)
+                      .HasMaxLength(200)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.Subject)
+                      .HasMaxLength(255)
+                      .IsUnicode(false);
+            });
+
+            // -------------------------
             // Leader
             // -------------------------
             modelBuilder.Entity<Leader>(entity =>
@@ -268,6 +355,35 @@ namespace WelfareWorkTracker.Infrastructure.Data
                       .HasForeignKey(e => e.UserId)
                       .OnDelete(DeleteBehavior.ClientSetNull)
                       .HasConstraintName("FK_Leader_User");
+            });
+
+            // -------------------------
+            // Notification
+            // -------------------------
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC07B023217E");
+                entity.ToTable("Notification");
+
+                entity.Property(e => e.DateCreated).HasDefaultValueSql("(sysutcdatetime())");
+
+                entity.Property(e => e.Message)
+                      .HasMaxLength(4000)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.NotificationType)
+                      .HasMaxLength(100)
+                      .IsUnicode(false);
+
+                entity.Property(e => e.Title)
+                      .HasMaxLength(255)
+                      .IsUnicode(false);
+
+                entity.HasOne<User>()
+                      .WithMany()
+                      .HasForeignKey(e => e.ToUserId)
+                      .OnDelete(DeleteBehavior.ClientSetNull)
+                      .HasConstraintName("FK_Notification_ToUser");
             });
 
             // -------------------------

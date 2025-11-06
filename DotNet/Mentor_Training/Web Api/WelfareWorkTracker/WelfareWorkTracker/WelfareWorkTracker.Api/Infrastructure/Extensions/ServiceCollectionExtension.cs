@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MassTransit;
+using Microsoft.EntityFrameworkCore;
 using WelfareWorkTracker.Api.Configurations;
 using WelfareWorkTracker.Api.Infrastructure.Handler;
+using WelfareWorkTracker.Core.Constants;
 using WelfareWorkTracker.Core.Contracts.Repository;
 using WelfareWorkTracker.Core.Contracts.Service;
 using WelfareWorkTracker.Infrastructure.Data;
@@ -16,6 +18,19 @@ namespace WelfareWorkTracker.Api.Infrastructure.Extensions
             services.AddControllers();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
+
+            services.AddMassTransit(x =>
+            {
+                var queueConfig = configuration.GetSection("QueueConfig").Get<QueueConfig>();
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host(queueConfig!.Uri, h =>
+                    {
+                        h.Username(queueConfig.UserName);
+                        h.Password(queueConfig.Password);
+                    });
+                });
+            });
         }
 
         public static void RegisterApplicationServices(this IServiceCollection services)

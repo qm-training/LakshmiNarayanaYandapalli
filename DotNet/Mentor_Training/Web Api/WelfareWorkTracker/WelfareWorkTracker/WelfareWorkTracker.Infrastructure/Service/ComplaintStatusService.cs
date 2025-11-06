@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Net;
+using WelfareWorkTracker.Core.Constants;
 using WelfareWorkTracker.Core.Contracts.Repository;
 using WelfareWorkTracker.Core.Contracts.Service;
 using WelfareWorkTracker.Core.Dtos;
@@ -13,15 +14,19 @@ namespace WelfareWorkTracker.Infrastructure.Service
     public class ComplaintStatusService(IComplaintStatusRepository complaintStatusRepository,
                                             IComplaintRepository complaintRepository,
                                             IUserRepository userRepository,
+                                            IEmailTemplateRepository emailTemplateRepository,
                                             IComplaintService complaintService,
                                             IClaimsService claimsService,
+                                            IEmailService emailService,
                                             IMapper mapper) : IComplaintStatusService
     {
         private readonly IComplaintStatusRepository _complaintStatusRepository = complaintStatusRepository;
         private readonly IComplaintRepository _complaintRepository = complaintRepository;
         private readonly IUserRepository _userRepository = userRepository;
+        private readonly IEmailTemplateRepository _emailTemplateRepository = emailTemplateRepository;
         private readonly IComplaintService _complaintService = complaintService;
         private readonly IClaimsService _claimsService = claimsService;
+        private readonly IEmailService _emailService = emailService;
         private readonly IMapper _mapper = mapper;
         public async Task<ComplaintStatusDto> AddComplaintStatusByAdmin(ComplaintStatusAdminVm complaintStatusAdminVm)
         {
@@ -56,6 +61,24 @@ namespace WelfareWorkTracker.Infrastructure.Service
                 complaint.Status = (int)Status.Reject;
                 await _complaintRepository.UpdateComplaintAsync(complaint);
                 await _complaintService.UpdateStatusOfAllReferredComplaintsAsync(complaintStatusAdminVm.ComplaintId);
+
+                var citizen = await _userRepository.GetUserByIdAsync(complaint.CitizenId);
+
+                var citizenTemplate = await _emailTemplateRepository.GetByNameAsync(Constants.EmailTemplates.ExistingCitizenComplaintReopened) ?? throw new WelfareWorkTrackerException($"Email Template Not Found!", (int)HttpStatusCode.NotFound);
+
+
+                var citizenPayload = new Dictionary<string, string> {
+                        { "userName",citizen!.FullName},
+                        {"description", complaint.Description },
+                        {"rejectReason", newStatus.RejectReason }
+                };
+                var citizenEmailVm = new EmailVm
+                {
+                    ToUserEmail = citizen.Email,
+                    TemplateId = citizenTemplate.Id,
+                    Payload = citizenPayload
+                };
+                await _emailService.SendEmailAsync(citizenEmailVm);
                 var complaintStatusDto = _mapper.Map<ComplaintStatusDto>(newStatus);
                 return complaintStatusDto;
 
@@ -82,6 +105,23 @@ namespace WelfareWorkTracker.Infrastructure.Service
                 complaint.Status = complaintStatusAdminVm.Status;
                 await _complaintRepository.UpdateComplaintAsync(complaint);
                 await _complaintService.UpdateStatusOfAllReferredComplaintsAsync(complaintStatusAdminVm.ComplaintId);
+
+                var citizen = await _userRepository.GetUserByIdAsync(complaint.CitizenId);
+
+                var citizenTemplate = await _emailTemplateRepository.GetByNameAsync(Constants.EmailTemplates.ExistingCitizenComplaintReopened) ?? throw new WelfareWorkTrackerException($"Email Template Not Found!", (int)HttpStatusCode.NotFound);
+
+
+                var citizenPayload = new Dictionary<string, string> {
+                        { "userName",citizen!.FullName},
+                        {"description", complaint.Description },
+                };
+                var citizenEmailVm = new EmailVm
+                {
+                    ToUserEmail = citizen.Email,
+                    TemplateId = citizenTemplate.Id,
+                    Payload = citizenPayload
+                };
+                await _emailService.SendEmailAsync(citizenEmailVm);
 
                 var complaintStatusDto = _mapper.Map<ComplaintStatusDto>(newStatus);
                 return complaintStatusDto;
@@ -138,6 +178,23 @@ namespace WelfareWorkTracker.Infrastructure.Service
                         throw new WelfareWorkTrackerException("Failed to update referred complaints statuses.");
                     }
 
+                    var citizen = await _userRepository.GetUserByIdAsync(complaint.CitizenId);
+
+                    var citizenTemplate = await _emailTemplateRepository.GetByNameAsync(Constants.EmailTemplates.ExistingCitizenComplaintReopened) ?? throw new WelfareWorkTrackerException($"Email Template Not Found!", (int)HttpStatusCode.NotFound);
+
+
+                    var citizenPayload = new Dictionary<string, string> {
+                        { "userName",citizen!.FullName},
+                        {"description", complaint.Description },
+                };
+                    var citizenEmailVm = new EmailVm
+                    {
+                        ToUserEmail = citizen.Email,
+                        TemplateId = citizenTemplate.Id,
+                        Payload = citizenPayload
+                    };
+                    await _emailService.SendEmailAsync(citizenEmailVm);
+
                     var complaintStatusDto = _mapper.Map<ComplaintStatusDto>(linkedcomplaintStatus);
                     return complaintStatusDto;
                 }
@@ -167,6 +224,23 @@ namespace WelfareWorkTracker.Infrastructure.Service
                 };
 
                 await _complaintStatusRepository.AddComplaintStatusAsync(newComplaintStatus);
+
+                var citizen = await _userRepository.GetUserByIdAsync(complaint.CitizenId);
+
+                var citizenTemplate = await _emailTemplateRepository.GetByNameAsync(Constants.EmailTemplates.ExistingCitizenComplaintReopened) ?? throw new WelfareWorkTrackerException($"Email Template Not Found!", (int)HttpStatusCode.NotFound);
+
+
+                var citizenPayload = new Dictionary<string, string> {
+                        { "userName",citizen!.FullName},
+                        {"description", complaint.Description },
+                };
+                var citizenEmailVm = new EmailVm
+                {
+                    ToUserEmail = citizen.Email,
+                    TemplateId = citizenTemplate.Id,
+                    Payload = citizenPayload
+                };
+                await _emailService.SendEmailAsync(citizenEmailVm);
 
                 var complaintStatusDto = _mapper.Map<ComplaintStatusDto>(newComplaintStatus);
                 return complaintStatusDto;
@@ -227,6 +301,23 @@ namespace WelfareWorkTracker.Infrastructure.Service
                     await _complaintRepository.UpdateComplaintAsync(complaint);
                     await _complaintService.UpdateStatusOfAllReferredComplaintsAsync(complaintStatusLeaderVm.ComplaintId);
 
+                    var citizen = await _userRepository.GetUserByIdAsync(complaint.CitizenId);
+
+                    var citizenTemplate = await _emailTemplateRepository.GetByNameAsync(Constants.EmailTemplates.ExistingCitizenComplaintReopened) ?? throw new WelfareWorkTrackerException($"Email Template Not Found!", (int)HttpStatusCode.NotFound);
+
+
+                    var citizenPayload = new Dictionary<string, string> {
+                        { "userName",citizen!.FullName},
+                        {"description", complaint.Description },
+                };
+                    var citizenEmailVm = new EmailVm
+                    {
+                        ToUserEmail = citizen.Email,
+                        TemplateId = citizenTemplate.Id,
+                        Payload = citizenPayload
+                    };
+                    await _emailService.SendEmailAsync(citizenEmailVm);
+
                     var complaintStatusDto = _mapper.Map<ComplaintStatusDto>(newStatus);
                     return complaintStatusDto;
                 }
@@ -254,6 +345,23 @@ namespace WelfareWorkTracker.Infrastructure.Service
                     complaint.Status = complaintStatusLeaderVm.Status;
                     await _complaintRepository.UpdateComplaintAsync(complaint);
                     await _complaintService.UpdateStatusOfAllReferredComplaintsAsync(complaintStatusLeaderVm.ComplaintId);
+
+                    var citizen = await _userRepository.GetUserByIdAsync(complaint.CitizenId);
+
+                    var citizenTemplate = await _emailTemplateRepository.GetByNameAsync(Constants.EmailTemplates.ExistingCitizenComplaintReopened) ?? throw new WelfareWorkTrackerException($"Email Template Not Found!", (int)HttpStatusCode.NotFound);
+
+
+                    var citizenPayload = new Dictionary<string, string> {
+                        { "userName",citizen!.FullName},
+                        {"description", complaint.Description },
+                };
+                    var citizenEmailVm = new EmailVm
+                    {
+                        ToUserEmail = citizen.Email,
+                        TemplateId = citizenTemplate.Id,
+                        Payload = citizenPayload
+                    };
+                    await _emailService.SendEmailAsync(citizenEmailVm);
 
                     var complaintStatusDto = _mapper.Map<ComplaintStatusDto>(newStatus);
                     return complaintStatusDto;

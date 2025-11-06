@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using WelfareWorkTracker.Core.Dtos;
 using WelfareWorkTracker.Core.Models;
+using WelfareWorkTracker.Core.Vms;
 
 namespace WelfareWorkTracker.Api.Configurations
 {
@@ -19,6 +20,10 @@ namespace WelfareWorkTracker.Api.Configurations
                 cnfg.CreateMap<DailyComplaint, DailyComplaintDto>();
                 cnfg.CreateMap<DailyComplaintStatus, DailyComplaintStatusDto>();
                 cnfg.CreateMap<ComplaintFeedback, ComplaintFeedbackDto>();
+
+                cnfg.CreateMap<CreateNotificationVm, Notification>();
+                cnfg.CreateMap<CreateEmailTemplateVm, EmailTemplate>();
+                cnfg.CreateMap<UpdateEmailTemplateVm, EmailTemplate>();
             });
                 return mapper.CreateMapper();
         }

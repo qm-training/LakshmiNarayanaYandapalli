@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using System.Net;
+using WelfareWorkTracker.Core.Constants;
 using WelfareWorkTracker.Core.Contracts.Repository;
 using WelfareWorkTracker.Core.Contracts.Service;
 using WelfareWorkTracker.Core.Dtos;
@@ -7,6 +8,7 @@ using WelfareWorkTracker.Core.Enums;
 using WelfareWorkTracker.Core.Exceptions;
 using WelfareWorkTracker.Core.Models;
 using WelfareWorkTracker.Core.Vms;
+using WelfareWorkTracker.Infrastructure.Repository;
 
 namespace WelfareWorkTracker.Infrastructure.Service
 {
@@ -14,14 +16,20 @@ namespace WelfareWorkTracker.Infrastructure.Service
                                     IComplaintStatusRepository complaintStatusRepository,
                                     IComplaintImageRepository complaintImageRepository,
                                     IUserRepository userRepository,
+                                    IConstituencyRepository constituencyRepository,
+                                    IEmailTemplateRepository emailTemplateRepository,
                                     IClaimsService claimsService,
+                                    IEmailService emailService,
                                     IMapper mapper) : IComplaintService
     {
         private readonly IComplaintRepository _complaintRepository = complaintRepository;
         private readonly IComplaintStatusRepository _complaintStatusRepository = complaintStatusRepository;
         private readonly IComplaintImageRepository _complaintImageRepository = complaintImageRepository;
         private readonly IUserRepository _userRepository = userRepository;
+        private readonly IConstituencyRepository _constituencyRepository = constituencyRepository;
+        private readonly IEmailTemplateRepository _emailTemplateRepository = emailTemplateRepository;
         private readonly IClaimsService _claimsService = claimsService;
+        private readonly IEmailService _emailService = emailService;
         private readonly IMapper _mapper = mapper;
         public async Task<ComplaintDto> AddComplaintAsync(ComplaintVm complaintVm)
         {
@@ -70,6 +78,25 @@ namespace WelfareWorkTracker.Infrastructure.Service
             };
 
             await _complaintStatusRepository.AddComplaintStatusAsync(complaintStatus);
+
+            var constituencyName = await _constituencyRepository.GetConstituencyNameByIdAsync(complaint.ComplaintId)
+                ?? throw new WelfareWorkTrackerException("Constituency not found.", (int)HttpStatusCode.NotFound);
+            var adminRep = await _userRepository.GetAdminRepByConstituencyName(consituencyName)
+                ?? throw new WelfareWorkTrackerException("AdminRep not found.", (int)HttpStatusCode.NotFound);
+
+            var emailTemplate = await _emailTemplateRepository.GetByNameAsync(Constants.EmailTemplates.UnderValidation) 
+                        ?? throw new WelfareWorkTrackerException($"Email Template Not Found!", (int)HttpStatusCode.NotFound);
+            var payload = new Dictionary<string, string> {
+            { "userName",adminRep.FullName},
+            { "constituencyName",constituencyName},
+            };
+            var email = new EmailVm
+            {
+                ToUserEmail = adminRep.Email,
+                TemplateId = emailTemplate.Id,
+                Payload = payload
+            };
+            await _emailService.SendEmailAsync(email);
 
             var complaintDto = _mapper.Map<ComplaintDto>(createdComplaint);
 
@@ -261,6 +288,19 @@ namespace WelfareWorkTracker.Infrastructure.Service
                 await _complaintRepository.UpdateComplaintAsync(complaint);
             }
             return true;
+        }
+        private async Task DecreaseLeaderReputationForApprovalDelayAsync(User leader)
+        {
+            leader.Reputation -= 10;
+            if (leader.Reputation < 0)
+                leader.Reputation = 0;
+
+            await _userRepository.UpdateLeaderReputationAsync(leader.UserId, leader.Reputation);
+
+            if (leader.Reputation < 15)
+            {
+                //await TriggerReElectionAsync(leader)
+            }
         }
     }
 }
