@@ -7,11 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Service\" />
-    <Folder Include="Contracts\Repository\" />
-    <Folder Include="Models\" />
-    <Folder Include="Dtos\" />
-    <Folder Include="Vms\" />
+    <Compile Remove="Contracts\**" />
+    <Compile Remove="Dtos\**" />
+    <Compile Remove="Models\**" />
+    <Compile Remove="Vms\**" />
+    <EmbeddedResource Remove="Contracts\**" />
+    <EmbeddedResource Remove="Dtos\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <EmbeddedResource Remove="Vms\**" />
+    <None Remove="Contracts\**" />
+    <None Remove="Dtos\**" />
+    <None Remove="Models\**" />
+    <None Remove="Vms\**" />
   </ItemGroup>
 
 </Project>
