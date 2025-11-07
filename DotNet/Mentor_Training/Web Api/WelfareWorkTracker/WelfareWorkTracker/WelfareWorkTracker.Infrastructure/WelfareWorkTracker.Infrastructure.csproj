@@ -7,15 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\**" />
     <Compile Remove="Repository\**" />
     <Compile Remove="Service\**" />
-    <EmbeddedResource Remove="Data\**" />
     <EmbeddedResource Remove="Repository\**" />
     <EmbeddedResource Remove="Service\**" />
-    <None Remove="Data\**" />
     <None Remove="Repository\**" />
     <None Remove="Service\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WelfareWorkTracker.Core\WelfareWorkTracker.Core.csproj" />
   </ItemGroup>
 
 </Project>

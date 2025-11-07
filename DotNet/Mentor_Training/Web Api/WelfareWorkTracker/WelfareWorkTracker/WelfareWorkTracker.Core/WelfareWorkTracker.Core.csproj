@@ -9,15 +9,12 @@
   <ItemGroup>
     <Compile Remove="Contracts\**" />
     <Compile Remove="Dtos\**" />
-    <Compile Remove="Models\**" />
     <Compile Remove="Vms\**" />
     <EmbeddedResource Remove="Contracts\**" />
     <EmbeddedResource Remove="Dtos\**" />
-    <EmbeddedResource Remove="Models\**" />
     <EmbeddedResource Remove="Vms\**" />
     <None Remove="Contracts\**" />
     <None Remove="Dtos\**" />
-    <None Remove="Models\**" />
     <None Remove="Vms\**" />
   </ItemGroup>
 
