@@ -1,0 +1,9 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using RabbitMQConsumer.Core.Contracts.Repository;
+global using RabbitMQConsumer.Core.Contracts.Services;
+global using RabbitMQConsumer.Core.Options;
+global using RabbitMQConsumer.Infrastructure.Data;
+global using RabbitMQConsumer.Infrastructure.Repository;
+global using RabbitMQConsumer.Infrastructure.Services;
+global using Microsoft.AspNetCore.Mvc;
+global using RabbitMQSender.Core.Dtos;

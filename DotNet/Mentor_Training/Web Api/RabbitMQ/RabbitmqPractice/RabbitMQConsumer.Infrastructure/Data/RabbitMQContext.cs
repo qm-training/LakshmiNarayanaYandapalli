@@ -1,0 +1,30 @@
+﻿namespace RabbitMQConsumer.Infrastructure.Data;
+
+public partial class RabbitMQContext : DbContext
+{
+    public RabbitMQContext(DbContextOptions<RabbitMQContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<Student> Students { get; set; }
+
+    public virtual DbSet<Teacher> Teachers { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Student>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Students__3214EC070025C2EF");
+        });
+
+        modelBuilder.Entity<Teacher>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Teachers__3214EC0751DB0B69");
+        });
+
+        OnModelCreatingPartial(modelBuilder);
+    }
+
+    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+}
