@@ -13,6 +13,4 @@ public class DailyComplaint
 
     public DateTime DateUpdated { get; set; }
 
-    public virtual Constituency Constituency { get; set; } = null!;
-
 }

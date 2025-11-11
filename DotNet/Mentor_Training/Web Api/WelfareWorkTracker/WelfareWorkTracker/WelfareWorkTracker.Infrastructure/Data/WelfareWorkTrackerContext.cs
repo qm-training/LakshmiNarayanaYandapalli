@@ -1,10 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Data;
-using WelfareWorkTracker.Core.Models;
-
-namespace WelfareWorkTracker.Infrastructure.Data;
-
-public partial class WelfareWorkTrackerContext : DbContext
+﻿namespace WelfareWorkTracker.Infrastructure.Data;
+public class WelfareWorkTrackerContext : DbContext
 {
     public WelfareWorkTrackerContext()
     {
@@ -97,27 +92,7 @@ public partial class WelfareWorkTrackerContext : DbContext
                 .HasColumnType(nameof(SqlDbType.VarChar))
                 .HasMaxLength(4000);
 
-            entity.Property(e => e.Address)
-                .HasMaxLength(255)
-                .IsUnicode(false);
-
-            entity.Property(e => e.CountryName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-
-            entity.Property(e => e.StateName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-
-            entity.Property(e => e.DistrictName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-
             entity.Property(e => e.ConstituencyName)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-
-            entity.Property(e => e.VillageName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
 
@@ -145,6 +120,12 @@ public partial class WelfareWorkTrackerContext : DbContext
                 .HasForeignKey(e => e.LeaderId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .HasConstraintName("FK_Complaint_Leader");
+
+            entity.HasOne<Constituency>()
+                .WithMany()
+                .HasForeignKey(e => e.ConstituencyId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Complaint_Constituency");
         });
 
         // ---------------- ComplaintFeedback ----------------
