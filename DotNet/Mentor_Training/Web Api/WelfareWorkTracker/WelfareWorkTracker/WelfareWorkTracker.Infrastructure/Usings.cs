@@ -1,0 +1,19 @@
+﻿global using Microsoft.EntityFrameworkCore;
+global using System.Data;
+global using WelfareWorkTracker.Core.Models;
+global using WelfareWorkTracker.Infrastructure.Data;
+global using WelfareWorkTracker.Core.Enums;
+global using WelfareWorkTracker.Core.Contracts.Repository;
+global using System.Net;
+global using WelfareWorkTracker.Core.Exceptions;
+global using Microsoft.AspNetCore.Http;
+global using System.Security.Claims;
+global using WelfareWorkTracker.Core.Contracts.Service;
+global using AutoMapper;
+global using WelfareWorkTracker.Core.Vms;
+global using WelfareWorkTracker.Core.Constants;
+global using WelfareWorkTracker.Core.Dtos;
+global using WelfareWorkTracker.Library.HandlerContext;
+global using MassTransit;
+global using Hangfire;
+

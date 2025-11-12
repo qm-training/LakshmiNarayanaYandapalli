@@ -1,0 +1,19 @@
+﻿namespace WelfareWorkTracker.Core.Dtos;
+public class UserDto
+{
+    public string FullName { get; set; } = null!;
+
+    public string Email { get; set; } = null!;
+
+    public int Age { get; set; }
+
+    public long MobileNumber { get; set; }
+
+    public string Gender { get; set; } = null!;
+
+    public string Address { get; set; } = null!;
+
+    public int ConstituencyId { get; set; }
+
+    public int RoleId { get; set; }
+}
