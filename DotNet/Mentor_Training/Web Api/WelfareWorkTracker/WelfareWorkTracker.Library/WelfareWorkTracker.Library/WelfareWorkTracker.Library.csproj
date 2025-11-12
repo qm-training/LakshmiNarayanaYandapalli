@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>WelfareWorkTracker.Library</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>LakshmiNarayana</Authors>
+    <Company>Qualminds</Company>
+    <Product>WelfareWorkTracker.Library</Product>
+  </PropertyGroup>
+
+</Project>
