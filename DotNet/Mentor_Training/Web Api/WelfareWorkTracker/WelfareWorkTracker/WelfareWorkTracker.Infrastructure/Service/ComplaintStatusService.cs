@@ -1,5 +1,4 @@
-﻿
-namespace WelfareWorkTracker.Infrastructure.Service;
+﻿namespace WelfareWorkTracker.Infrastructure.Service;
 public class ComplaintStatusService(IComplaintStatusRepository complaintStatusRepository,
                                         IComplaintRepository complaintRepository,
                                         IUserRepository userRepository,

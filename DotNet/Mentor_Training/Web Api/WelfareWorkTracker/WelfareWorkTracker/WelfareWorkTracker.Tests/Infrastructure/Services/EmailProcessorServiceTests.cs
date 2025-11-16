@@ -1,4 +1,4 @@
-﻿namespace WelfareWorkTrackerAuth.Tests.Infrastructure.Services;
+﻿namespace WelfareWorkTracker.Tests.Infrastructure.Services;
 public class EmailProcessorServiceTests
 {
     private readonly EmailProcessorService _emailProcessorService;
@@ -171,3 +171,4 @@ public class EmailProcessorServiceTests
         };
     }
 }
+

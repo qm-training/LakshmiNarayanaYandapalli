@@ -17,3 +17,7 @@ global using Microsoft.AspNetCore.Http;
 global using System.Security.Claims;
 global using Hangfire;
 global using Hangfire.MemoryStorage;
+global using System.Security.Principal;
+global using WelfareWorkTracker.Infrastructure.Service;
+global using AutoMapper;
+global using WelfareWorkTracker.Core.Constants;

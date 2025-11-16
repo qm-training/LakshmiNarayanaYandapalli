@@ -25,10 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WelfareWorkTracker.Api\WelfareWorkTracker.Api.csproj" />
     <ProjectReference Include="..\WelfareWorkTracker.Core\WelfareWorkTracker.Core.csproj" />
     <ProjectReference Include="..\WelfareWorkTracker.Infrastructure\WelfareWorkTracker.Infrastructure.csproj" />

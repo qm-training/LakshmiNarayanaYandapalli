@@ -47,7 +47,7 @@ public class FeedbackService(IFeedbackRepository FeedbackRepository,
 
         // Validate that the user's constituency matches the complaint's constituency
         var user = await _userRepository.GetUserByIdAsync(userId);
-        if (complaint != null && citizenFeedbackVm.ComplaintId.HasValue && complaint.ComplaintId != user!.ConstituencyId)
+        if (complaint != null && citizenFeedbackVm.ComplaintId.HasValue && complaint.ConstituencyId != user!.ConstituencyId)
             throw new WelfareWorkTrackerException("You can only provide feedback for your constituency.", (int)HttpStatusCode.Unauthorized);
 
         // Check if the user has already provided feedback for the complaint

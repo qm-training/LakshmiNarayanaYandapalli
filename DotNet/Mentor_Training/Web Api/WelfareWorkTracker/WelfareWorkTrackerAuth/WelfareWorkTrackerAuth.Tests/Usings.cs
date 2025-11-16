@@ -22,3 +22,4 @@ global using AutoMapper;
 global using WelfareWorkTrackerAuth.Core.Contracts.Repository;
 global using WelfareWorkTrackerAuth.Core.Contracts.Repositories;
 global using WelfareWorkTrackerAuth.Core.Contracts.Services;
+global using WelfareWorkTrackerAuth.Infrastructure.Services;
