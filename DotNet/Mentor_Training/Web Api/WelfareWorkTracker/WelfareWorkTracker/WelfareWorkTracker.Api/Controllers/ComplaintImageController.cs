@@ -7,11 +7,6 @@ public class ComplaintImageController(IComplaintImageService complaintImageServi
 {
     private readonly IComplaintImageService _complaintImageService = complaintImageService;
 
-    /// <summary>
-    /// Adds an image for a specific complaint submitted by a citizen.
-    /// </summary>
-    /// <param name="complaintImageVm">The vm containing the image data and associated complaint information.</param>
-    /// <returns>Returns a success message and the added image if the operation is successful; otherwise, returns a not found result.</returns>
     [HttpPost]
     public async Task<IActionResult> AddComplaintImage(ComplaintImageVm complaintImageVm)
     {
@@ -22,11 +17,6 @@ public class ComplaintImageController(IComplaintImageService complaintImageServi
         return Ok(new { message = "Image added successfully", image });
     }
 
-    /// <summary>
-    /// To get a image/record from a db - Admin
-    /// </summary>
-    /// <param name="id">The unique identifier of the complaint image to retrieve.</param>
-    /// <returns>Returns the complaint image if found; otherwise, returns a not found result.</returns>
     [Authorize(Roles = "Admin")]
     [HttpGet("admin/{id}")]
     public async Task<IActionResult> GetComplaintById(int id)
@@ -37,11 +27,6 @@ public class ComplaintImageController(IComplaintImageService complaintImageServi
         return Ok(complaintImage);
     }
 
-    /// <summary>
-    /// To get a complaint images related to a complaint - citizen
-    /// </summary>
-    /// <param name="complaintId">The unique identifier of the complaint for which images are being retrieved.</param>
-    /// <returns>Returns the complaint image if found, or a NotFound result if no image exist for the provided complaint ID.</returns>
     [HttpGet("citizen/{complaintId}")]
     public async Task<IActionResult> GetComplaintByComplaintId(int complaintId)
     {
@@ -51,11 +36,6 @@ public class ComplaintImageController(IComplaintImageService complaintImageServi
         return Ok(complaintImage);
     }
 
-    /// <summary>
-    /// To retreive all images related to a specific complaint
-    /// </summary>
-    /// <param name="complaintId">The unique identifier of the complaint for which images are being retrieved.</param>
-    /// <returns>Returns the complaint images if found, or a NotFound result if no images exist for the provided complaint ID.</returns>
     [HttpGet("allImages/{complaintId}")]
     public async Task<IActionResult> GetAllComplaintImagesByComplaintId(int complaintId)
     {
@@ -66,11 +46,6 @@ public class ComplaintImageController(IComplaintImageService complaintImageServi
         return Ok(complaintImage);
     }
 
-    /// <summary>
-    /// To delete an image
-    /// </summary>
-    /// <param name="complaintImageId">The unique identifier of the complaint image to be deleted.</param>
-    /// <returns>Returns a success message if the image is deleted, or a NotFound result if no image exists with the provided ID.</returns>
     [HttpDelete]
     public async Task<IActionResult> DeleteComplaintImagesById(int complaintImageId)
     {

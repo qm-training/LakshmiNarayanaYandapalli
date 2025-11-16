@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36414.22 d17.14
+VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTracker.Core", "WelfareWorkTracker.Core\WelfareWorkTracker.Core.csproj", "{5AB4EE4D-AD44-43A6-A5A9-CFE8F9A83FE6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTracker.Infrastructure", "WelfareWorkTracker.Infrastructure\WelfareWorkTracker.Infrastructure.csproj", "{E7BD378A-6544-424F-96E8-8B649F4A08D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{FD12B8DA-15A6-423E-9643-A9E62C589DC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTracker.Tests", "WelfareWorkTracker.Tests\WelfareWorkTracker.Tests.csproj", "{02EAA5A1-C2A6-42BD-916B-DDE3FE33190C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,10 @@ Global
 		{E7BD378A-6544-424F-96E8-8B649F4A08D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7BD378A-6544-424F-96E8-8B649F4A08D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7BD378A-6544-424F-96E8-8B649F4A08D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02EAA5A1-C2A6-42BD-916B-DDE3FE33190C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02EAA5A1-C2A6-42BD-916B-DDE3FE33190C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02EAA5A1-C2A6-42BD-916B-DDE3FE33190C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02EAA5A1-C2A6-42BD-916B-DDE3FE33190C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +49,7 @@ Global
 		{0630DF3C-3274-47E7-9B61-51E8E742FD2E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{5AB4EE4D-AD44-43A6-A5A9-CFE8F9A83FE6} = {EDE5E5EA-4DC8-4FFF-B68C-FDB0306AC0CF}
 		{E7BD378A-6544-424F-96E8-8B649F4A08D3} = {8C5A975D-36AA-4371-A0CD-D2B0E8D637D4}
+		{02EAA5A1-C2A6-42BD-916B-DDE3FE33190C} = {FD12B8DA-15A6-423E-9643-A9E62C589DC6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D6B8E18D-0D55-464B-A392-CC29BA1BF0C3}
