@@ -6,6 +6,13 @@ public class ConstituencyController(IConstituencyService constituencyService) : 
 {
     private readonly IConstituencyService _constituencyService = constituencyService;
 
+    /// <summary>
+    /// Retrieves all constituencies available in the system.
+    /// </summary>
+    /// <returns>
+    /// Returns a list of all constituencies.  
+    /// If no constituencies exist, an exception is raised by the service layer.
+    /// </returns>
     [HttpGet]
     public async Task<IActionResult> GetConstituencies()
     {
@@ -13,6 +20,15 @@ public class ConstituencyController(IConstituencyService constituencyService) : 
         return Ok(constituencies);
     }
 
+    /// <summary>
+    /// Adds a new constituency to the system.
+    /// </summary>
+    /// <param name="constituencyVm">
+    /// The constituency details including name, district, state, country, and pincode.
+    /// </param>
+    /// <returns>
+    /// Returns the newly added constituency with its generated identifier.
+    /// </returns>
     [HttpPost]
     public async Task<IActionResult> AddConstituency(ConstituencyVm constituencyVm)
     {
