@@ -1,4 +1,4 @@
-﻿namespace WelfareWorkTrackerAuth.Infrastructure.Repositories;
+﻿namespace WelfareWorkTrackerAuth.Infrastructure.Repository;
 
 public class EmailPlaceholderRepository(WelfareWorkTrackerContext context) : IEmailPlaceholderRepository
 {
@@ -34,8 +34,10 @@ public class EmailPlaceholderRepository(WelfareWorkTrackerContext context) : IEm
 
     public async Task<bool> UpdateAsync(EmailPlaceholder placeholderData)
     {
-        var placeholder = await _context.EmailPlaceholders.FindAsync(placeholderData.Id) 
-            ?? throw new WelfareWorkTrackerException($"Email Placeholder with Id {placeholderData.Id} Not Found!", (int)HttpStatusCode.NotFound);
+        var placeholder = await _context.EmailPlaceholders.FindAsync(placeholderData.Id);
+
+        if (placeholder == null)
+            throw new WelfareWorkTrackerException($"Email Placeholder with Id {placeholderData.Id} Not Found!", (int)HttpStatusCode.NotFound);
 
         _context.EmailPlaceholders.Update(placeholderData);
         var rowsEffected = await _context.SaveChangesAsync();

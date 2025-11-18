@@ -72,7 +72,7 @@ public class RoleControllerTests
     {
         // Arrange
         var vm = CreateRoleVm("Viewer");
-        _mockService.Setup(s => s.AddRoleAsync(vm)).ReturnsAsync((RoleDto?)null);
+        _mockService.Setup(s => s.AddRoleAsync(vm)).ReturnsAsync((RoleDto)null!);
 
         // Act
         var result = await _controller.AddRole(vm);

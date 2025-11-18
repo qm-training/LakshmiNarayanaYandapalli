@@ -53,7 +53,7 @@ public class EmailServiceTests
 
         _mockSmtpClientWrapper.Verify(s => s.SendMailAsync(
             It.Is<MailMessage>(m =>
-                m.From.Address == _smtpOptions.SenderEmail &&
+                m.From!.Address == _smtpOptions.SenderEmail &&
                 m.To.Single().Address == welfareEvent.UserEmail &&
                 m.Subject == welfareEvent.Subject &&
                 m.Body == welfareEvent.Body &&

@@ -1,12 +1,7 @@
-﻿namespace WelfareWorkTrackerAuth.Infrastructure.Services;
-public class EventPublisher : IEventPublisher
+﻿namespace WelfareWorkTrackerAuth.Infrastructure.Service;
+public class EventPublisher(IBus bus) : IEventPublisher
 {
-    private readonly IBus _bus;
-
-    public EventPublisher(IBus bus)
-    {
-        _bus = bus;
-    }
+    private readonly IBus _bus = bus;
 
     public async Task PublishEventAsync<TEvent>(TEvent eventMessage) where TEvent : class
     {

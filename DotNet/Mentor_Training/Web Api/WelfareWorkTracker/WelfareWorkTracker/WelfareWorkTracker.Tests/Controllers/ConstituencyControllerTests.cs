@@ -76,7 +76,7 @@ public class ConstituencyControllerTests
     {
         // Arrange
         var vm = CreateConstituencyVm();
-        _mockService.Setup(s => s.AddConstituencyAsync(vm)).ReturnsAsync((ConstituencyDto?)null);
+        _mockService.Setup(s => s.AddConstituencyAsync(vm)).ReturnsAsync((ConstituencyDto)null!);
 
         // Act
         var result = await _controller.AddConstituency(vm);

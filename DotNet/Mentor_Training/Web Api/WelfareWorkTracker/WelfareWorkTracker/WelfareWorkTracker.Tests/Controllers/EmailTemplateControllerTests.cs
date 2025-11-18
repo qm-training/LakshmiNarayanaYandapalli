@@ -32,7 +32,7 @@ public class EmailTemplateControllerTests
     {
         // Arrange
         AttachUser(_controller);
-        _mockService.Setup(s => s.GetTemplateByIdAsync(404)).ReturnsAsync((EmailTemplate?)null);
+        _mockService.Setup(s => s.GetTemplateByIdAsync(404)).ReturnsAsync((EmailTemplate)null!);
 
         // Act
         var result = await _controller.GetTemplateById(404);
@@ -104,7 +104,7 @@ _mockService
         AttachUser(_controller);
         _mockService
             .Setup(s => s.GetByNameAsync("Unknown"))
-            .ReturnsAsync((EmailTemplate?)null);
+            .ReturnsAsync((EmailTemplate)null!);
 
         // Act
         var result = await _controller.GetAllTemplatesByTemplateName("Unknown");

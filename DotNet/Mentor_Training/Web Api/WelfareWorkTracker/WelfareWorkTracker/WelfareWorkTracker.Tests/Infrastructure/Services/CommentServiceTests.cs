@@ -475,7 +475,7 @@ public class CommentServiceTests
 
         _mockCommentRepository
             .Setup(r => r.DeleteCommentAsync(existingComment))
-            .ReturnsAsync((Comment?)null);
+            .ReturnsAsync((Comment)null!);
 
         // Act
         var result = await _commentService.DeleteCommentByCommentIdAsync(commentId);

@@ -127,7 +127,7 @@ public class CommentControllerTests
         var vm = CreateCommentVm("Nope");
         _mockService
             .Setup(s => s.UpdateCommentByIdAsync(404, vm))
-            .ReturnsAsync((CommentDto?)null);
+            .ReturnsAsync((CommentDto)null!);
 
         // Act
         var result = await _controller.UpdateCommentByCommentId(404, vm);

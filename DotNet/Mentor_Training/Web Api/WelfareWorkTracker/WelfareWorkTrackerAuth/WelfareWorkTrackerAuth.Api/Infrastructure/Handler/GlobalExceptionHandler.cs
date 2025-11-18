@@ -1,4 +1,4 @@
-﻿namespace WelfareWorkTrackerAuth.Api.Infrastructure.Handlers;
+﻿namespace WelfareWorkTrackerAuth.Api.Infrastructure.Handler;
 public class GlobalExceptionHandler : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)

@@ -183,7 +183,7 @@ public class FeedbackServiceTests
     {
         // Arrange
         _mockClaims.Setup(c => c.GetUserIdFromClaimsAsync()).ReturnsAsync(1);
-        _mockFeedbackRepo.Setup(r => r.GetAllFeedbacksAsync(null, 12)).ReturnsAsync((List<ComplaintFeedback>?)null);
+        _mockFeedbackRepo.Setup(r => r.GetAllFeedbacksAsync(null, 12)).ReturnsAsync((List<ComplaintFeedback>)null!);
 
         // Act
         var result = await _service.GetAllFeedbacksAsync(null, 12);

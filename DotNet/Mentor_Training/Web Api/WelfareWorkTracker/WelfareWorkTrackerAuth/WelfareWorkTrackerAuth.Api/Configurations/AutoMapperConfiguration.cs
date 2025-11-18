@@ -1,4 +1,4 @@
-﻿namespace WelfareTracker.Api.Configurations;
+﻿namespace WelfareWorkTrackerAuth.Api.Configurations;
 public static class AutoMapperConfiguration
 {
     public static IMapper InitializeMapper()

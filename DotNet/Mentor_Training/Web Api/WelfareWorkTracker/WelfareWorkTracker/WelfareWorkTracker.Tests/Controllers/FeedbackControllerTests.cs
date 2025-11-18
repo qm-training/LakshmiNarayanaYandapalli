@@ -34,7 +34,7 @@ public class FeedbackControllerTests
         // Arrange
         AttachUser(_controller, "Citizen");
         var vm = CreateVm("Oops", false, 1, null);
-        _mockService.Setup(s => s.AddFeedbackAsync(vm)).ReturnsAsync((FeedbackDto?)null);
+        _mockService.Setup(s => s.AddFeedbackAsync(vm)).ReturnsAsync((FeedbackDto)null!);
 
         // Act
         var result = await _controller.AddFeedback(vm);

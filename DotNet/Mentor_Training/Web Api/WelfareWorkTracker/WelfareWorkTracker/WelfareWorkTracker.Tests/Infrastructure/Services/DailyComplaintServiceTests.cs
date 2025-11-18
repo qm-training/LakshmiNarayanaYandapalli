@@ -162,7 +162,7 @@ public class DailyComplaintServiceTests
         Assert.Single(assignedIds);
 
         _mockDailyComplaintRepo.Verify(r => r.AddDailyComplaintAsync(It.Is<DailyComplaint>(dc =>
-            dc.LeaderId == eligible.UserId && dc.ConstituencyId == eligible.ConstituencyId && dc.IsCompleted == false)), Times.Once);
+            dc.LeaderId == eligible.UserId && dc.ConstituencyId == eligible.ConstituencyId && !dc.IsCompleted)), Times.Once);
 
         _mockDailyComplaintRepo.Verify(r => r.AddDailyComplaintAsync(It.Is<DailyComplaint>(dc =>
             dc.LeaderId == ineligibleEqual15.UserId)), Times.Never);

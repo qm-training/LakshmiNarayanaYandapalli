@@ -1,4 +1,4 @@
-﻿namespace WelfareWorkTrackerAuth.Infrastructure.Repositories;
+﻿namespace WelfareWorkTrackerAuth.Infrastructure.Repository;
 public class EmailOutboxRepository(WelfareWorkTrackerContext context) : IEmailOutboxRepository
 {
     private readonly WelfareWorkTrackerContext _context = context;

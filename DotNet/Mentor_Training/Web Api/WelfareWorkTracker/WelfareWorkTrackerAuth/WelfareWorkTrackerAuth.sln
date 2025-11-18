@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTrackerAuth.Api"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTrackerAuth.Core", "WelfareWorkTrackerAuth.Core\WelfareWorkTrackerAuth.Core.csproj", "{C66DCC47-221D-47B5-AFD7-9A039714AB5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTracker.Infrastructure", "WelfareWorkTracker.Infrastructure\WelfareWorkTracker.Infrastructure.csproj", "{B55B19E3-C44F-4163-8E6C-80E5B0F4290B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTrackerAuth.Infrastructure", "WelfareWorkTracker.Infrastructure\WelfareWorkTrackerAuth.Infrastructure.csproj", "{B55B19E3-C44F-4163-8E6C-80E5B0F4290B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5C210879-649B-4974-A325-18B68251DC08}"
 EndProject

@@ -1,15 +1,12 @@
 ﻿namespace WelfareWorkTrackerAuth.Tests.Infrastructure.Services;
 public class AuthServiceTests
 {
-    private readonly IFixture _fixture;
     private readonly Mock<IOptions<JwtOptions>> _mockOptions;
     private readonly JwtOptions _jwtOptions;
     private readonly AuthService _authService;
 
     public AuthServiceTests()
     {
-        _fixture = new Fixture();
-
         _jwtOptions = new JwtOptions
         {
             Issuer = "TestIssuer",
@@ -51,7 +48,7 @@ public class AuthServiceTests
     {
         // Arrange
         var user = CreateUserWithValidRole();
-        user.Email = null;
+        user.Email = null!;
 
         // Act
         var token = _authService.GenerateJwtToken(user);

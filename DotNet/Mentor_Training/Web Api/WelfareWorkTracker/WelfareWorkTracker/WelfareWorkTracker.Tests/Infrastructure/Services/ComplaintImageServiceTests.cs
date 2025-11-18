@@ -218,7 +218,7 @@ public class ComplaintImageServiceTests
 
         _mockComplaintImageRepository
             .Setup(r => r.GetAllComplaintImagesByComplaintIdAsync(complaintId))
-            .ReturnsAsync((List<ComplaintImage>?)null);
+            .ReturnsAsync((List<ComplaintImage>)null!);
 
         // Act
         var result = await _complaintImageService.GetComplaintImagesByComplaintIdAsync(complaintId);

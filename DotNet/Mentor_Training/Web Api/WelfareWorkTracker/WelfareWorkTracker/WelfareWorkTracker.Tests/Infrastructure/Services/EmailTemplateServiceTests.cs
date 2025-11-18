@@ -105,7 +105,7 @@ public class EmailTemplateServiceTests
     public async Task UpdateTemplateAsync_WhenTemplateNotFound_Throws()
     {
         // Arrange
-        _mockRepo.Setup(r => r.GetByIdAsync(55)).ReturnsAsync((EmailTemplate?)null);
+        _mockRepo.Setup(r => r.GetByIdAsync(55)).ReturnsAsync((EmailTemplate)null!);
 
         // Act
         var act = () => _service.UpdateTemplateAsync(55, 1, new UpdateEmailTemplateVm());
@@ -144,7 +144,7 @@ public class EmailTemplateServiceTests
         // Assert
         Assert.False(existing.IsActive);
         _mockRepo.Verify(r => r.UpdateAsync(It.Is<EmailTemplate>(e =>
-            e.Id == 33 && e.IsActive == false && e.DateUpdated != default
+            e.Id == 33 && !e.IsActive && e.DateUpdated != default
         )), Times.Once);
     }
 
@@ -152,7 +152,7 @@ public class EmailTemplateServiceTests
     public async Task DeleteTemplateAsync_WhenTemplateNotFound_Throws()
     {
         // Arrange
-        _mockRepo.Setup(r => r.GetByIdAsync(44)).ReturnsAsync((EmailTemplate?)null);
+        _mockRepo.Setup(r => r.GetByIdAsync(44)).ReturnsAsync((EmailTemplate)null!);
 
         // Act
         var act = () => _service.DeleteTemplateAsync(44, 1);

@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WelfareWorkTracker.Infrastructure\WelfareWorkTracker.Infrastructure.csproj" />
+    <ProjectReference Include="..\WelfareWorkTracker.Infrastructure\WelfareWorkTrackerAuth.Infrastructure.csproj" />
     <ProjectReference Include="..\WelfareWorkTrackerAuth.Core\WelfareWorkTrackerAuth.Core.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿namespace Notifications.Infrastructure.Extensions;
+﻿namespace Notification.Api.Infrastructure.Extensions;
 public static class ServiceCollectionExtentions
 {
     public static void RegisterSystemServices(this IServiceCollection services, IConfiguration configuration)

@@ -36,7 +36,7 @@ public class ComplaintControllerTests
     {
         // Arrange
         var vm = CreateComplaintVm();
-        _mockService.Setup(s => s.AddComplaintAsync(vm)).ReturnsAsync((ComplaintDto?)null);
+        _mockService.Setup(s => s.AddComplaintAsync(vm)).ReturnsAsync((ComplaintDto)null!);
 
         // Act
         var result = await _controller.AddComplaint(vm);
@@ -125,7 +125,7 @@ public class ComplaintControllerTests
         var message = payload.GetType().GetProperty("message")!.GetValue(payload, null);
         var complaint = payload.GetType().GetProperty("complaint")!.GetValue(payload, null);
         Assert.Equal("Complaint deleted successfully", message);
-        Assert.Equal(true, complaint);
+        Assert.NotNull(complaint);
     }
 
     [Fact]

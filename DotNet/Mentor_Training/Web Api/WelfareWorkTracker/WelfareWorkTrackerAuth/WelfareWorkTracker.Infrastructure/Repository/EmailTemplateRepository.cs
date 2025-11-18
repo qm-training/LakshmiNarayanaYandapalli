@@ -1,4 +1,4 @@
-﻿namespace WelfareWorkTrackerAuth.Infrastructure.Repositories;
+﻿namespace WelfareWorkTrackerAuth.Infrastructure.Repository;
 
 public class EmailTemplateRepository(WelfareWorkTrackerContext context) : IEmailTemplateRepository
 {
@@ -40,8 +40,10 @@ public class EmailTemplateRepository(WelfareWorkTrackerContext context) : IEmail
     public async Task<bool> UpdateAsync(EmailTemplate template)
     {
 
-        var placeholder = await _context.EmailTemplates.FindAsync(template.Id) 
-            ?? throw new WelfareWorkTrackerException($"Email Templates with Id {template.Id} Not Found!", (int)HttpStatusCode.NotFound);
+        var placeholder = await _context.EmailTemplates.FindAsync(template.Id);
+
+        if (placeholder == null)
+                throw new WelfareWorkTrackerException($"Email Templates with Id {template.Id} Not Found!", (int)HttpStatusCode.NotFound);
 
         _context.EmailTemplates.Update(template);
         var rowsEffected = await _context.SaveChangesAsync();

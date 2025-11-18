@@ -1,4 +1,4 @@
-﻿namespace WelfareWorkTrackerAuth.Core.Contracts.Repositories;
+﻿namespace WelfareWorkTrackerAuth.Core.Contracts.Repository;
 
 public interface IEmailPlaceholderRepository
 {

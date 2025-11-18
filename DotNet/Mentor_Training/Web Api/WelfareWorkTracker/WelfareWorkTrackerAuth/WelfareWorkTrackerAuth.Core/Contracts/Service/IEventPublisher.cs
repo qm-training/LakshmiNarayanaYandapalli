@@ -1,4 +1,4 @@
-﻿namespace WelfareWorkTrackerAuth.Core.Contracts.Services;
+﻿namespace WelfareWorkTrackerAuth.Core.Contracts.Service;
 
 public interface IEventPublisher
 {

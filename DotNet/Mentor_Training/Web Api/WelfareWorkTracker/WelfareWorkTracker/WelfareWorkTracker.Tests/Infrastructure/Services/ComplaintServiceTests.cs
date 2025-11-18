@@ -431,7 +431,7 @@ public class ComplaintServiceTests
 
         _mockComplaintRepository
             .Setup(r => r.GetComplaintsForLeaderByLeaderIdAsync(leaderId))
-            .ReturnsAsync((List<Complaint>?)null);
+            .ReturnsAsync((List<Complaint>)null!);
 
         // Act
         var result = await _complaintService.GetComplaintsForLeaderByLeaderIdAsync(leaderId, Status.UnderValidation);

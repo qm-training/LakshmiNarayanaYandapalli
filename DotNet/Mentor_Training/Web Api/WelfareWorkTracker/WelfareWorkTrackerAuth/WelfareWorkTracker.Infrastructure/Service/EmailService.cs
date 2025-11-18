@@ -1,4 +1,4 @@
-﻿namespace WelfareWorkTrackerAuth.Infrastructure.Services;
+﻿namespace WelfareWorkTrackerAuth.Infrastructure.Service;
 public class EmailService(IEmailProcessorService emailProcessor,
                             IEmailTemplateRepository emailTemplateRepository,
                             IEmailPlaceholderRepository emailPlaceholderRepository,
