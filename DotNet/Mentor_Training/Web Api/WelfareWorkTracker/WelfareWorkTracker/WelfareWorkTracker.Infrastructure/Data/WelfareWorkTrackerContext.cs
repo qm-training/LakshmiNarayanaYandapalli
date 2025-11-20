@@ -1,0 +1,441 @@
+﻿namespace WelfareWorkTracker.Infrastructure.Data;
+public class WelfareWorkTrackerContext : DbContext
+{
+    public WelfareWorkTrackerContext()
+    {
+    }
+
+    public WelfareWorkTrackerContext(DbContextOptions<WelfareWorkTrackerContext> options)
+        : base(options)
+    {
+    }
+
+    public virtual DbSet<Comment> Comments { get; set; }
+
+    public virtual DbSet<Complaint> Complaints { get; set; }
+
+    public virtual DbSet<ComplaintFeedback> ComplaintFeedbacks { get; set; }
+
+    public virtual DbSet<ComplaintImage> ComplaintImages { get; set; }
+
+    public virtual DbSet<ComplaintStatus> ComplaintStatuses { get; set; }
+
+    public virtual DbSet<Constituency> Constituencies { get; set; }
+
+    public virtual DbSet<DailyComplaint> DailyComplaints { get; set; }
+
+    public virtual DbSet<DailyComplaintStatus> DailyComplaintStatuses { get; set; }
+
+    public virtual DbSet<EmailOutbox> EmailOutboxes { get; set; }
+
+    public virtual DbSet<EmailPlaceholder> EmailPlaceholders { get; set; }
+
+    public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
+
+    public virtual DbSet<Role> Roles { get; set; }
+
+    public virtual DbSet<User> Users { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+
+        // ---------------- Comment ----------------
+        modelBuilder.Entity<Comment>(entity =>
+        {
+            entity.HasKey(e => e.CommentId).HasName("PK__Comment__C3B4DFCA");
+            entity.ToTable("Comment");
+
+            entity.Property(e => e.Description)
+                .HasColumnType(nameof(SqlDbType.VarChar))
+                .HasMaxLength(4000)
+                .HasColumnName("Description");
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.DateUpdated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            // FKs (no navs)
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Comment_User");
+
+            entity.HasOne<Complaint>()
+                .WithMany()
+                .HasForeignKey(e => e.ComplaintId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Comment_Complaint");
+
+            entity.HasOne<DailyComplaint>()
+                .WithMany()
+                .HasForeignKey(e => e.DailyComplaintId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Comment_DailyComplaint");
+        });
+
+        // ---------------- Complaint ----------------
+        modelBuilder.Entity<Complaint>(entity =>
+        {
+            entity.HasKey(e => e.ComplaintId).HasName("PK__Complain__740D898F");
+            entity.ToTable("Complaint");
+
+            entity.Property(e => e.Title)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Description)
+                .HasColumnType(nameof(SqlDbType.VarChar))
+                .HasMaxLength(4000);
+
+            entity.Property(e => e.ConstituencyName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
+            entity.Property(e => e.ReferenceNumber)
+                .HasDefaultValue(0);
+
+            entity.Property(e => e.Attempts).HasDefaultValue(1);
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.DateUpdated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(e => e.CitizenId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Complaint_Citizen");
+
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(e => e.LeaderId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Complaint_Leader");
+
+            entity.HasOne<Constituency>()
+                .WithMany()
+                .HasForeignKey(e => e.ConstituencyId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_Complaint_Constituency");
+        });
+
+        // ---------------- ComplaintFeedback ----------------
+        modelBuilder.Entity<ComplaintFeedback>(entity =>
+        {
+            entity.HasKey(e => e.CitizenFeedbackId).HasName("PK__Complain__056FD829");
+            entity.ToTable("ComplaintFeedback");
+
+            entity.Property(e => e.FeedbackMessage)
+                .HasColumnType(nameof(SqlDbType.VarChar))
+                .HasMaxLength(4000);
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.DateUpdated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.HasOne<Complaint>()
+                .WithMany()
+                .HasForeignKey(e => e.ComplaintId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_ComplaintFeedback_Complaint");
+
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(e => e.CitizenId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_ComplaintFeedback_Citizen");
+
+            entity.HasOne<DailyComplaint>()
+                .WithMany()
+                .HasForeignKey(e => e.DailyComplaintId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_ComplaintFeedback_DailyComplaint");
+        });
+
+        // ---------------- ComplaintImage ----------------
+        modelBuilder.Entity<ComplaintImage>(entity =>
+        {
+            entity.HasKey(e => e.ComplaintImageId).HasName("PK__Complain__F5DE709D");
+            entity.ToTable("ComplaintImage");
+
+            entity.Property(e => e.ImageUrl)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.DateUpdated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.HasOne<Complaint>()
+                .WithMany()
+                .HasForeignKey(e => e.ComplaintId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_ComplaintImage_Complaint");
+        });
+
+        // ---------------- ComplaintStatus ----------------
+        modelBuilder.Entity<ComplaintStatus>(entity =>
+        {
+            entity.HasKey(e => e.ComplaintStatusId).HasName("PK__Complain__A5FEB61E");
+            entity.ToTable("ComplaintStatus");
+
+            entity.Property(e => e.OpenedDate).HasColumnType("datetime");
+            entity.Property(e => e.DeadlineDate).HasColumnType("datetime");
+            entity.Property(e => e.NewOpenedDate).HasColumnType("datetime");
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.DateUpdated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.Status)
+                .IsRequired()
+                .HasColumnName("Status");
+
+            entity.HasOne<Complaint>()
+                .WithMany()
+                .HasForeignKey(e => e.ComplaintId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_ComplaintStatus_Complaint");
+        });
+
+        // ---------------- Constituency ----------------
+        modelBuilder.Entity<Constituency>(entity =>
+        {
+            entity.HasKey(e => e.ConstituencyId).HasName("PK__Constitu__AD6DB4AF");
+            entity.ToTable("Constituency");
+
+            entity.Property(e => e.ConstituencyName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.Property(e => e.DistrictName)
+                .HasMaxLength(150)
+                .IsUnicode(false);
+
+            entity.Property(e => e.StateName)
+                .HasMaxLength(150)
+                .IsUnicode(false);
+
+            entity.Property(e => e.CountryName)
+                .HasMaxLength(150)
+                .IsUnicode(false);
+        });
+
+        // ---------------- DailyComplaint ----------------
+        modelBuilder.Entity<DailyComplaint>(entity =>
+        {
+            entity.HasKey(e => e.DailyComplaintId).HasName("PK__DailyCom__BE8C98A3");
+            entity.ToTable("DailyComplaint");
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.DateUpdated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(e => e.LeaderId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_DailyComplaint_Leader");
+
+            entity.HasOne<Constituency>()
+                .WithMany()
+                .HasForeignKey(e => e.ConstituencyId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_DailyComplaint_Constituency");
+        });
+
+        // ---------------- DailyComplaintStatus ----------------
+        modelBuilder.Entity<DailyComplaintStatus>(entity =>
+        {
+            entity.HasKey(e => e.DailyComplaintStatusId).HasName("PK__DailyCom__0FA8065F");
+            entity.ToTable("DailyComplaintStatus");
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.DateUpdated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.HasOne<DailyComplaint>()
+                .WithMany()
+                .HasForeignKey(e => e.DailyComplaintId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_DailyComplaintStatus_DailyComplaint");
+        });
+
+        // ---------------- EmailOutbox ----------------
+        modelBuilder.Entity<EmailOutbox>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__EmailOut__3214EC07");
+            entity.ToTable("EmailOutbox");
+
+            entity.Property(e => e.ToEmail)
+                .HasMaxLength(256);
+
+            entity.Property(e => e.FromEmail)
+                .HasMaxLength(256);
+
+            entity.Property(e => e.SentAt)
+                .HasColumnType("datetime");
+
+            entity.HasOne<EmailTemplate>()
+                .WithMany()
+                .HasForeignKey(e => e.EmailTemplateId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_EmailOutbox_Template");
+        });
+
+        // ---------------- EmailPlaceholder ----------------
+        modelBuilder.Entity<EmailPlaceholder>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__EmailPla__3214EC07");
+            entity.ToTable("EmailPlaceholder");
+
+            entity.Property(e => e.PlaceHolderKey)
+                .HasMaxLength(150);
+
+            entity.Property(e => e.PlaceHolderValue)
+                .HasColumnType(nameof(SqlDbType.VarChar))
+                .HasMaxLength(4000);
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.DateUpdated)
+                .HasColumnType("datetime");
+
+            entity.HasOne<EmailOutbox>()
+                .WithMany()
+                .HasForeignKey(e => e.EmailOutboxId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_EmailPlaceholder_Outbox");
+        });
+
+        // ---------------- EmailTemplate ----------------
+        modelBuilder.Entity<EmailTemplate>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__EmailTem__3214EC07");
+            entity.ToTable("EmailTemplate");
+
+            entity.Property(e => e.Name)
+                .HasMaxLength(150);
+
+            entity.Property(e => e.Subject)
+                .HasMaxLength(300);
+
+            entity.Property(e => e.Body)
+                .HasColumnType(nameof(SqlDbType.VarChar))
+                .HasMaxLength(4000);
+
+            entity.Property(e => e.IsActive).IsRequired();
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.DateUpdated)
+                .HasColumnType("datetime");
+
+            entity.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(e => e.CreatedBy)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_EmailTemplate_User");
+        });
+
+        // ---------------- Role ----------------
+        modelBuilder.Entity<Role>(entity =>
+        {
+            entity.HasKey(e => e.RoleId).HasName("PK__Role__8AFACE1A");
+            entity.ToTable("Role");
+
+            entity.Property(e => e.RoleName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+        });
+
+        // ---------------- User ----------------
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.HasKey(e => e.UserId).HasName("PK__User__1788CC4C");
+            entity.ToTable("User");
+
+            entity.HasIndex(e => e.Email).IsUnique();
+
+            entity.Property(e => e.FullName)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Email)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Address)
+                .HasMaxLength(255)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Gender)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
+            entity.Property(e => e.PasswordHash).HasMaxLength(500);
+            entity.Property(e => e.PasswordSalt).HasMaxLength(500);
+            entity.Property(e => e.RefreshToken).HasMaxLength(500);
+
+            entity.Property(e => e.RefreshTokenExpiry).HasColumnType("datetime");
+
+            entity.Property(e => e.IsActive).HasDefaultValue(true);
+
+            // default reputation (adjust if you prefer 0)
+            entity.Property(e => e.Reputation).HasDefaultValue(100.0);
+
+            entity.Property(e => e.DateCreated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.Property(e => e.DateUpdated)
+                .HasColumnType("datetime")
+                .HasDefaultValueSql("(getutcdate())");
+
+            entity.HasOne<Role>()
+                .WithMany()
+                .HasForeignKey(e => e.RoleId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_User_Role");
+
+            entity.HasOne<Constituency>()
+                .WithMany()
+                .HasForeignKey(e => e.ConstituencyId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_User_Constituency");
+        });
+    }
+}
