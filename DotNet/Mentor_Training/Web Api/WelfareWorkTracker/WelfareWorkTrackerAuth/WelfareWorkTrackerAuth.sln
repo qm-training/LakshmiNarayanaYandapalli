@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36414.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{2632538F-2C7C-470F-B764-01CC27E721A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{A6070366-34CD-4531-A534-8D876646D0F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTrackerAuth.Api", "WelfareWorkTrackerAuth.Api\WelfareWorkTrackerAuth.Api.csproj", "{47A5C0A6-63C2-4C3A-A6BA-A343F41A8DD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTrackerAuth.Core", "WelfareWorkTrackerAuth.Core\WelfareWorkTrackerAuth.Core.csproj", "{C66DCC47-221D-47B5-AFD7-9A039714AB5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTrackerAuth.Infrastructure", "WelfareWorkTracker.Infrastructure\WelfareWorkTrackerAuth.Infrastructure.csproj", "{B55B19E3-C44F-4163-8E6C-80E5B0F4290B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{5C210879-649B-4974-A325-18B68251DC08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WelfareWorkTrackerAuth.Tests", "WelfareWorkTrackerAuth.Tests\WelfareWorkTrackerAuth.Tests.csproj", "{D77C6903-6CA9-4E0D-804E-DFE111B1A198}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47A5C0A6-63C2-4C3A-A6BA-A343F41A8DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47A5C0A6-63C2-4C3A-A6BA-A343F41A8DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47A5C0A6-63C2-4C3A-A6BA-A343F41A8DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47A5C0A6-63C2-4C3A-A6BA-A343F41A8DD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C66DCC47-221D-47B5-AFD7-9A039714AB5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C66DCC47-221D-47B5-AFD7-9A039714AB5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C66DCC47-221D-47B5-AFD7-9A039714AB5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C66DCC47-221D-47B5-AFD7-9A039714AB5B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B55B19E3-C44F-4163-8E6C-80E5B0F4290B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B55B19E3-C44F-4163-8E6C-80E5B0F4290B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B55B19E3-C44F-4163-8E6C-80E5B0F4290B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B55B19E3-C44F-4163-8E6C-80E5B0F4290B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D77C6903-6CA9-4E0D-804E-DFE111B1A198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D77C6903-6CA9-4E0D-804E-DFE111B1A198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D77C6903-6CA9-4E0D-804E-DFE111B1A198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D77C6903-6CA9-4E0D-804E-DFE111B1A198}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{47A5C0A6-63C2-4C3A-A6BA-A343F41A8DD0} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C66DCC47-221D-47B5-AFD7-9A039714AB5B} = {2632538F-2C7C-470F-B764-01CC27E721A9}
+		{B55B19E3-C44F-4163-8E6C-80E5B0F4290B} = {A6070366-34CD-4531-A534-8D876646D0F2}
+		{D77C6903-6CA9-4E0D-804E-DFE111B1A198} = {5C210879-649B-4974-A325-18B68251DC08}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C924B0AB-17B3-4EAF-B197-20D00CBD6013}
+	EndGlobalSection
+EndGlobal
