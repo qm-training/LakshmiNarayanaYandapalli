@@ -1,0 +1,11 @@
+﻿global using JwtAuthentication.Core.Contracts.Services;
+global using JwtAuthentication.Core.Dto;
+global using JwtAuthentication.Infrastructure.Services;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Mvc;
+global using JwtAuthentication.Core.Contracts.Repository;
+global using JwtAuthentication.Infrastructure.Data;
+global using JwtAuthentication.Infrastructure.Repository;
+global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.EntityFrameworkCore;
+global using JwtAuthentication.Api.Infrastructure.Extensions;
